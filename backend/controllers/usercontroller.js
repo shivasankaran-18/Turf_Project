@@ -1,6 +1,6 @@
 import userModel from "../models/usermodel.js";
 import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import validator from "validator"
 
 /* Login User */
@@ -17,7 +17,7 @@ const login = async (req,res)=>{
             return res.json({success:false,message:"Invalid Credantails"});
         }
         const token = createToken(user._id);
-        res.json({success:true,token});
+        res.json({success:true,token:`Bearer ${token}`});
     }
     catch(err){
         console.log(err);
@@ -64,7 +64,7 @@ const register = async (req,res) =>{
         )
         const user = await newUser.save();
         const token = createToken(user._id);
-        res.json({success:true,message:`Token : ${token}`})
+        res.json({success:true,token:`Bearer ${token}`})
     }
     catch(err){
         console.log(err);
