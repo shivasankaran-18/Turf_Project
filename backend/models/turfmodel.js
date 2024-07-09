@@ -7,8 +7,22 @@ const TurfSchema = new mongoose.Schema(
         city : {type : String, required:true},
         state : {type:String, required:true},
         images : {type:String, required:true},
+        turfId: { type: Number, default: 1, unique: true },
     }
 )
+TurfSchema.pre('save',async function(next){
+    try{
+        if(this.isNew){
+            const doc = this;
+            const highestTurf = await TurfModel.findOne().sort('-turfId');
+            doc.turfId = highestTurf ? highestTurf.turfId + 1: 1;
+        }
+        next();
+    }
+    catch(err){
+        next(err);
+    }
+})
 
 const TurfModel = mongoose.model("Turf-Details",TurfSchema)
 

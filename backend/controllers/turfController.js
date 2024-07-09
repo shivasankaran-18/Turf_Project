@@ -5,7 +5,7 @@ import fs from "fs";
 /* Add Turf Details */
 
 const addTurf = async (req,res)=>{
-    let image_filename = `${req.file.filename}`
+    let image_filename = `${req.body.file}`
     console.log(req.body.state)
     const newTurf = new TurfModel(
         {

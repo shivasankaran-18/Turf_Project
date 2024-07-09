@@ -4,6 +4,7 @@ import { connectDb } from "./config/db.js";
 import turfRouter from "./routes/turfRoute.js";
 import userRouter from "./routes/userRoute.js";
 import "dotenv/config.js"
+import adminRouter from "./routes/adminRoute.js";
 
 /*App Config*/
 const app = express();
@@ -16,7 +17,7 @@ connectDb();
 
 
 /* API endpoints */
-
+app.use("/api/admin",adminRouter)
 app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
 

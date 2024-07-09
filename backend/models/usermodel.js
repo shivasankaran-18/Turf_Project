@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema(
         name:{type:String , required: true},
         email : {type: String,required:true,unqiue:true},
         password : {type:String, required:true},
-        userBooking : {type:Object,default:{}}
+        userBooking : {type:Array(Object),default:{}}
     },{minimize : false}
 )
 

@@ -17,7 +17,7 @@ const upload = multer({
     storage:storage
 })
 
-turfRouter.post("/add",upload.single("image"),addTurf)
+turfRouter.post("/add",upload.single("images"),addTurf)
 turfRouter.get("/list",listTurf)
 
 

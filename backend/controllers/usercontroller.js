@@ -17,6 +17,7 @@ const login = async (req,res)=>{
             return res.json({success:false,message:"Invalid Credantails"});
         }
         const token = createToken(user._id);
+        console.log(token);
         res.json({success:true,token:`Bearer ${token}`});
     }
     catch(err){
@@ -64,6 +65,7 @@ const register = async (req,res) =>{
         )
         const user = await newUser.save();
         const token = createToken(user._id);
+        console.log(token)
         res.json({success:true,token:`Bearer ${token}`})
     }
     catch(err){
