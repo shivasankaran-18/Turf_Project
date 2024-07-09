@@ -58,7 +58,7 @@ export function Signup(){
                             //@ts-ignore
                             localStorage.setItem("token",res.data.token);
                             console.log(res);
-                            navigate("/dashboard");
+                            navigate("/home");
 
                         }
                         catch{

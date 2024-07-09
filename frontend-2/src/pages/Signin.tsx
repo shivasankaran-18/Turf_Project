@@ -53,7 +53,7 @@ export function Signin(){
                             //@ts-ignore
                             localStorage.setItem("token ",res.data.token);
                             console.log(res);
-                            navigate("/dashboard");
+                            navigate("/home");
                         }
                         catch{
                             window.alert("error");
