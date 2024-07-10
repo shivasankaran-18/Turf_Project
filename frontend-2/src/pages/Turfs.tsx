@@ -21,19 +21,26 @@ type temp={
 
 export const Turfs=()=>{
     const [turfs,setTurfs]=useState<temp>([]);
-    const [filter,setFilter]=useState<string>("");
+    const [val,setval]=useState<boolean>(true);
+    const [filter,setFilter]=useState<string>(" ");
 
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/turfdetails/list/${filter}`).then((data)=>{
-            console.log(data.data.data)
-            setTurfs(data.data.data)});
+        axios.get(`${BACKEND_URL}/api/turfdetails/list`).then((data)=>{
+            console.log(data)
+            setTurfs(data.data)});
+            setval(false);
         
 
     },[filter])
-    if(turfs.length==0)
+    if(val)
     {
         return (
+            <>
             <NavBar val={"turfs"} />
+            
+            </>
+            
+
         )
     }
 
@@ -43,6 +50,7 @@ export const Turfs=()=>{
         <SearchBar setFilter={setFilter}/>
        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
             {turfs.map((turf)=><Card name={turf?.turfname} area={turf?.address} city={turf?.city} state={turf?.state} price={"800"}/>)}
             
      

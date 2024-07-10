@@ -6,11 +6,14 @@ import userRouter from "./routes/userRoute.js";
 import "dotenv/config.js"
 import adminRouter from "./routes/adminRoute.js";
 
+import bodyParser  from "body-parser";
+
 /*App Config*/
 const app = express();
 const PORT = 4000;
 /* Middleware */
-app.use(express.json())
+// app.use(express.json())
+app.use(bodyParser.json());
 app.use(cors())
 /* DB connection */
 connectDb();
