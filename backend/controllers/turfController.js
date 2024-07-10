@@ -28,8 +28,13 @@ const addTurf = async (req,res)=>{
 }
 
 const listTurf = async(req,res) =>{
+    const params=req.params
+    console.log(params);
     try{
-        const turfs = await TurfModel.find({});
+        const turfs = await TurfModel.find({turfname:{
+            $regex:params,
+            $options:1
+        }});
         res.json({sucess:true,data: turfs})
     }
     catch(err){
