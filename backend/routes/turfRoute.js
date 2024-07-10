@@ -1,5 +1,5 @@
 import express from "express"
-import { addTurf, listTurf } from "../controllers/turfController.js"
+import { addTurf, getTurf, listTurf } from "../controllers/turfController.js"
 import multer from "multer"
 
 const turfRouter = express.Router();
@@ -18,7 +18,8 @@ const upload = multer({
 })
 
 turfRouter.post("/add",upload.single("images"),addTurf)
-turfRouter.get("/list/",listTurf)
+turfRouter.get("/get",getTurf);
+turfRouter.get("/list",listTurf)
 
 
 export default turfRouter;

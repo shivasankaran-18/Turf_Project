@@ -12,7 +12,7 @@ type temp={
     city:string,
     state:string,
     images:"string",
-    turfId:Number
+    turfId:number
 
 
 
@@ -25,7 +25,12 @@ export const Turfs=()=>{
     const [filter,setFilter]=useState<string>(" ");
 
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/turfdetails/list/?filter=${filter}`).then((data)=>{
+        axios.get(`${BACKEND_URL}/api/turfdetails/list/?filter=${filter}`,{
+            headers:{
+                Authorization:localStorage.getItem("token")
+            }
+
+        }).then((data)=>{
             console.log(data)
             setTurfs(data.data)});
             setval(false);
@@ -51,7 +56,7 @@ export const Turfs=()=>{
        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-            {turfs.map((turf)=><Card name={turf?.turfname} area={turf?.address} city={turf?.city} state={turf?.state} price={"800"}/>)}
+            {turfs.map((turf)=><Card name={turf?.turfname} area={turf?.address} city={turf?.city} state={turf?.state} price={"800"} turfId={turf?.turfId}/>)}
             
      
         {/* <Card />

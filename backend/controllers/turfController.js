@@ -26,6 +26,21 @@ const addTurf = async (req,res)=>{
         res.json({sucess:false,message:"Failed to add Truf"})
     }
 }
+const getTurf=async(req,res)=>{
+    const params=req.query.id;
+    try{
+        const turf=await TurfModel.findOne({
+            turfId:params
+        })
+        res.json(turf);
+    }
+    catch{
+        res.json({
+            msg:"turf not found"
+        })
+    }
+
+}
 
 const listTurf = async(req,res) =>{
  
@@ -34,14 +49,14 @@ const listTurf = async(req,res) =>{
     try{
         const turfs = await TurfModel.find({turfname:{
             $regex:`/${params}/`,
-            $options:'i'
+          
        
         }});
         res.json(turfs)
     }
     catch(err){
         console.log(err);
-        res.json({success:false,data:{}})
+        res.json({success:false})
     }
 }
-export {addTurf,listTurf}
+export {addTurf,listTurf,getTurf}

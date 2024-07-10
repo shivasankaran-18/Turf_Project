@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom"
 import { Button } from "../shadcn/ui/button"
 
-export const Card=(prop:{name:string,area:string,city:string,state:string,price:string})=>{
+export const Card=(prop:{name:string,area:string,city:string,state:string,price:string,turfId:number})=>{
 
-    
+    const navigate=useNavigate();
 
 return <div className=" relative top-20 max-w-sm bg-white rounded-lg shadow border-4 border-slate-700 ">
 
@@ -12,7 +13,9 @@ return <div className=" relative top-20 max-w-sm bg-white rounded-lg shadow bord
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 ps-0  flex justify-start">{prop.name}</h5>
         <p className="font-normal text-gray-700 flex justify-start pt-3">{`${prop.area},${prop.city},${prop.state}`}</p>
         <div className=" font-bold  pt-3 flex justify-start ms-4   text-2xl">{`₹${prop.price}/-`}</div>
-        <Button size={"lg"} className="w-full">Book a slot</Button>
+        <Button size={"lg"} className="w-full" onClick={()=>{
+            navigate(`/book?id=${prop.turfId}`)
+        }}>Book a slot</Button>
     </div>
 </div>
 
