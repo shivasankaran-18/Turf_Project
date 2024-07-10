@@ -18,7 +18,7 @@ const upload = multer({
 })
 
 turfRouter.post("/add",upload.single("images"),addTurf)
-turfRouter.get("/list/:filter",listTurf)
+turfRouter.get("/list/",listTurf)
 
 
 export default turfRouter;
