@@ -25,7 +25,7 @@ export const Turfs=()=>{
     const [filter,setFilter]=useState<string>(" ");
 
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/turfdetails/list`).then((data)=>{
+        axios.get(`${BACKEND_URL}/api/turfdetails/list/?filter=${filter}`).then((data)=>{
             console.log(data)
             setTurfs(data.data)});
             setval(false);
