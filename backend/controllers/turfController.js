@@ -35,7 +35,7 @@ const listTurf = async(req,res) =>{
             $regex:params,
             $options:1
         }});
-        res.json({sucess:true,data: turfs})
+        res.json(turfs)
     }
     catch(err){
         console.log(err);
