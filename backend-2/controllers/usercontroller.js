@@ -1,23 +1,38 @@
-import userModel from "../models/usermodel.js";
+
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import validator from "validator"
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient();
+
 
 /* Login User */
 
 const login = async (req,res)=>{
     const {email,password} = req.body;
+    console.log(email);
     try{
-        const user = await userModel.findOne({email});
-        if(user==null){
+        const user = await prisma.user.findUnique({
+            where:{
+
+                email:email
+            },
+            select:{
+                email:true,
+                password:true
+            }
+        })
+        console.log(user);
+        
+        if(!user){
             return res.json({success:false,message:"User not found"});
         }
         const match = await bcrypt.compare(password,user.password);  // We can't use direct if cond to check the user.password == password as the user's password is encrypt by bycrpt so we need to use compare method of bycrpt
         if(!match){
             return res.json({success:false,message:"Invalid Credantails"});
         }
-        const token = createToken(user._id);
-        console.log(token);
+        const token = createToken(user);
+      
         res.json({success:true,token:`Bearer ${token}`});
     }
     catch(err){
@@ -27,9 +42,9 @@ const login = async (req,res)=>{
 }
 
 
-const createToken = (id) =>{
+const createToken = ({email,password}) =>{
     console.log(process.env.JWT_SECRET);
-    return jwt.sign({id},process.env.JWT_SECRET);
+    return jwt.sign({email},process.env.JWT_SECRET);
 }
 
 /* Register user */
@@ -38,7 +53,11 @@ const register = async (req,res) =>{
     const {name,password,email} = req.body;
     try{
         // checking is the user already exists
-        const exists = await userModel.findOne({email});
+        const exists = await prisma.user.findUnique({
+            where:{
+                email
+            }
+        })
         if(exists){
             return res.json({success:false,message:"Email already exists"});
         }
@@ -56,16 +75,20 @@ const register = async (req,res) =>{
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password,salt);
         
-        const newUser = new userModel(
-            {
-                name:name,
-                email:email,
-                password:hashedPass,
+        const newUser = await prisma.user.create({
+            data:{
+                email,
+                name,
+                password:hashedPass
+            },
+            select:{
+                email:true,
+                password:true
             }
-        )
-        const user = await newUser.save();
-        const token = createToken(user._id);
-        console.log(token)
+        })
+       
+        const token = createToken(newUser);
+        console.log(newUser)
         res.json({success:true,token:`Bearer ${token}`})
     }
     catch(err){

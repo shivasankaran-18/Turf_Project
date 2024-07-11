@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "TurfSlot" ALTER COLUMN "date" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "UserBooking" ALTER COLUMN "date" SET DATA TYPE TEXT;
