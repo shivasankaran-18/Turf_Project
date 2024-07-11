@@ -21,10 +21,10 @@ export const NavBar = ({val}:{val:string}) => {
                         <Link to={"/turfs"} className={`block py-2 px-3 ${val === 'turfs' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Turfs</Link>
                     </li>
                     <li>
-                        <Link to={""} className={`block py-2 px-3 ${val === 'booked' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Booked</Link>
+                        <Link to={"/booked"} className={`block py-2 px-3 ${val === 'booked' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Booked</Link>
                     </li>
                     <li>
-                        <Link to={""} className={`block py-2 px-3 ${val === 'contact' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Contact</Link>
+                        <Link to={"/contact"} className={`block py-2 px-3 ${val === 'contact' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Contact</Link>
                     </li>
 
                     </ul>
@@ -37,7 +37,7 @@ export const NavBar = ({val}:{val:string}) => {
                     </Avatar>
                     <Button className="mx-2" onClick={()=>{
                         localStorage.removeItem("token");
-                        navigate("/signin")
+                        navigate("/")
                     }}>Log Out</Button>
                 </div>
             </div>

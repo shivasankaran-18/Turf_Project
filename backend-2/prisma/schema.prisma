@@ -39,7 +39,9 @@ model TurfSlot{
   id Int @id @default(autoincrement())
   date String
   timeSlots String
+  available Boolean @default(true)
   turfId Int 
+  price Int @default(500)
   turf Turf @relation(fields: [turfId],references: [id],onDelete: Cascade)
 }
 
@@ -48,8 +50,9 @@ model UserBooking{
   turfId Int
   userId Int
   date String
-  startTime String
-  endTime String
+  slot String
+  price Int @default(500)
+  paid Boolean @default(false)
   user  User @relation(fields: [userId],references: [id],onDelete: Cascade)
   turf Turf @relation(fields: [turfId],references: [id],onDelete: Cascade)
 

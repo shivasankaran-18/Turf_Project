@@ -3,56 +3,94 @@ const prisma = new PrismaClient();
 
 
 const book = async (req,res)=>{
-    const userData = await prisma.user.findUnique({where:{id:req.body.userId}})
+    const userData = await prisma.user.findUnique({where:{email:req.headers.email}})
     if(!userData){
         return res.json({success:false,message:"Please login to book your turf"})
     }
-    let id = req.body.turfId;
-    let start = req.body.startTime;
+
+    let id = parseInt(req.body.turfId);
     let date1 = req.body.date;
-    let end = req.body.endTime;
-    let time = start+"-"+end
+    let slot = req.body.slot
+    
+    
     const turf = await prisma.turf.findUnique({where:{id}})
     if(!turf){
         return res.json({success:false,message:"Turf Not Found"});
     }
-    const turfSlot = await prisma.turfSlot.findMany({where:{turfId:id}})
-    let dateArr = [];
-    for(let i=0;i<turfSlot.length;i++)
+    const turfSlot = await prisma.turfSlot.findMany({where:{turfId:id,available:true,date:date1,timeSlots:slot}})
+   
+
+    if(!turfSlot)
     {
-        dateArr.push(turfSlot[i].date);
+        return res.json({msg:"no slot available"})
     }
     
-    console.log(dateArr)
-    console.log(date1)
-    const isdate = dateArr.indexOf(date1);
-    const isTime = turfSlot.timeSlots.indexOf(time);
-    if(isdate == -1){
-        return res.json({success:false,message:"The Date is not available"});
-    }
-    if(isTime == -1){
-        return res.json({success:false,message:"The slot is already booked or the slot is not there"})
-    }
-    let turfBooked = {
-        "turfName":turf.turfname,
-        "address":turf.address,
-        "city":turf.city,
-        "state":turf.state,
-        "date": date1,
-        "startTime": start,
-        "endTime": end
-    }
+    try{
+        await prisma.$transaction(async(tx)=>{
+       
+            const data=await tx.userBooking.create({
+                data:{
+                    turfId:id,
+                    userId:userData.id,
+                    date :date1,
+                    slot
+                }
+            })
+            const data2=await tx.turfSlot.update({
+                where:{
+                   
+                    id:turfSlot[0].id
+                },
+                data:{
+                    available:false
+                }
+            })
     
-    const data=await prisma.userBooking.create({
-        data:{
-            turfId:turf.id,
-            userId:userData.id,
-            date :date1,
-            startTime:start,
-            endTime:end,
-        }
-    })
-    res.json({success:true,message:"Slot Booked",data});
+    
+            res.json({success:true,message:"Slot Booked",data});
+    
+    
+        })
+
+    }
+    catch{
+        res.json({success:false})
+    }
+   
+
+    
+    
+    
 }
 
-export {book}
+const booked=async(req,res)=>{
+    const user=await prisma.user.findUnique({
+        where:{
+            email:req.headers.email
+        }
+    })
+    const turfs=await prisma.userBooking.findMany({
+        where:{
+            userId:user.id,
+            paid:false
+        }
+    })
+    const result=[]
+    for(let i=0;i<turfs.length;i++)
+    {
+        const temp=await prisma.turf.findUnique({
+            where:{
+                id:turfs[i].turfId
+            }
+        })
+        if(temp)
+        {
+            result.push(temp)
+        }
+    }
+
+    return res.json({msg:"success",result})
+
+}
+
+export {book,booked}

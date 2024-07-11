@@ -6,7 +6,8 @@ import userRouter from "./routes/userRoute.js";
 
 import adminRouter from "./routes/adminRoute.js";
 
-
+import { PrismaClient } from "@prisma/client";
+const prisma=new PrismaClient()
 
 /*App Config*/
 const app = express();
@@ -23,6 +24,12 @@ app.use(cors())
 app.use("/api/admin",adminRouter)
 app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
+
+// app.get("/test",async(req,res)=>{
+//     const data=await prisma.userBooking.deleteMany({})
+//     return res.send("done")
+// })
+
 
 app.listen(PORT,()=>{
     console.log("Running.........")

@@ -22,10 +22,12 @@ const addTurf = async (req,res)=>{
 }
 const getTurf=async(req,res)=>{
     const params=req.query.id;
+    console.log(params)
+    
     
     const turf=await prisma.turfSlot.findMany({
         where:{
-            turfId:params
+            turfId:parseInt(params)
         }
 
     })
@@ -35,16 +37,8 @@ const getTurf=async(req,res)=>{
 
 const listTurf = async(req,res) =>{
  
-    const params=req.query.filter ||" ";
-    console.log("params "+params)
-    const turf=await prisma.turf.findMany({
-        where:{
-            turfName:{
-                contains:params
-            }
-        }
-
-    })
+    
+    const turf=await prisma.turf.findMany({ })
     return res.json(turf);
 }
 export {addTurf,listTurf,getTurf}

@@ -12,7 +12,7 @@ import {
 export function Home() {
     const navigate=useNavigate();
   return (
-    <div>
+    <div >
       <NavBar val="home"/>
       <div className="h-screen">
         <div className="flex justify-center items-center mt-36"> 

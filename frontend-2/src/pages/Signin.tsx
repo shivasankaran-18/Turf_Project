@@ -50,10 +50,19 @@ export function Signin(){
                                 password:passwd
 
                             })
-                            //@ts-ignore
-                            localStorage.setItem("token ",res.data.token);
-                            console.log(res);
+                            console.log(res.data.token);
+                            if(!res.data.success)
+                            {
+                                alert("user not found")
+                            }
+                            else{
+                                localStorage.setItem("token",res.data.token);
+                                console.log(localStorage.getItem("token"))
+                          
                             navigate("/home");
+                            }
+                            //@ts-ignore
+                            
                         }
                         catch{
                             window.alert("error");
