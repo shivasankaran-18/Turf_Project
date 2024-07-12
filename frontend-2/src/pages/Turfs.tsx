@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react"
-import { Card } from "../components/Card"
+import {  Cards } from "../components/Card"
 import { NavBar } from "../components/Navbar"
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { SearchBar } from "../components/SearchBar";
+import { Spinner } from "../components/Spinner";
 
 type temp={
-    id:string,
-    turfname:string,
-    address:string,
+    id:number,
+    turfName:string,
+    area:string,
     city:string,
     state:string,
-    images:"string",
-    turfId:number
+   
 
 
 
@@ -25,7 +25,7 @@ export const Turfs=()=>{
     const [filter,setFilter]=useState<string>(" ");
 
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/turfdetails/list/?filter=${filter}`,{
+        axios.get(`${BACKEND_URL}/api/turfdetails/list`,{
             headers:{
                 Authorization:localStorage.getItem("token")
             }
@@ -40,10 +40,12 @@ export const Turfs=()=>{
     if(val)
     {
         return (
-            <>
-            <NavBar val={"turfs"} />
-            
-            </>
+            <div className='flex justify-center items-center h-screen'>
+       
+            <Spinner />
+      
+      
+            </div>
             
 
         )
@@ -56,7 +58,7 @@ export const Turfs=()=>{
        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-            {turfs.map((turf)=><Card name={turf?.turfname} area={turf?.address} city={turf?.city} state={turf?.state} price={"800"} turfId={turf?.turfId}/>)}
+            {turfs.map((turf)=><Cards turfName={turf?.turfName} area={turf?.area} city={turf?.city} state={turf?.state} price={"800"} id={turf?.id}/>)}
             
      
         {/* <Card />

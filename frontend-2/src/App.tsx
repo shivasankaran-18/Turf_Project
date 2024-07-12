@@ -7,24 +7,35 @@ import { Signin } from './pages/Signin'
 import { Home } from './pages/Home'
 import { Turfs } from './pages/Turfs'
 import { Book } from './pages/Book'
+import { Booked } from './pages/Booked'
+import { Contact } from './pages/Contact'
+import {RecoilRoot } from "recoil"
+import { Landing } from './pages/Landing'
 
 function App() {
 
 
   return (
     <>
-      <BrowserRouter>
+    <RecoilRoot>
+    <BrowserRouter>
         <Routes>
-
+          <Route path="/" element={<Landing />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/signin" element={<Signin />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/turfs" element={<Turfs/>}></Route>
           <Route path="/book" element={<Book/>}></Route>
-
+          <Route path="/booked" element={<Booked />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
         </Routes>
       
       </BrowserRouter>
+
+
+
+    </RecoilRoot>
+     
      
     </>
   )
