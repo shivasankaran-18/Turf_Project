@@ -1,0 +1,8 @@
+-- AddForeignKey
+ALTER TABLE "Turf" ADD CONSTRAINT "Turf_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "adminDetails"("Id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Reviews" ADD CONSTRAINT "Reviews_turfId_fkey" FOREIGN KEY ("turfId") REFERENCES "Turf"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Reviews" ADD CONSTRAINT "Reviews_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -25,10 +25,10 @@ app.use("/api/admin",adminRouter)
 app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
 
-// app.get("/test",async(req,res)=>{
-//     const data=await prisma.userBooking.deleteMany({})
-//     return res.send("done")
-// })
+app.get("/test",async(req,res)=>{
+    const data=await prisma.turf.deleteMany({})
+    return res.send("done")
+})
 
 
 app.listen(PORT,()=>{
