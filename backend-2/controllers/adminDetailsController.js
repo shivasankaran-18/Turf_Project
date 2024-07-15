@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import validator from "validator"
+import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 const prisma = new PrismaClient();
 
@@ -24,7 +25,7 @@ const adminlogin = async (req,res)=>{
         if(!match){
             return res.json({success:false,message:"Invalid Credantails"});
         }
-        const token = createToken(user);
+        const token = createToken(admin);
       
         res.json({success:true,token:`Bearer ${token}`});
     }
@@ -35,27 +36,28 @@ const adminlogin = async (req,res)=>{
 }
 
 
-const createToken = ({email,password}) =>{
+const createToken = ({emailId,password}) =>{
     console.log(process.env.JWT_SECRET);
-    return jwt.sign({email},process.env.JWT_SECRET);
+    console.log("EmailId:"+emailId)
+    return jwt.sign({emailId},process.env.JWT_SECRET);
 }
 
 /* Register user */
 
 const adminregister = async (req,res) =>{
-    const {name,emailId,password,contact} = req.body;
+    const {name,email,password,contact} = req.body;
     try{
         // checking is the user already exists
         const exists = await prisma.adminDetails.findUnique({
             where:{
-                emailId:emailId
+                emailId:email
             }
         })
         if(exists){
             return res.json({success:false,message:"Email already exists"});
         }
         // validating the email and password using validator
-        if(!validator.isEmail(emailId)){   /* This returns whether email is valid  */
+        if(!validator.isEmail(email)){   /* This returns whether email is valid  */
             return res.json({success:false,message:"Enter valid email"});
         }
 
@@ -68,16 +70,12 @@ const adminregister = async (req,res) =>{
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password,salt);
         
-        const newUser = await prisma.user.create({
+        const newUser = await prisma.adminDetails.create({
             data:{
-                name,
-                emailId,
+                name:name,
+                emailId:email,
+                contact:contact,
                 password:hashedPass,
-                contact
-            },
-            select:{
-                emailId:true,
-                password:true
             }
         })
        

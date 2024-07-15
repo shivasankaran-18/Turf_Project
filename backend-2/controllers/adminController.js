@@ -4,13 +4,25 @@ const prisma = new PrismaClient();
 
 
 const addTimeSlot = async(req,res)=>{
-    
+    const admin = await prisma.adminDetails.findUnique({
+        where:{
+            emailId:req.headers.email
+        }
+    })
+    if(!admin){
+        return res.json({success:true,message:"Login to add"});
+    }
     try{
+        console.log(admin)
+        const TurfId = admin.turf[0].id;
+        console.log("TurfId:"+TurfId);
         const turfSlots=await prisma.turfSlot.create({
             data:{
-                turfId:req.body.turfId,
-                date:req.body.date,
-                timeSlots:req.body.timeSlots
+                turfId:TurfId,
+                start:req.body.start,
+                end:req.body.end,
+                available:true,
+                price:req.body.price
             }
         })
         return res.json({success:true,message:"Time Slot added successfully"});

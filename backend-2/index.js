@@ -26,7 +26,7 @@ app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
 
 app.get("/test",async(req,res)=>{
-    const data=await prisma.turf.deleteMany({})
+    const data=await prisma.adminDetails.deleteMany({})
     return res.send("done")
 })
 

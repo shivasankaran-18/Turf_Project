@@ -23,19 +23,29 @@ model User{
   reviews Reviews[]
 }
 
-model Turf{
-  id Int @id @default(autoincrement())
-  turfName String 
-  area String
-  city String
-  likes Int @default(0)
-  state String
-  turfslot TurfSlot[]
+model Turf {
+  id          Int          @id @default(autoincrement())
+  turfName    String
+  area        String
+  city        String
+  likes       Int          @default(0)
+  state       String
+  adminId     Int          @unique
+  admin       adminDetails @relation(fields: [adminId], references: [id])
+  turfslot    TurfSlot[]
   userbooking UserBooking[]
-  adminId Int
-  admin adminDetails @relation(fields: [adminId],references: [Id],onDelete: Cascade)
-  review Reviews[]
+  reviews     Reviews[]
 }
+
+model adminDetails {
+  id       Int    @id @default(autoincrement())
+  name     String
+  emailId  String @unique
+  contact  String?
+  password String
+  turf     Turf[]
+}
+
 
 model Reviews{
   id Int @id @default(autoincrement())
@@ -49,10 +59,10 @@ model Reviews{
 
 model TurfSlot{
   id Int @id @default(autoincrement())
-  date String
-  timeSlots String
+  start DateTime
+  end DateTime
   available Boolean @default(true)
-  turfId Int 
+  turfId Int
   price Int @default(500)
   turf Turf @relation(fields: [turfId],references: [id],onDelete: Cascade)
 }
@@ -71,14 +81,7 @@ model UserBooking{
 }
 
 
-model adminDetails{
-  Id Int @id @default(autoincrement())
-  name String
-  emailId String @unique
-  contact String
-  password String
-  turfs Turf[]
-}
+
 
 
 

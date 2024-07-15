@@ -3,12 +3,12 @@ import jwt from "jsonwebtoken"
 
 const authMiddleWare = async(req,res,next)=>{
     
-    const [,token] = req.headers.authorization.split(" ");
-    
+    const {token,email} = req.headers;
+    console.log(token + " "+email)
     try{
-        
         const token_decode = jwt.verify(token,process.env.JWT_SECRET);
-        req.headers.email = token_decode.email;
+        console.log("Token:"+token_decode.emailId);
+        req.headers.email = token_decode.emailId;
         console.log("hello "+req.headers.email);
         next();
     }
