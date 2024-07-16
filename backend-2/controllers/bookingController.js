@@ -64,7 +64,7 @@ const book = async (req,res)=>{
 const booked=async(req,res)=>{
     const user=await prisma.user.findUnique({
         where:{
-            email:req.headers.email
+            id:req.headers.id
         }
     })
     const turfs=await prisma.userBooking.findMany({
