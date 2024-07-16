@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "TurfSlot" ADD COLUMN     "price" INTEGER NOT NULL DEFAULT 500;
