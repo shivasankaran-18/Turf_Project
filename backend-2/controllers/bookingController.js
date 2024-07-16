@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 
 const book = async (req,res)=>{
-    const userData = await prisma.user.findUnique({where:{email:req.headers.email}})
+    const userData = await prisma.user.findUnique({where:{id:req.headers.id}})
     if(!userData){
         return res.json({success:false,message:"Please login to book your turf"})
     }
@@ -67,7 +67,7 @@ const book = async (req,res)=>{
 const booked=async(req,res)=>{
     const user=await prisma.user.findUnique({
         where:{
-            email:req.headers.email
+            id:req.headers.id
         }
     })
     const turfs=await prisma.userBooking.findMany({
