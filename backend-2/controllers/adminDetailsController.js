@@ -6,16 +6,13 @@ const prisma = new PrismaClient();
 
 const adminlogin = async (req,res)=>{
     const {emailId,password} = req.body;
+    console.log(req.body);
     try{
         const admin = await prisma.adminDetails.findUnique({
             where:{
 
                 emailId:emailId
             },
-            select:{
-                emailId:true,
-                password:true
-            }
         })
         console.log(admin);
         if(!admin){
@@ -36,10 +33,9 @@ const adminlogin = async (req,res)=>{
 }
 
 
-const createToken = ({emailId,password}) =>{
+const createToken = ({id}) =>{
     console.log(process.env.JWT_SECRET);
-    console.log("EmailId:"+emailId)
-    return jwt.sign({emailId},process.env.JWT_SECRET);
+    return jwt.sign({id},process.env.JWT_SECRET);
 }
 
 /* Register user */
@@ -76,6 +72,8 @@ const adminregister = async (req,res) =>{
                 emailId:email,
                 contact:contact,
                 password:hashedPass,
+            },select:{
+                id:true
             }
         })
        
@@ -93,9 +91,9 @@ const adminregister = async (req,res) =>{
 }
 
 const admindetail=async(req,res)=>{
-    const user=await prisma.user.findUnique({
+    const user=await prisma.adminDetails.findUnique({
         where:{
-            email:req.headers.email
+            id:req.headers.id
         }
     })
     return res.json(user)
