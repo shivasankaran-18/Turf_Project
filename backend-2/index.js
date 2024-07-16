@@ -26,10 +26,17 @@ app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
 
 app.get("/test",async(req,res)=>{
-    const data=await prisma.turf.findMany({
+    const data=await prisma.turfSlot.create({
         // where:{
         //     id:2
         // }
+        data:{
+            date:"2024-07-21",
+            slot:"19:00-18:00",
+            turfId:1,
+            price:800,
+            
+        }
     })
     return res.send(data)
 })

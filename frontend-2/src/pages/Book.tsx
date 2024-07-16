@@ -19,7 +19,9 @@ import { Spinner } from "../components/Spinner";
 
 type detail={
   date:string,
-  timeSlots:string,
+  slot:string,
+  price:number,
+  available:boolean,
   id:number,
   turfid:number
 
@@ -46,7 +48,7 @@ export const Book=()=>{
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/api/turfdetails/get?id=${search.get("id")}`,{
           headers:{
-            Authorization:localStorage.getItem("token")
+            Authorization:localStorage.getItem("usertoken")
           }
         }).then((data)=>{
             console.log(data.data);
@@ -86,7 +88,7 @@ export const Book=()=>{
             }}
             >
               <option>Click</option>
-              {details.map((x)=><option>{x.timeSlots}</option>)}
+              {details.map((x)=><option>{x.slot}</option>)}
             </select>
           </div>
           <div>
@@ -116,7 +118,7 @@ export const Book=()=>{
 
               },{
                 headers:{
-                  Authorization:localStorage.getItem("token")
+                  Authorization:localStorage.getItem("usertoken")
                 }
               })
 

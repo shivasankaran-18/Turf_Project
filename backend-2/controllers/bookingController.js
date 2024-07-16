@@ -11,12 +11,13 @@ const book = async (req,res)=>{
     let id = parseInt(req.body.turfId);
     let slot = req.body.slot;
     let sports = req.body.sports;
+    let date=req.body.date
     
     const turf = await prisma.turf.findUnique({where:{id:id}})
     if(!turf){
         return res.json({success:false,message:"Turf Not Found"});
     }
-    const turfSlot = await prisma.turfSlot.findMany({where:{turfId:id,available:true,date:date1,timeSlots:slot}})
+    const turfSlot = await prisma.turfSlot.findMany({where:{turfId:id,available:true,date,timeSlots:slot}})
 
     if(!turfSlot)
     {
