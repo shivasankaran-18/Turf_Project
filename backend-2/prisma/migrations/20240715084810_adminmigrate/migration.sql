@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Turf" ALTER COLUMN "adminId" DROP DEFAULT;
