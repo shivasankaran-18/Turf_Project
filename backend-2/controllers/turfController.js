@@ -18,6 +18,7 @@ const addTurf = async (req,res)=>{
             area:req.body.area,
             city:req.body.city,
             state:req.body.state,
+            sports:req.body.sports,
             adminId:admin.id
         }
     })

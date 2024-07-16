@@ -3,23 +3,20 @@ const prisma = new PrismaClient();
 
 
 const book = async (req,res)=>{
-    const userData = await prisma.user.findUnique({where:{email:req.headers.email}})
+    const userData = await prisma.user.findUnique({where:{id:req.headers.id}})
     if(!userData){
         return res.json({success:false,message:"Please login to book your turf"})
     }
-    
 
     let id = parseInt(req.body.turfId);
-    let date1 = req.body.date;
-    let slot = req.body.slot
+    let slot = req.body.slot;
+    let sports = req.body.sports;
     
-    
-    const turf = await prisma.turf.findUnique({where:{id}})
+    const turf = await prisma.turf.findUnique({where:{id:id}})
     if(!turf){
         return res.json({success:false,message:"Turf Not Found"});
     }
     const turfSlot = await prisma.turfSlot.findMany({where:{turfId:id,available:true,date:date1,timeSlots:slot}})
-   
 
     if(!turfSlot)
     {
