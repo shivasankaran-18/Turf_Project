@@ -56,7 +56,7 @@ export function Signup(){
                                 name
                             }) as {success:boolean,token:string};
                             //@ts-ignore
-                            localStorage.setItem("token",res.data.token);
+                            localStorage.setItem("usertoken",res.data.token);
                             console.log(res);
                             navigate("/home");
 

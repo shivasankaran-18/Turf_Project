@@ -56,7 +56,7 @@ export function Signin(){
                                 alert("user not found")
                             }
                             else{
-                                localStorage.setItem("token",res.data.token);
+                                localStorage.setItem("usertoken",res.data.token);
                                 console.log(localStorage.getItem("token"))
                           
                             navigate("/home");

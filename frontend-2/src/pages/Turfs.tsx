@@ -27,7 +27,7 @@ export const Turfs=()=>{
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/api/turfdetails/list`,{
             headers:{
-                Authorization:localStorage.getItem("token")
+                Authorization:localStorage.getItem("usertoken")
             }
 
         }).then((data)=>{
@@ -61,11 +61,7 @@ export const Turfs=()=>{
             {turfs.map((turf)=><Cards turfName={turf?.turfName} area={turf?.area} city={turf?.city} state={turf?.state} price={"800"} id={turf?.id}/>)}
             
      
-        {/* <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card /> */}
+       
         
         </div>
         

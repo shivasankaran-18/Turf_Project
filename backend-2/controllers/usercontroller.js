@@ -17,10 +17,7 @@ const login = async (req,res)=>{
 
                 email:email
             },
-            select:{
-                email:true,
-                password:true
-            }
+           
         })
         console.log(user);
         
@@ -31,7 +28,7 @@ const login = async (req,res)=>{
         if(!match){
             return res.json({success:false,message:"Invalid Credantails"});
         }
-        const token = createToken(user);
+        const token = createToken(user.id);
       
         res.json({success:true,token:`Bearer ${token}`});
     }
@@ -42,9 +39,9 @@ const login = async (req,res)=>{
 }
 
 
-const createToken = ({email,password}) =>{
+const createToken = (id) =>{
     console.log(process.env.JWT_SECRET);
-    return jwt.sign({email},process.env.JWT_SECRET);
+    return jwt.sign({id},process.env.JWT_SECRET);
 }
 
 /* Register user */
@@ -81,13 +78,10 @@ const register = async (req,res) =>{
                 name,
                 password:hashedPass
             },
-            select:{
-                email:true,
-                password:true
-            }
+           
         })
        
-        const token = createToken(newUser);
+        const token = createToken(newUser.id);
         console.log(newUser)
         res.json({success:true,token:`Bearer ${token}`})
     }
