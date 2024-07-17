@@ -18,7 +18,7 @@ export const NavBar = ({val}:{val:string}) => {
                         <Link to={"/home"} className={`block py-2 px-3 ${val === 'home' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`} aria-current="page">Home</Link>
                     </li>
                     <li>
-                        <Link to={"/turfs"} className={`block py-2 px-3 ${val === 'turfs' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Turfs</Link>
+                        <Link to={"/bookingDetails"} className={`block py-2 px-3 ${val === 'Booking Details' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Booking Details</Link>
                     </li>
                     <li>
                         <Link to={"/booked"} className={`block py-2 px-3 ${val === 'booked' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Booked</Link>
