@@ -97,7 +97,7 @@ const register = async (req,res) =>{
 const detail=async(req,res)=>{
     const user=await prisma.user.findUnique({
         where:{
-            email:req.headers.email
+            id:req.headers.id
         }
     })
     return res.json(user)

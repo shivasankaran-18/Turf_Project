@@ -28,4 +28,26 @@ const addTimeSlot = async(req,res)=>{
     }
 }
 
-export  {addTimeSlot}
+const getTurf=async(req,res)=>{
+    try{
+        const turf= await prisma.turf.findUnique({
+            where:{
+                adminId:req.headers.id
+            }
+        })
+        const turfSlots=await prisma.turfSlot.findMany({
+            where:{
+                turfId:turf.id
+            }
+        })
+       
+        console.log("turf"+turf)
+
+        return res.json({success:"true",turf,turfSlots})
+    }
+    catch{
+        return res.json({success:"false"})
+    }
+}
+
+export  {addTimeSlot,getTurf}

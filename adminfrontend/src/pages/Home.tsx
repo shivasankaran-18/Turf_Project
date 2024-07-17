@@ -1,14 +1,60 @@
 
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { NavBar } from "../components/Navbar"
 import { Button } from "../shadcn/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../shadcn/ui/card"
+import axios from "axios"
+import { BACKEND_URL } from "../config"
+import { Spinner } from "../components/Spinner"
+import { useNavigate } from "react-router-dom"
 
 
 
+type detial={
+  id:number,
+  Sports:string[],
+  adminId:number,
+  area:string,
+  city:string,
+  likes:number,
+  state:string,
+  turfName:string
+}
 
 export  function Home() {
+  const [details,setDetails]=useState<detial>();
+  const [flag,setFlag]=useState<boolean>(true)
+  const  navigate=useNavigate()
+
+ 
+  useEffect(()=>{
+    axios.get(`${BACKEND_URL}/api/admin/getTurf`,{
+      headers:{
+        Authorization:localStorage.getItem("admintoken")
+      }
+    }).then((data)=>{
+      console.log(data.data)
+      setDetails(data.data.turf)
+      setFlag(false)
+
+    })
+  
+  
+  },[])
+
+  if(flag)
+  {
+    return(
+      <div className='flex justify-center items-center h-screen'>
+     
+      <Spinner />
+      
+      
+      </div>
+  )
+
+  }
 
   
    
@@ -23,12 +69,12 @@ export  function Home() {
             <CardHeader className="bg-muted/50 p-6">
               <div className="flex items-center justify-between">
                 <div className="grid gap-1">
-                  <CardTitle className="text-2xl font-bold">Acme Turf Field</CardTitle>
-                  <CardDescription className="text-muted-foreground">123 Main St, Anytown USA</CardDescription>
+                  <CardTitle className="text-2xl font-bold">{details?.turfName}</CardTitle>
+                  <CardDescription className="text-muted-foreground">{`${details?.area.toUpperCase()},${details?.city.toUpperCase()},${details?.state.toUpperCase()}`}</CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
                   <HeartIcon className="h-5 w-5 text-red-500" />
-                  <span className="text-lg font-bold">1.2K</span>
+                  <span className="text-lg font-bold">{details?.likes}</span>
                 </div>
               </div>
             </CardHeader>
@@ -42,7 +88,7 @@ export  function Home() {
               />
             </CardContent>
             <CardFooter className="flex justify-center">
-              <Button variant="outline">view Details </Button>
+              <Button onClick={()=>navigate("/details")}>View Details </Button>
             </CardFooter>
           </Card>
         </div>

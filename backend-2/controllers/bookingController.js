@@ -17,7 +17,7 @@ const book = async (req,res)=>{
     if(!turf){
         return res.json({success:false,message:"Turf Not Found"});
     }
-    const turfSlot = await prisma.turfSlot.findMany({where:{turfId:id,available:true,date,timeSlots:slot}})
+    const turfSlot = await prisma.turfSlot.findMany({where:{turfId:id,available:true,date,slot}})
 
     if(!turfSlot)
     {
@@ -31,7 +31,7 @@ const book = async (req,res)=>{
                 data:{
                     turfId:id,
                     userId:userData.id,
-                    date :date1,
+                    date ,
                     slot
                 }
             })

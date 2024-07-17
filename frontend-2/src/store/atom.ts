@@ -10,7 +10,7 @@ export const userDetails=atom({
         get:async()=>{
             const res=await axios.get(`${BACKEND_URL}/api/user/detail`,{
                 headers:{
-                    Authorization:localStorage.getItem("token")
+                    Authorization:localStorage.getItem("usertoken")
                 }
             })
             return res.data
