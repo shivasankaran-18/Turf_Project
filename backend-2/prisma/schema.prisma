@@ -30,6 +30,7 @@ model Turf {
   city        String
   likes       Int          @default(0)
   state       String
+  images      String[]
   adminId     Int          @unique
   admin       adminDetails @relation(fields: [adminId], references: [id])
   turfslot    TurfSlot[]
