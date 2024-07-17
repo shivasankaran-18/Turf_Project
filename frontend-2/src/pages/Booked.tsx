@@ -25,7 +25,7 @@ export const Booked = () => {
   useEffect(()=>{
     axios.get(`${BACKEND_URL}/api/user/get`,{
         headers:{
-            Authorization:localStorage.getItem("token")
+            Authorization:localStorage.getItem("usertoken")
         }
     }).then((data)=>
     {
