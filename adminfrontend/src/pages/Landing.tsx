@@ -1,8 +1,4 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/AREAym9KEgc
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../shadcn/ui/button"
 
