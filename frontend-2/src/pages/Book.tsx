@@ -18,20 +18,31 @@ import {
 import { Spinner } from "../components/Spinner";
 
 type detail={
+  
   date:string,
   slot:string,
   price:number,
   available:boolean,
   id:number,
-  turfid:number
-
+  turfid:number,
 }[]
+
+type turfDetails = {
+  turfName:string,
+  images:string,
+  area:string,
+  state:string,
+  city:string,
+  sports:[]
+}
+
 
 
 export const Book=()=>{
     const [search]=useSearchParams()
     const [flag,setFlag]=useState(false);
     const [details,setDetails]=useState<detail>([]);
+    const [turfDetails,setTurfDetails] = useState<turfDetails>();
     const [date,setDate]=useState<string>("");
     const [slot,setSlot]=useState<string>("")
     const navigate=useNavigate()
@@ -46,12 +57,25 @@ export const Book=()=>{
     };
 
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/turfdetails/get?id=${search.get("id")}`,{
+      console.log(search.get("id"));
+        axios.get(`${BACKEND_URL}/api/turfdetails/getslot`,{
           headers:{
-            Authorization:localStorage.getItem("usertoken")
+            Authorization:localStorage.getItem("usertoken"),
+            id:search.get("id")
           }
         }).then((data)=>{
-            console.log(data.data);
+            console.log(data.data)
+            let x = data.data[0];
+            let y = {
+              images: x.images,
+              turfName:x.turfName,
+              area : x.area,
+              city : x.city,
+              state : x.state,
+              sports : x.sports
+            };
+            setTurfDetails(y);
+            console.log(turfDetails);
             setDetails(data.data);
             setFlag(true)
         });
@@ -72,7 +96,8 @@ export const Book=()=>{
         <>
             <NavBar val="turfs" />
             <div className="max-w-4xl mx-auto mt-24 p-5 bg-white shadow-lg rounded-lg  border-4 border-violet-400 ">
-        <img src="path/to/turf-image.jpg" alt="Turf Image" className="w-full h-64 object-cover rounded-lg" />
+              <h1>{turfDetails?.turfName}</h1>
+        <img src={turfDetails?.images[0]} alt="Turf Image" className="w-full h-64 object-cover rounded-lg" />
        
           <div className="mt-6 space-y-4">
             <label  className="block text-sm font-medium text-gray-700 ">Select Date</label>

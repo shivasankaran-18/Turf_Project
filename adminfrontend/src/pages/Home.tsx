@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react"
 import { NavBar } from "../components/Navbar"
 import { Button } from "../shadcn/ui/button"
@@ -17,6 +15,7 @@ type detial={
   adminId:number,
   area:string,
   city:string,
+  images:String,
   likes:number,
   state:string,
   turfName:string
@@ -80,7 +79,7 @@ export  function Home() {
             </CardHeader>
             <CardContent>
               <img
-                src="/placeholder.svg"
+                src={details?.images[0]}
                 width={600}
                 height={300}
                 alt="Turf Field"

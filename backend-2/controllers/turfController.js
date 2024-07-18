@@ -75,16 +75,32 @@ const addTurf = async (req, res) => {
 };
 
 
-const getTurf=async(req,res)=>{
+
+const getTurfSlot=async(req,res)=>{
     const params=req.headers.id;
     console.log(params)
-    const turf=await prisma.turfSlot.findMany({
+    const turf = await prisma.turf.findUnique({
+      where:{
+        id:parseInt(params)
+      }
+    })
+    const turfslot=await prisma.turfSlot.findMany({
         where:{
             turfId:parseInt(params),
-        },
+        }
     })
+    const enrichedTurfSlots = turfslot.map(slot => ({
+      ...slot,
+      images: turf.images,
+      turfName: turf.turfName,
+      area:turf.area,
+      city:turf.city,
+      state:turf.state,
+      sports:turf.Sports
+    }));
 
-    return res.json(turf);
+    console.log(enrichedTurfSlots);
+    return res.json(enrichedTurfSlots);
 }
 const admingetTurf = async(req,res) =>{
   const params = parseInt(req.headers.turfid);
@@ -113,4 +129,4 @@ const listTurf = async(req,res) =>{
     const turf=await prisma.turf.findMany({ })
     return res.json(turf);
 }
-export {addTurf,listTurf,getTurf,admingetTurf}
+export {addTurf,listTurf,getTurfSlot,admingetTurf}
