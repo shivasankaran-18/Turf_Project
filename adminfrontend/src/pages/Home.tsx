@@ -38,7 +38,6 @@ export  function Home() {
       console.log(data.data)
       setDetails(data.data.turf)
       setFlag(false)
-
     })
   
   

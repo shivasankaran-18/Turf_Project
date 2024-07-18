@@ -37,7 +37,6 @@ const book = async (req,res)=>{
             })
             const data2=await tx.turfSlot.update({
                 where:{
-                   
                     id:turfSlot[0].id
                 },
                 data:{
