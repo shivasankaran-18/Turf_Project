@@ -29,7 +29,7 @@ export  function Home() {
  
   useEffect(()=>{
   
-    axios.get(`${BACKEND_URL}/api/admin/getTurf`,{
+    axios.get(`${BACKEND_URL}/api/admin/getTurfhome`,{
       headers:{
         Authorization:localStorage.getItem("admintoken")
       }

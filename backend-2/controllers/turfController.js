@@ -78,15 +78,15 @@ const addTurf = async (req, res) => {
 
 const getTurfSlot=async(req,res)=>{
     const params=req.headers.id;
-    console.log(params)
     const turf = await prisma.turf.findUnique({
       where:{
-        id:parseInt(params)
+        adminId:params
       }
     })
+    console.log(turf);
     const turfslot=await prisma.turfSlot.findMany({
         where:{
-            turfId:parseInt(params),
+            turfId:turf.id,
         }
     })
     const enrichedTurfSlots = turfslot.map(slot => ({
@@ -98,30 +98,15 @@ const getTurfSlot=async(req,res)=>{
       state:turf.state,
       sports:turf.Sports
     }));
-
     console.log(enrichedTurfSlots);
     return res.json(enrichedTurfSlots);
 }
 const admingetTurf = async(req,res) =>{
-  const params = parseInt(req.headers.turfid);
-  console.log(params)
+  const params = req.headers.id;
   const turf = await prisma.turf.findUnique({
-    where:{ id : params}
-  })
-  console.log(turf);
-  console.log(turf.images);
-  const imagePromises = turf.images.map(async (imageKey) => {
-    const imageparams = {
-      Bucket: bucket_name,
-      Key: imageKey
-    };
-    const command = new GetObjectCommand(imageparams);
-    const url = await getSignedUrl(s3Client, command, { expiresIn: 120 });
-    return url;
+    where:{ adminId : params}
   });
-
-  turf.images = await Promise.all(imagePromises);
-return res.json({turf});
+  return res.json({turf});
 }
 
 const listTurf = async(req,res) =>{

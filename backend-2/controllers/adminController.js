@@ -38,7 +38,10 @@ const getTurf = async (req, res) => {
                 adminId: req.headers.id,
             },
         });
-
+        console.log(turf)
+        if(!turf){
+            return res.json({success:"false",message:"No turf is there"})
+        }
         const turfSlots = await prisma.turfSlot.findMany({
             where: {
                 turfId: turf.id,
@@ -47,8 +50,6 @@ const getTurf = async (req, res) => {
                 },
             },
         });
-
-       
         const groupedSlots = turfSlots.reduce((acc, slot) => {
             const key = `${slot.date}_${slot.turfId}`;
             if (!acc[key]) {

@@ -164,7 +164,6 @@ export const Book=()=>{
             </div>
           <Button className="mt-4 w-3/4" size={"lg"} variant={"destructive"} onClick={()=>{navigate("/turfs")}} >Back</Button>
         </div>
-        
       </div>
 
     
