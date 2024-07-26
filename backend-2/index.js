@@ -25,6 +25,9 @@ app.use("/api/admin",adminRouter)
 app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
 
+
+
+
 app.get("/test",async(req,res)=>{
     const data=await prisma.turfSlot.create({
         data:{

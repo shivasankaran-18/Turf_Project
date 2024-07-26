@@ -12,10 +12,7 @@ type temp={
     area:string,
     city:string,
     state:string,
-   
-
-
-
+    images:string,
 }[]
 
 
@@ -34,8 +31,6 @@ export const Turfs=()=>{
             console.log(data)
             setTurfs(data.data)});
             setval(false);
-        
-
     },[filter])
     if(val)
     {
@@ -58,7 +53,7 @@ export const Turfs=()=>{
        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-            {turfs.map((turf)=><Cards turfName={turf?.turfName} area={turf?.area} city={turf?.city} state={turf?.state} price={"800"} id={turf?.id}/>)}
+            {turfs.map((turf)=><Cards turfName={turf?.turfName} area={turf?.area} city={turf?.city} state={turf?.state} price={"800"} id={turf?.id} image={turf.images[0]}/>)}
             
      
        

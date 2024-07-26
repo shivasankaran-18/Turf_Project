@@ -1,5 +1,5 @@
 import express from "express"
-import { addTurf, getTurf, listTurf } from "../controllers/turfController.js"
+import { addTurf,getTurfSlot, listTurf } from "../controllers/turfController.js"
 import { PrismaClient } from "@prisma/client";
 import { authMiddleWare } from "../middleware/auth.js";
 const prisma=new PrismaClient();
@@ -11,9 +11,9 @@ const turfRouter = express.Router();
 
 
 
-turfRouter.post("/add",addTurf)
-turfRouter.get("/get",authMiddleWare,getTurf);
-turfRouter.get("/list",authMiddleWare,listTurf)
+turfRouter.post("/add",addTurf);
+turfRouter.get("/getslot",getTurfSlot);
+turfRouter.get("/list",listTurf)
 
 turfRouter.get("/update",async(req,res)=>{
     const result=await prisma.turfSlot.create({

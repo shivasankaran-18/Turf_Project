@@ -13,6 +13,7 @@ type Turf = {
   city: string;
   likes: number;
   state: string;
+  images: string,
   adminId: number;
   Sports: string[];
 };
@@ -127,7 +128,7 @@ export function Details() {
       <NavBar val="home" />
       <div className="w-full mt-16">
         <section className="relative h-[400px] sm:h-[500px] md:h-[600px] overflow-hidden">
-          <img src="/placeholder.svg" alt="Turf Field" className="w-full h-full object-cover" />
+          <img src={turfDetails.images[0]} alt="Turf Field" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">{turfDetails.turfName}</h1>
           </div>

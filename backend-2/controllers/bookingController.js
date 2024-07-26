@@ -12,6 +12,9 @@ const book = async (req,res)=>{
     let slot = req.body.slot;
     let sports = req.body.sports;
     let date=req.body.date
+
+    console.log(date)
+    console.log(slot)
     
     const turf = await prisma.turf.findUnique({where:{id:id}})
     if(!turf){
@@ -23,7 +26,7 @@ const book = async (req,res)=>{
     {
         return res.json({msg:"no slot available"})
     }
-    
+    console.log(turfSlot)
     try{
         await prisma.$transaction(async(tx)=>{
        
@@ -43,11 +46,7 @@ const book = async (req,res)=>{
                     available:false
                 }
             })
-    
-    
             res.json({success:true,message:"Slot Booked",data});
-    
-    
         })
 
     }

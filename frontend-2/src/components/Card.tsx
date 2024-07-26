@@ -4,7 +4,7 @@ import { Input } from "../shadcn/ui/input"
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../shadcn/ui/card"
 
-export const Cards=(prop:{turfName:string,area:string,city:string,state:string,price:string,id:number})=>{
+export const Cards=(prop:{turfName:string,area:string,city:string,state:string,price:string,id:number,image:string})=>{
 
     const navigate=useNavigate();
   
@@ -18,7 +18,7 @@ export const Cards=(prop:{turfName:string,area:string,city:string,state:string,p
             <CardDescription>{`${prop.area},${prop.city},${prop.state}`}</CardDescription>
           </CardHeader>
           <CardContent>
-            <img src="/placeholder.svg" alt="Football World" className="w-full h-48 object-cover rounded-md" />
+            <img src={prop.image} alt="Football World" className="w-full h-48 object-cover rounded-md" />
             <p className="mt-4 text-xl font-bold">{prop.price}/-</p>
           </CardContent>
           <CardFooter>

@@ -3,10 +3,12 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import validator from "validator"
 import { PrismaClient } from '@prisma/client'
+import Stripe from "stripe"
 const prisma = new PrismaClient();
 
-
 /* Login User */
+
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
 
 const login = async (req,res)=>{
     const {email,password} = req.body;
@@ -104,5 +106,43 @@ const detail=async(req,res)=>{
 
 }
 
+const payment = async(req,res)=>{
+    try {
+        const data = req.body;
+        console.log(process.env.FRONTEND_URL)
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: [
+            {
+              price_data: {
+                currency: 'inr', // Use 'inr' for Indian Rupees
+                product_data: {
+                  name: data.turfName,
+                },
+                unit_amount: 1000, // Replace with the actual amount in cents/paisa (2000 means ₹20.00)
+              },
+              quantity: 1,
+            },
+          ],
+          mode: 'payment',
+          success_url: `${process.env.FRONTEND_URL}/booked`, // Replace with your actual success URL
+          cancel_url:  `${process.env.FRONTEND_URL}/turf`,  // Replace with your actual cancel URL
+          metadata: {
+            area: data.area,
+            state: data.state,
+            city: data.city,
+            date: data.date,
+            slot: data.slot,
+            mode: data.mode,
+          },
+        });
+    
+        res.json({ success: true, url: session.url });
+      } catch (e) {
+        console.error(e);
+        res.status(500).json({ success: false, error: e.message });
+      }
+}
 
-export {login,register,detail}
+
+export {login,register,detail,payment}

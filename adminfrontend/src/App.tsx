@@ -10,6 +10,7 @@ import { Details } from './pages/Details'
 import { BookingDetails } from './pages/BookingDetails'
 import { Landing } from './pages/Landing'
 import { Contact } from './pages/Contact'
+import { Contact } from './pages/Contact'
 
 
 function App() {
@@ -27,7 +28,6 @@ function App() {
           <Route path="/details" element={<Details />}></Route>
           <Route path="/bookingDetails" element={<BookingDetails />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-
          
         </Routes>
       

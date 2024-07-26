@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react"
 import { NavBar } from "../components/Navbar"
 import { Button } from "../shadcn/ui/button"
@@ -40,7 +38,7 @@ export  function Home() {
  
   useEffect(()=>{
   
-    axios.get(`${BACKEND_URL}/api/admin/getTurf`,{
+    axios.get(`${BACKEND_URL}/api/admin/getTurfhome`,{
       headers:{
         Authorization:localStorage.getItem("admintoken")
       }
@@ -199,7 +197,7 @@ export  function Home() {
             </CardHeader>
             <CardContent>
               <img
-                src="/placeholder.svg"
+                src={details?.images[0]}
                 width={600}
                 height={300}
                 alt="Turf Field"
