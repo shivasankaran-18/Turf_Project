@@ -34,7 +34,7 @@ const addTurf = async (req, res) => {
   const admin = await prisma.adminDetails.findUnique({
     where: { id: req.headers.id }
   });
-
+  console.log(req.body)
   console.log("admin", admin);
   if (!admin) {
     return res.json({ success: false, message: "Please login as admin to add turf" });

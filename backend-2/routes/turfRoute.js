@@ -1,6 +1,7 @@
 import express from "express"
 import { addTurf,getTurfSlot, listTurf } from "../controllers/turfController.js"
 import { PrismaClient } from "@prisma/client";
+import { authMiddleWare } from "../middleware/auth.js";
 const prisma=new PrismaClient();
 const turfRouter = express.Router();
 

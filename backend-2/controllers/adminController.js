@@ -79,7 +79,7 @@ const getTurf = async (req, res) => {
         return res.json({ success: true, turf, turfSlots: groupedSlotsArray });
     } catch (error) {
         console.error("Error fetching turf slots:", error);
-        return res.status(500).json({ success: false, error: "Internal Server Error" });
+        return res.status(200).json({ success: false, error: "Internal Server Error" });
     }
 };
 
