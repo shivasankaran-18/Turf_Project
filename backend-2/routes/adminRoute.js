@@ -1,6 +1,6 @@
 import express from "express";
 import { addTimeSlot, addTurfSlots, getNotPaidDetails, getPaidDetails, getTurf,  updateTurfDetails, updateTurfSlots } from "../controllers/adminController.js";
-import { addTimeSlot } from "../controllers/adminController.js"
+
 import { admindetail, adminlogin, adminregister } from "../controllers/adminDetailsController.js";
 import { authMiddleWare } from "../middleware/auth.js";
 import { addTurf,admingetTurf } from "../controllers/turfController.js";
@@ -26,6 +26,6 @@ adminRouter.post("/addTurfSlots",authMiddleWare,addTurfSlots)
 adminRouter.get("/getNotPaidDetails",authMiddleWare,getNotPaidDetails)
 adminRouter.get("/getPaidDetails",authMiddleWare,getPaidDetails)
 adminRouter.post("/addturf",authMiddleWare,upload.array('images',5),addTurf)
-adminRouter.get("/getTurf",authMiddleWare,admingetTur
+// adminRouter.get("/getTurf",authMiddleWare,admingetTurf)
 
 export default adminRouter

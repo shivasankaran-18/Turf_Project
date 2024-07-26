@@ -113,7 +113,9 @@ export function Details() {
     );
     setTurfSlots([...turfSlots, newSlot]);
     setNewSlot(temp);
+
     setIsAddSlotOpen(false)
+    window.location.reload()
   };
 
   if (!turfDetails) {
@@ -221,7 +223,7 @@ export function Details() {
                 </div>
                 <div className="space-y-1">
                   {slot.slot.map((slotTime, idx) => (
-                    <div key={idx} className="flex justify-between m-4">
+                    <div key={idx} className="flex justify-between p-2">
                       <span className="col-span-1 ">{slotTime}</span>
                       <span className="col-span-1">{slot.price[idx]}</span>
                     </div>

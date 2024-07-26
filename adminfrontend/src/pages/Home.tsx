@@ -7,25 +7,35 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import axios from "axios"
 import { BACKEND_URL } from "../config"
 import { Spinner } from "../components/Spinner"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { Label } from "../shadcn/ui/label"
+import { Input } from "../shadcn/ui/input"
+
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../shadcn/ui/dialog"
+
 
 
 
 type detial={
-  id:number,
-  Sports:string[],
-  adminId:number,
+  id?:number,
+  Sports?:string[],
+  adminId?:number,
   area:string,
   city:string,
-  likes:number,
+  likes?:number,
   state:string,
   turfName:string
 }
 
+
+
 export  function Home() {
   const [details,setDetails]=useState<detial>();
   const [flag,setFlag]=useState<boolean>(true)
+  const [available,setAvailable]=useState<boolean>(true)
+  const [isOpenCard,setIsOpenCard]=useState<boolean>(false)
   const  navigate=useNavigate()
+  const [newTurf,setNewTurf]=useState<detial>({area:" ",city:" ",state:" ",turfName:" "})
 
  
   useEffect(()=>{
@@ -36,12 +46,38 @@ export  function Home() {
       }
     }).then((data)=>{
       console.log(data.data)
-      setDetails(data.data.turf)
-      setFlag(false)
+      if(data.data.success==false)
+      {
+        setAvailable(false)
+        setFlag(false)
+      }
+      else{
+        setDetails(data.data.turf)
+        setFlag(false)
+      }
+      
+     
     })
   
   
   },[])
+
+
+  async function addTurf(){
+    console.log(newTurf)
+    const res=await axios.post(`${BACKEND_URL}/api/admin/addTurf`,{
+      details:newTurf
+    },
+  {
+    headers:{
+      Authorization:localStorage.getItem("admintoken")
+    }
+  })
+
+
+  window.location.reload()
+
+  }
 
   if(flag)
   {
@@ -54,6 +90,89 @@ export  function Home() {
       </div>
   )
 
+  }
+
+  if(!available)
+  {
+    return(
+      <div className="flex min-h-screen w-full flex-col bg-background">
+        <NavBar val='home'/>
+        <div className="flex justify-center items-center h-screen">
+                    
+        <div className="flex flex-col items-center justify-center space-y-4">
+              <ClipboardIcon className="h-16 w-16 text-muted" />
+              <h2 className="text-2xl font-bold">No Turfs Found</h2>
+              <p className="text-muted-foreground">
+                You don't have any turfs yet. Click the "Add Turf" button to get started.
+              </p>
+             <Button size={"lg"} className="bg-green-600 hover:bg-green-800" onClick={()=>setIsOpenCard(true)}>
+          
+               Add Turf
+
+             </Button>
+                
+            
+            </div>
+        </div>
+        <Dialog open={isOpenCard} >
+          <DialogContent className="w-full max-w-md">
+            <DialogHeader>
+              <DialogTitle>Add New Turf</DialogTitle>
+            </DialogHeader>
+            <div>
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="turfName">Turf Name</Label>
+                  <Input
+                    id="turfName"
+                    name="name"
+                    value={newTurf.turfName}
+                    onChange={(e: { target: { value: any } })=>setNewTurf({...newTurf,turfName:e.target.value})}
+                    placeholder="Enter turf name"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="area">Area</Label>
+                  <Input
+                    id="area"
+                    name="area"
+                    value={newTurf.area}
+                    onChange={(e: { target: { value: any } })=>setNewTurf({...newTurf,area:e.target.value})}
+                    placeholder="Enter area"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="city">City</Label>
+                  <Input
+                    id="city"
+                    name="city"
+                    value={newTurf.city}
+                    onChange={(e: { target: { value: any } })=>setNewTurf({...newTurf,city:e.target.value})}
+                    placeholder="Enter city"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="state">State</Label>
+                  <Input
+                    id="state"
+                    name="state"
+                    value={newTurf.state}
+                    onChange={(e: { target: { value: any } })=>setNewTurf({...newTurf,state:e.target.value})}
+                    placeholder="Enter state"
+                  />
+                </div>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={()=>setIsOpenCard(false)}>
+                Cancel
+              </Button>
+              <Button onClick={addTurf}>Add Turf</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+    )
   }
 
   
@@ -70,7 +189,7 @@ export  function Home() {
               <div className="flex items-center justify-between">
                 <div className="grid gap-1">
                   <CardTitle className="text-2xl font-bold">{details?.turfName}</CardTitle>
-                  <CardDescription className="text-muted-foreground">{`${details?.area.toUpperCase()},${details?.city.toUpperCase()},${details?.state.toUpperCase()}`}</CardDescription>
+                  <CardDescription className="text-muted-foreground">{`${details?.area},${details?.city},${details?.state}`}</CardDescription>
                 </div>
                 <div className="flex items-center gap-2">
                   <HeartIcon className="h-5 w-5 text-red-500" />
@@ -178,5 +297,47 @@ function XIcon(props) {
     </svg>
   )
 }
+//@ts-ignore
+function ClipboardIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    </svg>
+  )
+}
+
+//@ts-ignore
+function PlusIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 12h14" />
+      <path d="M12 5v14" />
+    </svg>
+  )
+}
+
 
 
