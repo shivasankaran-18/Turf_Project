@@ -76,13 +76,15 @@ const addTurf = async (req, res) => {
 
 
 const getTurf=async(req,res)=>{
-    const params=req.headers.id;
+    const params=req.params.id;
     console.log(params)
     const turf=await prisma.turfSlot.findMany({
         where:{
-            turfId:parseInt(params),
+            turfId:params,
+            available:true
         },
     })
+    console.log("turfSlot"+turf)
 
     return res.json(turf);
 }
