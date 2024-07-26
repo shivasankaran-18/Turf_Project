@@ -69,10 +69,6 @@ export function Signin(){
                         }
 
                     }}>Sign In</Button>
-
-                    
-            
-
                 </div>
             </div>
         </div>

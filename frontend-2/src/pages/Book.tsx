@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { NavBar } from "../components/Navbar";
-import {  useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Button } from "../shadcn/ui/button";
-
 import {
   Dialog,
   DialogContent,
@@ -12,86 +11,149 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  
   DialogTrigger,
 } from "../shadcn/ui/dialog"
 import { Spinner } from "../components/Spinner";
+import { flushSync } from 'react-dom';
 
-type detail={
-  
-  date:string,
-  slot:string,
-  price:number,
-  available:boolean,
-  id:number,
-  turfid:number,
-}[]
+type detail = {
+  date: string,
+  slot: string,
+  price: number,
+  available: boolean,
+  id: number,
+  turfid: number,
+}[];
 
 type turfDetails = {
-  turfName:string,
-  images:string,
-  area:string,
-  state:string,
-  city:string,
-  sports:[]
-}
+  turfName: string,
+  images: string,
+  area: string,
+  state: string,
+  city: string,
+  sports: [],
+};
 
+export const Book = () => {
+  const [search] = useSearchParams();
+  const [flag, setFlag] = useState(false);
+  const [details, setDetails] = useState<detail>([]);
+  const [turfDetails, setTurfDetails] = useState<turfDetails>();
+  const [date, setDate] = useState<string>("");
+  const [slot, setSlot] = useState<string>("");
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [availabitility, setAvailability] = useState(false);
 
+  const openDialog = () => {
+    setIsOpen(true);
+  };
 
-export const Book=()=>{
-    const [search]=useSearchParams()
-    const [flag,setFlag]=useState(false);
-    const [details,setDetails]=useState<detail>([]);
-    const [turfDetails,setTurfDetails] = useState<turfDetails>();
-    const [date,setDate]=useState<string>("");
-    const [slot,setSlot]=useState<string>("")
-    const navigate=useNavigate()
-    const [isOpen, setIsOpen] = useState(false);
+  const handleOptionChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setSelectedOption(event.target.value);
+  };
 
-    const openDialog = () => {
-      setIsOpen(true);
-    };
-  
-    const closeDialog = () => {
-      setIsOpen(false);
-    };
+  const handleSubmit = async () => {
+    console.log("Called");
 
-    useEffect(()=>{
-      console.log(search.get("id"));
-        axios.get(`${BACKEND_URL}/api/turfdetails/getslot`,{
-          headers:{
-            Authorization:localStorage.getItem("usertoken"),
-            id:search.get("id")
-          }
-        }).then((data)=>{
-            console.log(data.data)
-            let x = data.data[0];
-            let y = {
-              images: x.images,
-              turfName:x.turfName,
-              area : x.area,
-              city : x.city,
-              state : x.state,
-              sports : x.sports
-            };
-            setTurfDetails(y);
-            console.log(turfDetails);
-            setDetails(data.data);
-            setFlag(true)
-        });
-    },[search])
-    // console.log(search.get("id"));
-    if(!flag)
-    {
-     return(
-      <div className='flex justify-center items-center h-screen'>
-       
-      <Spinner />
-      
-      
-      </div>
-     )
+    if (selectedOption === "cash" || selectedOption === "") {
+      openDialog();
+    } else {
+      try {
+        const check1 = await handlecheck(); // Await the asynchronous function handlecheck
+        console.log("availabitility:", availabitility);
+
+          const response = await axios.post(`${BACKEND_URL}/api/user/payment`, {
+            turfName: turfDetails?.turfName,
+            area: turfDetails?.area,
+            state: turfDetails?.state,
+            city: turfDetails?.city,
+            date: date,
+            slot: slot,
+            mode: selectedOption
+          }, {
+            headers: {
+              Authorization: localStorage.getItem("usertoken")
+            }
+          });
+
+          console.log(response.data);
+          window.location = response.data.url;
+      } catch (error) {
+        console.error("Error during the post request:", error);
+      }
     }
+  };
+
+  const closeDialog = () => {
+    setIsOpen(false);
+  };
+
+  const handlecheck = async () => {
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/user/book`, {
+        turfId: search.get("id"),
+        slot,
+        date
+      }, {
+        headers: {
+          Authorization: localStorage.getItem("usertoken")
+        }
+      });
+
+      if (res.data.success === true) {
+        console.log("HI");
+
+      flushSync(() => {
+      setAvailability(true);
+});
+       
+        console.log("availbefore:", availabitility);
+      
+        closeDialog();
+
+      } else {
+        setAvailability(false);
+        alert("error");
+      }
+    } catch (error) {
+      console.error("Error during the booking request:", error);
+      setAvailability(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log(search.get("id"));
+    axios.get(`${BACKEND_URL}/api/turfdetails/getslot?id=${search.get("id")}`, {
+      headers: {
+        Authorization: localStorage.getItem("usertoken"),
+      }
+    }).then((data) => {
+      console.log(data.data);
+      let x = data.data[0];
+      let y = {
+        images: x.images,
+        turfName: x.turfName,
+        area: x.area,
+        city: x.city,
+        state: x.state,
+        sports: x.sports
+      };
+      setTurfDetails(y);
+      console.log(turfDetails);
+      setDetails(data.data);
+      setFlag(true);
+    });
+  }, [search]);
+
+  if (!flag) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <Spinner />
+      </div>
+    );
+  }
     return (
         <>
             <NavBar val="turfs" />
@@ -117,11 +179,38 @@ export const Book=()=>{
             </select>
           </div>
           <div>
-           
-
+              <h1>Select an Option</h1>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      key="option1"
+                      value="cash"
+                      checked={selectedOption === 'cash'}
+                      onChange={handleOptionChange}
+                      name="options"
+                    />
+                    Cash
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      key="option2"
+                      value="card"
+                      checked={selectedOption === 'card'}
+                      onChange={handleOptionChange}
+                      name="options"
+                    />
+                    Card
+                  </label>
+                </div>
+            </div>
+          <div>
            
           <div>
-              <Button className=" mt-4 w-3/4" size={"lg"} variant={"destructive"} onClick={openDialog}>Book Now</Button>
+              <Button className=" mt-4 w-3/4" size={"lg"} variant={"destructive"} onClick={handleSubmit}>Book Now</Button>
 
               <Dialog open={isOpen} >
                 <DialogContent>
@@ -133,31 +222,7 @@ export const Book=()=>{
                   </DialogDescription>
                   <DialogFooter className="flex justify-between">
                   <Button onClick={closeDialog}>Close</Button>
-                  <Button onClick={async()=>{
-            
-              const res=await axios.post(`${BACKEND_URL}/api/user/book`,{
-                turfId:search.get("id"),
-                slot,
-                date
-
-
-              },{
-                headers:{
-                  Authorization:localStorage.getItem("usertoken")
-                }
-              })
-
-
-              if(res.data.success)
-              {
-                closeDialog()
-              }
-              else{
-                alert("error")
-              }
-
-           }}>Confirm</Button>
-                    
+                  <Button onClick={handlecheck}>Confirm</Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

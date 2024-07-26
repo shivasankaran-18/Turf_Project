@@ -80,13 +80,15 @@ const getTurfSlot=async(req,res)=>{
     const params=req.headers.id;
     const turf = await prisma.turf.findUnique({
       where:{
-        adminId:params
+        id:parseInt(req.query.id)
+
       }
     })
     console.log(turf);
     const turfslot=await prisma.turfSlot.findMany({
         where:{
             turfId:turf.id,
+            available:true
         }
     })
     const enrichedTurfSlots = turfslot.map(slot => ({
