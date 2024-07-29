@@ -4,75 +4,87 @@ import { Button } from "../shadcn/ui/button";
 import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { Meteors } from "../shadcn/ui/meteors";
+import { AnimeatedButton } from "../components/buttonss";
 
 
-export function Signin(){
-    const [email,setEmail]=useState<string>(" ");
-    const [passwd,setPasswd]=useState<string>(" ");
-    const navigate=useNavigate();
+export function Signin() {
+    const [email, setEmail] = useState<string>(" ");
+    const [passwd, setPasswd] = useState<string>(" ");
+    const navigate = useNavigate();
 
 
-    return(
-
-        <div className="bg-red-100 min-h-screen bg- flex flex-col justify-center py-12  px-8 ">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <img className="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />
-                <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-                    Signin To Your Account
-                </h2>
-                <p className="mt-2 text-center text-sm leading-5 text-blue-500 max-w">
-                    {"Or "}
-                    <Link to={"/signup"}
-                        className="font-medium text-blue-500 hover:text-blue-500 ">
-                        {"Create a New Account"}
-                    </Link>
-                </p>
-            </div>
-
-
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-
-                    <div className="grid w-full max-w-sm items-center gap-1.5">
-                        <label htmlFor="email" className=" flex justify-start">Email</label>
-                        <Input type="email" id="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)}/>
-                    </div>
+    return (
+       
+        <div className="bg-gray-900 flex items-center justify-center  w-screen absolute left-0 top-0 h-screen">
+            
+            <div className=" w-1/3 relative">
+            
+        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
+        <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
+          
+          <h1 className="font-bold text-xl text-white mb-4 relative z-50">
+            TURFHUB
+          </h1><br></br>
                     
-                    <div className="grid w-full max-w-sm items-center gap-1.5 py-5  ">
-                        <label htmlFor="email" className=" flex justify-start">Password</label>
-                        <Input type="email" id="email" placeholder="Password" onChange={(e)=>setPasswd(e.target.value)}/>
-                    </div>
+                    
+          <h2 className="font-bold text-xl text-white  w-full text-center"> LOGIN</h2>
+          <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <div className=" py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+                         <label htmlFor="email" className=" flex justify-start">Email</label>
+                         <Input type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                     </div>
+                    
+                     <div className="grid w-full max-w-sm items-center gap-1.5 py-5  ">
+                         <label htmlFor="email" className=" flex justify-start">Password</label>
+                         <Input type="email" id="email" placeholder="Password" onChange={(e) => setPasswd(e.target.value)} />
+                     </div>
+<br></br>
+            <AnimeatedButton className="" val={"Signin"} onClicked={async () => {
+                         try {
+                             const res = await axios.post(`${BACKEND_URL}/api/user/login`, {
+                                 email,
+                                 password: passwd
 
-                    <Button onClick={async()=>{
-                        try{
-                            const res=await axios.post(`${BACKEND_URL}/api/user/login`,{
-                                email,
-                                password:passwd
-
-                            })
-                            console.log(res.data.token);
-                            if(!res.data.success)
-                            {
-                                alert("user not found")
-                            }
-                            else{
-                                localStorage.setItem("usertoken",res.data.token);
-                                console.log(localStorage.getItem("token"))
+                             })
+                             console.log(res.data.token);
+                             if (!res.data.success) {
+                                 alert("user not found")
+                             }
+                             else {
+                                 localStorage.setItem("usertoken", res.data.token);
+                                 console.log(localStorage.getItem("token"))
                           
-                            navigate("/home");
-                            }
-                            //@ts-ignore
+                                 navigate("/home");
+                             }
+                             //@ts-ignore
                             
-                        }
-                        catch{
+                         }
+                         catch {
                             window.alert("error");
                         }
 
-                    }}>Sign In</Button>
-                </div>
-            </div>
+                }}>Sign In</AnimeatedButton>
+               
+                    <p className="mt-2 text-center text-sm leading-5 text-white max-w">
+                    {"Don't have account ? "}
+                 <Link to={"/signup"}
+                      className="font-medium text-blue-500 hover:text-blue-500 ">
+                       {" Sign-up"}
+                   </Link>
+                 </p>
+ 
+          
+              </div>
+              </div>
+          
+          <Meteors number={40} />
         </div>
+      </div>
+    </div>
+        
 
-    )
+   )
 
 }
