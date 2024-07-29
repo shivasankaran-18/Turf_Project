@@ -54,11 +54,20 @@ export function Signup(){
                                 email,
                                 password:passwd,
                                 name
-                            }) as {success:boolean,token:string};
+                            }) as any;
+                            if(res.data.success==false)
+                            {
+                                alert("error")
+                            }
+                            else{
+                                console.log(res.data.token)
                             //@ts-ignore
                             localStorage.setItem("usertoken",res.data.token);
                             console.log(res);
                             navigate("/home");
+
+                            }
+                            
 
                         }
                         catch{
