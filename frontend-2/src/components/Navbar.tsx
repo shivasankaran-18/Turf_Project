@@ -4,6 +4,10 @@ import { Link, useNavigate } from "react-router-dom"
 
 export const NavBar = ({val}:{val:string}) => {
     const navigate=useNavigate();
+
+
+
+    
     
     return (
         <nav className="  w-full  border rounded-full border-y-4  border-purple-400 ">
