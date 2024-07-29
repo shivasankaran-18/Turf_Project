@@ -72,6 +72,47 @@ const booked=async(req,res)=>{
             paid:false
         }
     })
+
+    const details={}
+    for(let i=0;i<turfs.length;i++)
+    {
+        let temp=await prisma.turf.findUnique({
+            where:{
+                id:turfs[i].turfId
+            }
+        })
+        if(temp)
+        {
+            details[turfs[i].turfId]=temp.turfName
+        }
+    }
+
+    let temp=turfs.reduce((acc,val)=>{
+        let key=`${val.turfId}`
+        if(!acc[key])
+        {
+            acc[key]={
+                id:val.turfId,
+            slots:[val.slot],
+            price:[val.price],
+            date:[val.date],
+            turfName:details[val.turfId]
+            }
+            
+
+
+        }
+        else{
+            acc[key].slots.push(val.slot)
+            acc[key].price.push(val.price)
+            acc[key].date.push(val.date)
+            
+        }
+        return acc
+    },{})
+
+    console.log("booked "+Object.values(temp))
+
     const result=[]
     for(let i=0;i<turfs.length;i++)
     {
@@ -85,8 +126,9 @@ const booked=async(req,res)=>{
             result.push(temp)
         }
     }
+    console.log(result)
 
-    return res.json({msg:"success",result})
+    return res.json({msg:"success",val:Object.values(temp)})
 
 }
 
