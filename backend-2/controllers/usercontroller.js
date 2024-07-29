@@ -119,7 +119,7 @@ const payment = async(req,res)=>{
                 product_data: {
                   name: data.turfName,
                 },
-                unit_amount: 1000, // Replace with the actual amount in cents/paisa (2000 means ₹20.00)
+                unit_amount: 100, // Replace with the actual amount in cents/paisa (2000 means ₹20.00)
               },
               quantity: 1,
             },
