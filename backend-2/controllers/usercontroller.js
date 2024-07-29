@@ -126,7 +126,7 @@ const payment = async(req,res)=>{
           ],
           mode: 'payment',
           success_url: `${process.env.FRONTEND_URL}/booked`, // Replace with your actual success URL
-          cancel_url:  `${process.env.FRONTEND_URL}/turf`,  // Replace with your actual cancel URL
+          cancel_url:  `${process.env.FRONTEND_URL}/turfs`,  // Replace with your actual cancel URL
           metadata: {
             area: data.area,
             state: data.state,
