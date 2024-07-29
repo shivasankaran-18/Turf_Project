@@ -6,6 +6,8 @@ import { BACKEND_URL } from "../config";
 import { SearchBar } from "../components/SearchBar";
 import { Spinner } from "../components/Spinner";
 
+
+
 type temp={
     id:number,
     turfName:string,
@@ -51,9 +53,12 @@ export const Turfs=()=>{
         <NavBar val={"turfs"}/>
         <SearchBar setFilter={setFilter}/>
        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 ">
 
             {turfs.map((turf)=><Cards turfName={turf?.turfName} area={turf?.area} city={turf?.city} state={turf?.state} price={"800"} id={turf?.id} image={turf.images[0]}/>)}
+
+     
+
             
      
        

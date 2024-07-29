@@ -6,25 +6,25 @@ export const NavBar = ({val}:{val:string}) => {
     const navigate=useNavigate();
     
     return (
-        <nav className=" absolute left-0 top-0 w-full  border-b border-gray-200 ">
+        <nav className="  w-full  border rounded-full border-y-4  border-purple-400 ">
             <div className="container mx-auto flex flex-wrap items-center justify-between p-4">
                 <Link to="/home" className="flex items-center space-x-3 rtl:space-x-reverse">
                    
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap">TurfHub</span>
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">TurfHub</span>
                 </Link>
                 <div className="w-full sm:w-auto">
                     <ul className="font-medium flex flex-col p-4 sm:p-0 mt-4 border border-gray-100 rounded-lg sm:flex-row sm:space-x-8 rtl:space-x-reverse sm:mt-0 sm:border-0">
                     <li>
-                        <Link to={"/home"} className={`block py-2 px-3 ${val === 'home' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`} aria-current="page">Home</Link>
+                        <Link to={"/home"} className={`block py-2 px-3 ${val === 'home' ? 'text-sky-400' : 'hover:text-sky-400 text-white'} rounded sm:p-0`} aria-current="page">Home</Link>
                     </li>
                     <li>
-                        <Link to={"/turfs"} className={`block py-2 px-3 ${val === 'turfs' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Turfs</Link>
+                        <Link to={"/turfs"} className={`block py-2 px-3 ${val === 'turfs' ? 'text-sky-400' : 'hover:text-sky-400  text-white'} rounded sm:p-0`}>Turfs</Link>
                     </li>
                     <li>
-                        <Link to={"/booked"} className={`block py-2 px-3 ${val === 'booked' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Booked</Link>
+                        <Link to={"/booked"} className={`block py-2 px-3 ${val === 'booked' ? 'text-sky-400' : 'hover:text-sky-400  text-white'} rounded sm:p-0`}>Booked</Link>
                     </li>
                     <li>
-                        <Link to={"/contact"} className={`block py-2 px-3 ${val === 'contact' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Contact</Link>
+                        <Link to={"/contact"} className={`block py-2 px-3 ${val === 'contact' ? 'text-sky-400' : 'hover:text-sky-400  text-white'} rounded sm:p-0`}>Contact</Link>
                     </li>
 
                     </ul>

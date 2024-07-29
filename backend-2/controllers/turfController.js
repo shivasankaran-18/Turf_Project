@@ -100,7 +100,7 @@ const getTurfSlot=async(req,res)=>{
       state:turf.state,
       sports:turf.Sports
     }));
-    console.log(enrichedTurfSlots);
+    console.log("hii *******************"+enrichedTurfSlots);
     return res.json(enrichedTurfSlots);
 }
 const admingetTurf = async(req,res) =>{
