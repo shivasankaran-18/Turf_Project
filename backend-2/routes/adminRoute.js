@@ -18,7 +18,7 @@ adminRouter.post("/addtime",authMiddleWare,addTimeSlot);
 adminRouter.post("/register",adminregister);
 adminRouter.post("/login",adminlogin);
 adminRouter.get("/details",authMiddleWare,admindetail);
-adminRouter.post("/addturf",authMiddleWare,addTurf)
+adminRouter.post("/addturf",authMiddleWare,upload.array("images"),addTurf)
 adminRouter.get("/getTurf",authMiddleWare,getTurf)
 adminRouter.post("/updateTurfDetails",authMiddleWare,updateTurfDetails)
 adminRouter.post("/updateTurfSlots",authMiddleWare,updateTurfSlots)

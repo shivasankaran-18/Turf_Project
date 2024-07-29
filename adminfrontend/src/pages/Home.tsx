@@ -65,7 +65,12 @@ export  function Home() {
   
 
   const handleFileChange = (e: { target: { files: SetStateAction<never[]> } }) => {
-    setImages(e.target.files);
+    if(e.target.files)
+    {
+      //@ts-ignore
+      setImages(Array.from(e.target.files));
+    }
+
   };
 
   const addTurf = async () => {
@@ -96,19 +101,7 @@ export  function Home() {
   };
 
 
-  // async function addTurf(){
-  //   console.log(newTurf)
-  //   const res=await axios.post(`${BACKEND_URL}/api/admin/addTurf`,{
-  //     details:newTurf
-  //   },
-  // {
-  //   headers:{
-  //     Authorization:localStorage.getItem("admintoken")
-  //   }
-  // })
-
-
-  // window.location.reload()
+ 
 
 
 

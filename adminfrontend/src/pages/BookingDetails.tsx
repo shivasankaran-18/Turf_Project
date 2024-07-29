@@ -60,8 +60,20 @@ export function BookingDetails() {
     {
         return(
             <>
+              
             </>
         )
+    }
+    if(!paidDetails)
+    {
+      return(
+        <>
+          <NavBar val="Booking Details"></NavBar>
+          <div className="flex justify-center mt-36">
+              No users booked
+          </div>
+        </>
+      )
     }
    
 
