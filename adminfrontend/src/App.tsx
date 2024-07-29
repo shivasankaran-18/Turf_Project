@@ -9,7 +9,7 @@ import { Home } from './pages/Home'
 import { Details } from './pages/Details'
 import { BookingDetails } from './pages/BookingDetails'
 import { Landing } from './pages/Landing'
-import { Contact } from './pages/Contact'
+
 
 
 function App() {

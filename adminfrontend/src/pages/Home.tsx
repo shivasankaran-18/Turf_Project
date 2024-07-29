@@ -22,7 +22,8 @@ type detial={
   city:string,
   likes?:number,
   state:string,
-  turfName:string
+  turfName:string,
+  images?:string[]
 }
 
 
@@ -197,7 +198,8 @@ export  function Home() {
             </CardHeader>
             <CardContent>
               <img
-                src={details?.images[0]}
+                src={//@ts-ignore 
+                  details?.images[0] || ""}
                 width={600}
                 height={300}
                 alt="Turf Field"

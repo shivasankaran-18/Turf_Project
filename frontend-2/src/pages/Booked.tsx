@@ -6,13 +6,16 @@ import { BACKEND_URL } from '../config';
 import { Spinner } from '../components/Spinner';
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { userDetails } from '../store/atom';
+import { HoverEffect } from "../shadcn/ui/card-hover-effect";
+
 
 type temp={
     id:number,
-    area:string,
-    city:string,
-    state:string
+    slots:string[],
+    price:string[],
+    date:string[],
     turfName:string
+
 
 }[]
 
@@ -29,7 +32,8 @@ export const Booked = () => {
         }
     }).then((data)=>
     {
-        setBookings(data.data.result);
+      console.log(data.data)
+        setBookings(data.data.val);
         setFlag(false)
     })
 
@@ -47,13 +51,26 @@ export const Booked = () => {
     )
   }
 
+  // if(bookings.length==0)
+  // {
+  //   return(
+  //     <>
+  //     <NavBar val={"booked"} />
+
+  //     </>
+      
+  //   )
+  // }
+
+   
+  
 
  
 
   return (
     <>
     <NavBar val={"booked"} />
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-100 py-12 mt-24">
+    {/* <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-100 py-12 mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
           <h1 className="text-4xl font-extrabold text-center mb-8 text-gray-900">My Bookings</h1>
@@ -79,7 +96,11 @@ export const Booked = () => {
          
         </div>
       </div>
+    </div> */}
+    <div className="max-w-5xl mx-auto px-8">
+      <HoverEffect items={bookings} />
     </div>
+
     </>
   );
 };

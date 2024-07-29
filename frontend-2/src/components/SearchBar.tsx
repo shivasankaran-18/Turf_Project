@@ -5,8 +5,8 @@ import { Button } from "../shadcn/ui/button"
 export const SearchBar=({setFilter}:{setFilter:Dispatch<SetStateAction<string>>})=>{
     return(
         
-<div className="relative top-14 flex items-center w-full mx-auto ">   
-    <label  className="sr-only">Search</label>
+<div className="relative top-10  left-4 flex items-center w-full mx-auto ">   
+    
     <div className="relative w-5/6">
         
         <input type="text"  className="bg-gray-50 border  śborder-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  " placeholder="Search " 
