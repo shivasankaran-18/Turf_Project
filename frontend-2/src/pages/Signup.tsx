@@ -4,7 +4,8 @@ import { Button } from "../shadcn/ui/button";
 import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-
+import { Meteors } from "../shadcn/ui/meteors";
+import { AnimeatedButton } from "../components/buttonss";
 
 export function Signup(){
     const [email,setEmail]=useState<string>(" ");
@@ -15,64 +16,75 @@ export function Signup(){
 
     return(
 
-        <div className="bg-red-100 min-h-screen bg- flex flex-col justify-center py-12  px-8 ">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <img className="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />
-                <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-                    Create a new account
-                </h2>
-                <p className="mt-2 text-center text-sm leading-5 text-blue-500 max-w">
-                    {"Or "}
-                    <Link to={"/signin"}
-                        className="font-medium text-blue-500 hover:text-blue-500 ">
-                        {"Already Have an Account"}
-                    </Link>
-                </p>
-            </div>
-
-
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-
-                    <div className="grid w-full max-w-sm items-center ">
-                        <label htmlFor="email" className=" flex justify-start">Email</label>
-                        <Input type="email" id="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
-                    </div>
+        
+        <div className=" bg-gray-900 flex items-center justify-center w-screen absolute left-0 top-0 h-screen">
+        <div className=" w-1/3 relative ">
+          <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
+          <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
+            
+   
+            <h1 className="font-bold text-xl text-white mb-4 relative z-50">
+              TURFHUB
+                    </h1>
+                    <br></br>
                     
-                    <div className="grid w-full max-w-sm items-center pt-5  ">
-                        <label  className=" flex justify-start">Password</label>
-                        <Input type="password" id="email" placeholder="Password" onChange={(e)=>setPasswd(e.target.value)}/>
-                    </div>
-                    <div className="grid w-full max-w-sm items-center  py-5  ">
-                        <label className=" flex justify-start">Name</label>
-                        <Input type="text" id="email" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
-                    </div>
+                    
+            <h2 className="font-bold text-lg text-white  w-full text-center"> CREATE AN ACCOUNT</h2>
+                    <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <div className=" py-8 px-4 shadow sm:rounded-lg sm:px-10">
 
-                    <Button onClick={async()=>{
-                        try{
-                            const res=await axios.post(`${BACKEND_URL}/api/user/register`,{
+                     <div className="grid w-full max-w-sm items-center ">
+                     <label htmlFor="email" className=" flex justify-start">Email</label>
+                         <Input type="email" id="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
+                     </div>
+                    
+                     <div className="grid w-full max-w-sm items-center pt-5  ">
+                        <label  className=" flex justify-start">Password</label>
+                         <Input type="password" id="email" placeholder="Password" onChange={(e)=>setPasswd(e.target.value)}/>
+                     </div>
+                     <div className="grid w-full max-w-sm items-center  py-5  ">
+                         <label className=" flex justify-start">Name</label>
+                         <Input type="text" id="email" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
+                            </div>
+                            <br></br>
+
+                            <AnimeatedButton val={"Signup"} onClicked={async()=>{
+                         try{
+                             const res=await axios.post(`${BACKEND_URL}/api/user/register`,{
                                 email,
                                 password:passwd,
                                 name
-                            }) as {success:boolean,token:string};
-                            //@ts-ignore
-                            localStorage.setItem("usertoken",res.data.token);
-                            console.log(res);
-                            navigate("/home");
+                             }) as {success:boolean,token:string};
+                             //@ts-ignore
+                             localStorage.setItem("usertoken",res.data.token);
+                             console.log(res);
+                             navigate("/home");
 
-                        }
-                        catch{
-                            window.alert("error");
-                        }
+                         }
+                         catch{
+                             window.alert("error");
+                         }
                         
-                    }}>Sign Up</Button>
+                            }}>Sign Up</AnimeatedButton>
+                            <p className="mt-2  text-sm leading-5 text-white max-w">
+                     {"Have an Account? "}
+                     <Link to={"/signin"}
+                         className="font-medium text-blue-500 hover:text-blue-500 ">
+                         {" Sign in"}
+                    </Link>
+                 </p>
 
                     
             
 
-                </div>
+                 </div>
             </div>
+
+                    
+            <Meteors number={20} />
         </div>
+      </div>
+    </div>
 
     )
 

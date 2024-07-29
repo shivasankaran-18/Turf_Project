@@ -1,12 +1,17 @@
 
 import {Link, useNavigate} from "react-router-dom"
 import { Button } from "../shadcn/ui/button"
+import { ContainerScroll } from "../shadcn/ui/container-scroll-animation"
 
+import { BackgroundBeams } from "../shadcn/ui/background-beams"
 export  function Landing() {
     const navigate=useNavigate()
   return (
-    <div className="flex flex-col min-h-[100dvh] w-screen absolute top-0 left-0 ">
-      <header className="bg-primary text-primary-foreground px-4 lg:px-6 h-14 flex items-center ">
+    
+    
+    <div className="flex flex-col  w-full absolute top-0 left-0 right-0 ">
+      
+      <header className="bg-black text-primary-foreground px-4 lg:px-6 h-14 flex items-center ">
         <Link to="#" className="flex items-center justify-center mx-20 mt-4" >
           <BusIcon className="h-6 w-6" />
           <span className="text-2xl mx-4">TurfHub</span>
@@ -19,7 +24,7 @@ export  function Landing() {
         </div>
       </header>
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-primary text-primary-foreground">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-black text-primary-foreground">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
@@ -46,53 +51,34 @@ export  function Landing() {
               />
             </div>
           </div>
+         
         </section>
+        
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <div className="inline-block rounded-lg px-3 py-1 text-2xl">Key Features</div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Discover the benefits of TurfHub</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  TurfHub offers a seamless booking experience, real-time availability, and a wide selection of
-                  high-quality sports turfs to choose from.
-                </p>
-              </div>
-            </div>
-            <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-              <div className="grid gap-1">
-                <h3 className="text-lg font-bold">Easy Booking</h3>
-                <p className="text-sm text-muted-foreground">
-                  Find and book the perfect turf in just a few clicks. Our user-friendly platform makes the process
-                  seamless.
-                </p>
-              </div>
-              <div className="grid gap-1">
-                <h3 className="text-lg font-bold">Real-Time Availability</h3>
-                <p className="text-sm text-muted-foreground">
-                  Check real-time availability and schedule your booking without any hassle.
-                </p>
-              </div>
-              <div className="grid gap-1">
-                <h3 className="text-lg font-bold">Wide Selection</h3>
-                <p className="text-sm text-muted-foreground">
-                  Choose from a wide range of high-quality sports turfs suitable for various sports and events.
-                </p>
-              </div>
-              <div className="grid gap-1">
-                <h3 className="text-lg font-bold">Competitive Pricing</h3>
-                <p className="text-sm text-muted-foreground">
-                  Compare prices and find the best deals on sports turf rentals.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
-            <Button variant={"destructive"} className="mt-10 h-14 rounded-lg text-xl w-1/2">Book Now</Button>
-             
-            </div>
-          </div>
+        <ContainerScroll
+        titleComponent={
+          <>
+            <h1 className="text-4xl font-semibold text-black dark:text-white">
+              key features <br />
+              <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
+              Discover the benefits of TurfHub
+              </span>
+            </h1>
+          </>
+        }
+      >
+        <img
+            src="https://imagetolink.com/ib/EdS02IypUr.png"
+            alt="EdS02IypUr"
+          height={700}
+          width={400}
+          className="mx-auto rounded-2xl w-full h-full "
+          draggable={false}
+        />
+      </ContainerScroll>
+          
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-black text-primary-foreground">
           <div className="container px-4 md:px-6">
             <div className="grid gap-10 sm:px-10 md:gap-16 md:grid-cols-2">
               <div className="space-y-4">
@@ -125,8 +111,10 @@ export  function Landing() {
           </Link>
         </nav>
       </footer>
+      <BackgroundBeams className=" h-2/5"/>
     </div>
-  )
+    
+ )
 }
 //@ts-ignore
 function BusIcon(props) {
