@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { axisBottom } from 'd3';
+
 const prisma = new PrismaClient();
 
 
