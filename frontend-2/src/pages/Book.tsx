@@ -22,7 +22,11 @@ import { Calendar } from "../shadcn/ui/calendar";
 import { RadioGroup, RadioGroupItem } from "../shadcn/ui/radio-group";
 
 import {DatePicker} from "react-date-picker"
-
+import { Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious, } from "../shadcn/ui/carousel";
 
 type detail = {
   date: string,
@@ -47,226 +51,6 @@ type turfDetails = {
   
   sports: [],
 };
-
-
-// export const Book = () => {
-//   const [search] = useSearchParams();
-//   const [flag, setFlag] = useState(false);
-//   const [details, setDetails] = useState<detail>([]);
-//   const [turfDetails, setTurfDetails] = useState<turfDetails>();
-//   const [date, setDate] = useState<string>("");
-//   const [slot, setSlot] = useState<string>("");
-//   const navigate = useNavigate();
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [selectedOption, setSelectedOption] = useState("");
-//   const [availabitility, setAvailability] = useState(false);
-
-//   const openDialog = () => {
-//     setIsOpen(true);
-//   };
-
-//   const handleOptionChange = (event: { target: { value: SetStateAction<string>; }; }) => {
-//     setSelectedOption(event.target.value);
-//   };
-
-//   const handleSubmit = async () => {
-//     console.log("Called");
-
-//     if (selectedOption === "cash" || selectedOption === "") {
-//       openDialog();
-//     } else {
-//       try {
-//         const check1 = await handlecheck(); // Await the asynchronous function handlecheck
-//         console.log("availabitility:", availabitility);
-
-//           const response = await axios.post(`${BACKEND_URL}/api/user/payment`, {
-//             turfName: details[0]?.turfName,
-//             area: details[0]?.area,
-//             state: details[0]?.state,
-//             city: details[0]?.city,
-//             date: date,
-//             slot: slot,
-//             mode: selectedOption
-//           }, {
-//             headers: {
-//               Authorization: localStorage.getItem("usertoken")
-//             }
-//           });
-
-//           console.log(response.data);
-//           window.location = response.data.url;
-//       } catch (error) {
-//         console.error("Error during the post request:", error);
-//       }
-//     }
-//   };
-
-//   const closeDialog = () => {
-//     setIsOpen(false);
-//   };
-
-//   const handlecheck = async () => {
-//     try {
-//       const res = await axios.post(`${BACKEND_URL}/api/user/book`, {
-//         turfId: search.get("id"),
-//         slot,
-//         date
-//       }, {
-//         headers: {
-//           Authorization: localStorage.getItem("usertoken")
-//         }
-//       });
-
-//       if (res.data.success === true) {
-//         console.log("HI");
-
-//       flushSync(() => {
-//       setAvailability(true);
-// });
-       
-//         console.log("availbefore:", availabitility);
-      
-//         closeDialog();
-
-//       } else {
-//         setAvailability(false);
-//         alert("error");
-//       }
-//     } catch (error) {
-//       console.error("Error during the booking request:", error);
-//       setAvailability(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     console.log(search.get("id"));
-//     axios.get(`${BACKEND_URL}/api/turfdetails/getslot?id=${search.get("id")}`, {
-//       headers: {
-//         Authorization: localStorage.getItem("usertoken"),
-//       }
-//     }).then((data) => {
-//       console.log(data.data);
-  
-//       setDetails(data.data);
-//       setFlag(true);
-//     });
-//   }, [search]);
-
-//   if (!flag) {
-//     return (
-//       <div className='flex justify-center items-center h-screen'>
-//         <Spinner />
-//       </div>
-//     );
-//   }
-
-//   if(details.length==0)
-//   {
-//     return(
-//         <>
-//             <NavBar val="turfs" />
-
-//             < div className="w-full text-white mt-48">
-//                 No slots available
-//             </div>
-//         </>
-        
-
-//     )
-//   }
-//     return (
-//         <>
-//             <NavBar val="turfs" />
-//             <div className="max-w-4xl mx-auto mt-24 p-5 bg-white shadow-lg rounded-lg  border-4 border-violet-400 ">
-//               <h1>{details[0].turfName}</h1>
-//         <img src={details[0]?.images[0]} alt="Turf Image" className="w-full h-64 object-cover rounded-lg" />
-       
-//           <div className="mt-6 space-y-4">
-//             <label  className="block text-sm font-medium text-gray-700 ">Select Date</label>
-//             <input type="date" onChange={(e)=>{console.log(e.target.value);setDate(e.target.value)}} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-//           </div>
-//           <div className="mt-6">
-//             <label htmlFor="slot" className="block text-sm font-medium text-gray-700">Select Slot</label>
-          
-//             <select id="slot" name="slot" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-//             onChange={(e)=>{
-//               console.log(e.target.value)
-//               setSlot(e.target.value)
-//             }}
-//             >
-//               <option>Click</option>
-//               {details.map((x)=><option>{x.slot}</option>)}
-//             </select>
-//           </div>
-//           <div>
-//               <h1>Select an Option</h1>
-//                 <div>
-//                   <label>
-//                     <input
-//                       type="radio"
-//                       key="option1"
-//                       value="cash"
-//                       checked={selectedOption === 'cash'}
-//                       onChange={handleOptionChange}
-//                       name="options"
-//                     />
-//                     Cash
-//                   </label>
-//                 </div>
-//                 <div>
-//                   <label>
-//                     <input
-//                       type="radio"
-//                       key="option2"
-//                       value="card"
-//                       checked={selectedOption === 'card'}
-//                       onChange={handleOptionChange}
-//                       name="options"
-//                     />
-//                     Card
-//                   </label>
-//                 </div>
-//             </div>
-//           <div>
-           
-//           <div>
-//               <Button className=" mt-4 w-3/4" size={"lg"} variant={"destructive"} onClick={handleSubmit}>Book Now</Button>
-
-//               <Dialog open={isOpen} >
-//                 <DialogContent>
-//                   <DialogHeader>
-//                     <DialogTitle>Confirm Booking</DialogTitle>
-//                   </DialogHeader>
-//                   <DialogDescription>
-//                     Are You Sure?.
-//                   </DialogDescription>
-//                   <DialogFooter className="flex justify-between">
-//                   <Button onClick={closeDialog}>Close</Button>
-//                   <Button onClick={handlecheck}>Confirm</Button>
-//                   </DialogFooter>
-//                 </DialogContent>
-//               </Dialog>
-//             </div>
-//           <Button className="mt-4 w-3/4" size={"lg"} variant={"destructive"} onClick={()=>{navigate("/turfs")}} >Back</Button>
-//         </div>
-//       </div>
-
-    
-        
-//         </>
-        
-//     )
-// }
-
-
-
-//  */
-// import { Label } from "@/components/ui/label"
-// import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
-// import { Button } from "@/components/ui/button"
-// import { Calendar } from "@/components/ui/calendar"
-// import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 export  function Book() {
   const [search] = useSearchParams();
@@ -362,8 +146,6 @@ export  function Book() {
   };
 
 
-
-
   const handlecheck = async () => {
     try {
       const res = await axios.post(`${BACKEND_URL}/api/user/book`, {
@@ -438,13 +220,18 @@ export  function Book() {
     <NavBar val="turfs" />
     <div className="flex flex-col min-h-dvh mt-20 bg-red-700">
       <section className="relative w-full h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
-        <img
-          src={details[0].images[0]}
-          alt="Turf"
-          width={1920}
-          height={1080}
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
+      <Carousel>
+            <CarouselContent>
+              {details[0].images.map((image, index) => (
+                <CarouselItem key={index}>
+                  <img src={image} alt={`Carousel item ${index}`} className="w-full h-full object-cover" />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext/>
+        </Carousel>
+        {/* <img src={details[0].images[0]} width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover object-center"/> */}
         {/* <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4 md:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">{details[0].turfName}</h1>
           <p className="max-w-[600px] text-lg md:text-xl lg:text-2xl mt-4 text-center">
@@ -546,7 +333,6 @@ export  function Book() {
                </DialogFooter>
                  </DialogContent>
                </Dialog>
-              
             </div>
           </div>
         </div>
