@@ -32,7 +32,7 @@ export const Booked = () => {
         }
     }).then((data)=>
     {
-      console.log(data.data)
+      console.log(data.data.val +"temp....")
         setBookings(data.data.val);
         setFlag(false)
     })

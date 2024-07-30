@@ -23,18 +23,18 @@ const s3Client = new S3Client({
   }
 });
 
-/* Multer config */
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// /* Multer config */
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
 
 const randomName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 
 const addTurf = async (req, res) => {
-  console.log(req.files);
+  console.log(req.files +"logged now");
   const admin = await prisma.adminDetails.findUnique({
     where: { id: req.headers.id }
   });
-  console.log(req.body)
+  // console.log(req.body+"logged now")
   console.log("admin", admin);
   if (!admin) {
     return res.json({ success: false, message: "Please login as admin to add turf" });

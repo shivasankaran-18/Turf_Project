@@ -66,12 +66,15 @@ const booked=async(req,res)=>{
             id:req.headers.id
         }
     })
+    console.log(user+"reacher *****")
     const turfs=await prisma.userBooking.findMany({
         where:{
             userId:user.id,
             paid:false
         }
     })
+
+    console.log(turfs+"reacher *****")
 
     const details={}
     for(let i=0;i<turfs.length;i++)

@@ -3,7 +3,7 @@ import { addTimeSlot, addTurfSlots, getNotPaidDetails, getPaidDetails, getTurf, 
 
 import { admindetail, adminlogin, adminregister } from "../controllers/adminDetailsController.js";
 import { authMiddleWare } from "../middleware/auth.js";
-import { addTurf,admingetTurf, getTurfSlot } from "../controllers/turfController.js";
+import { addTurf,admingetTurf } from "../controllers/turfController.js";
 import multer from "multer";
 
 const adminRouter = express.Router();
@@ -13,11 +13,12 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 
+
 adminRouter.post("/addtime",authMiddleWare,addTimeSlot);
 adminRouter.post("/register",adminregister);
 adminRouter.post("/login",adminlogin);
 adminRouter.get("/details",authMiddleWare,admindetail);
-adminRouter.get("/getTurfhome",authMiddleWare,admingetTurf)
+adminRouter.post("/addturf",authMiddleWare,upload.array("images"),addTurf)
 adminRouter.get("/getTurf",authMiddleWare,getTurf)
 adminRouter.post("/updateTurfDetails",authMiddleWare,updateTurfDetails)
 adminRouter.post("/updateTurfSlots",authMiddleWare,updateTurfSlots)
