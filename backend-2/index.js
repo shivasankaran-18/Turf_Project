@@ -29,12 +29,9 @@ app.use("/api/user",userRouter)
 
 
 app.get("/test",async(req,res)=>{
-    const data=await prisma.turfSlot.create({
-        data:{
-            date:"2024-07-21",
-            slot:"15:00-16:00",
-            turfId:1,
-            price:100
+    const data=await prisma.adminDetails.deleteMany({
+        where:{
+            id:11
         }
         
     })

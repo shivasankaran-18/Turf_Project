@@ -32,7 +32,7 @@ model Turf {
   state       String
   images      String[]
   adminId     Int          @unique
-  admin       adminDetails @relation(fields: [adminId], references: [id])
+  admin       adminDetails @relation(fields: [adminId], references: [id],onDelete:Cascade)
   turfslot    TurfSlot[]
   userbooking UserBooking[]
   reviews     Reviews[]

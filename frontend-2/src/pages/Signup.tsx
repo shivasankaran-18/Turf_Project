@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../shadcn/ui/input";
-import { Button } from "../shadcn/ui/button";
+
 import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -54,16 +54,25 @@ export function Signup(){
                                 email,
                                 password:passwd,
                                 name
-                             }) as {success:boolean,token:string};
-                             //@ts-ignore
-                             localStorage.setItem("usertoken",res.data.token);
-                             console.log(res);
-                             navigate("/home");
+                            }) as any;
+                            if(res.data.success==false)
+                            {
+                                alert("error")
+                            }
+                            else{
+                                console.log(res.data.token)
+                            //@ts-ignore
+                            localStorage.setItem("usertoken",res.data.token);
+                            console.log(res);
+                            navigate("/home");
 
-                         }
-                         catch{
-                             window.alert("error");
-                         }
+                            }
+                            
+
+                        }
+                        catch{
+                            window.alert("error");
+                        }
                         
                             }}>Sign Up</AnimeatedButton>
                             <p className="mt-2  text-sm leading-5 text-white max-w">

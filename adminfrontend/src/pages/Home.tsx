@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { SetStateAction, useEffect, useState } from "react"
 import { NavBar } from "../components/Navbar"
 import { Button } from "../shadcn/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../shadcn/ui/card"
@@ -35,18 +35,20 @@ export  function Home() {
   const [isOpenCard,setIsOpenCard]=useState<boolean>(false)
   const  navigate=useNavigate()
   const [newTurf,setNewTurf]=useState<detial>({area:" ",city:" ",state:" ",turfName:" "})
+  const [images, setImages] = useState([]);
 
  
   useEffect(()=>{
   
-    axios.get(`${BACKEND_URL}/api/admin/getTurfhome`,{
+    axios.get(`${BACKEND_URL}/api/admin/getTurf`,{
       headers:{
         Authorization:localStorage.getItem("admintoken")
       }
     }).then((data)=>{
-      console.log(data.data)
-      if(data.data.success==false)
+      // console.log(data.data)
+      if(data.data.success=="false")
       {
+        console.log(data.data+"*****")
         setAvailable(false)
         setFlag(false)
       }
@@ -60,23 +62,48 @@ export  function Home() {
   
   
   },[])
+  
 
-
-  async function addTurf(){
-    console.log(newTurf)
-    const res=await axios.post(`${BACKEND_URL}/api/admin/addTurf`,{
-      details:newTurf
-    },
-  {
-    headers:{
-      Authorization:localStorage.getItem("admintoken")
+  const handleFileChange = (e: { target: { files: SetStateAction<never[]> } }) => {
+    if(e.target.files)
+    {
+      //@ts-ignore
+      setImages(Array.from(e.target.files));
     }
-  })
+
+  };
+
+  const addTurf = async () => {
+    const formData = new FormData();
+    formData.append('turfName', newTurf.turfName);
+    formData.append('area', newTurf.area);
+    formData.append('city', newTurf.city);
+    formData.append('state', newTurf.state);
+   
+
+    for (let i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
+    console.log(formData)
+
+    const res = await axios.post(`${BACKEND_URL}/api/admin/addTurf`, formData, {
+      headers: {
+        Authorization: localStorage.getItem('admintoken'),
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (res.data.success) {
+      window.location.reload();
+    } else {
+      console.error('Failed to add turf');
+    }
+  };
 
 
-  window.location.reload()
+ 
 
-  }
+
 
   if(flag)
   {
@@ -160,6 +187,16 @@ export  function Home() {
                     placeholder="Enter state"
                   />
                 </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="state">Images</Label>
+                  <Input
+                    type="file"
+                    multiple
+                    //@ts-ignore
+                    onChange={handleFileChange}
+                  />
+                </div>
+               
               </div>
             </div>
             <DialogFooter>
