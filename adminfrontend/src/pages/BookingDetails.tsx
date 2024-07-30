@@ -7,6 +7,7 @@ import { NavBar } from "../components/Navbar"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { BACKEND_URL } from "../config"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
 
 
 type details={
@@ -33,6 +34,8 @@ export function BookingDetails() {
     const [paidDetails,setPaidDetails]=useState<details>([])
     const [paidUsers,setPaidUsers]=useState<users>([])
     const [flag,setFlag]=useState(true)
+    const [isOpen,setIsOpen]=useState<boolean>(false)
+    const [userToBeMarked,setUserToBeMarked]=useState<null | details>()
 
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/api/admin/getNotPaidDetails`,{
@@ -40,7 +43,12 @@ export function BookingDetails() {
                 Authorization:localStorage.getItem("admintoken")
             }
         }).then((data)=>{
+          console.log(data.data)
             setNotPaidDetails(data.data.booking)
+            if(data.data.booking.length!=0)
+            {
+              setFlag(false)
+            }
             setNotPaidUsers(data.data.users)
         })
 
@@ -49,32 +57,50 @@ export function BookingDetails() {
                 Authorization:localStorage.getItem("admintoken")
             }
         }).then((data)=>{
+          console.log(data.data)
             setPaidDetails(data.data.booking)
+            if(data.data.booking.length!=0)
+              {
+                setFlag(false)
+              }
             setPaidUsers(data.data.users)
         })
+        
 
-        setFlag(false)
+        
     },[])
 
     if(flag)
     {
         return(
             <>
-              
-            </>
-        )
-    }
-    if(!paidDetails)
-    {
-      return(
-        <>
+          
           <NavBar val="Booking Details"></NavBar>
           <div className="flex justify-center mt-36">
               No users booked
           </div>
-        </>
-      )
+       
+              
+            </>
+        )
     }
+
+
+    async function markPaid()
+    {
+       const res=await axios.post(`${BACKEND_URL}/api/admin/markpaid`,userToBeMarked,{
+                      headers:{
+                        Authorization:localStorage.getItem("admintoken")
+                      }
+                    })
+                    
+        console.log(res)
+        setIsOpen(false)
+        window.location.reload()
+
+
+    }
+ 
    
 
 
@@ -117,7 +143,21 @@ export function BookingDetails() {
                 <TableCell>{data.slot}</TableCell>
                 <TableCell>{data.price}</TableCell>
                 <TableCell>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={async ()=>{
+                    //@ts-ignore
+                    setUserToBeMarked(data)
+                    setIsOpen(true)
+                    
+                    // const res=await axios.post(`${BACKEND_URL}/api/admin/markpaid`,data,{
+                    //   headers:{
+                    //     Authorization:localStorage.getItem("admintoken")
+                    //   }
+                    // })
+                    
+                    // console.log(res)
+
+
+                  }}>
                     Mark as Paid
                   </Button>
                 </TableCell>
@@ -132,7 +172,7 @@ export function BookingDetails() {
           </Table>
         </CardContent>
         <CardFooter className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">Showing 5 of 10 upcoming bookings</div>
+          <div className="text-sm text-muted-foreground">Showing upcoming bookings</div>
           <div className="flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -202,11 +242,7 @@ export function BookingDetails() {
                 <TableCell>{data.date}</TableCell>
                 <TableCell>{data.slot}</TableCell>
                 <TableCell>{data.price}</TableCell>
-                <TableCell>
-                  <Button variant="outline" size="sm">
-                    Mark as Paid
-                  </Button>
-                </TableCell>
+                
               </TableRow>
 
                     )
@@ -218,7 +254,7 @@ export function BookingDetails() {
           </Table>
         </CardContent>
         <CardFooter className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">Showing 5 of 10 completed bookings</div>
+          <div className="text-sm text-muted-foreground">Showing  completed bookings</div>
           <div className="flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -255,6 +291,22 @@ export function BookingDetails() {
           </div>
         </CardFooter>
       </Card>
+
+      <Dialog open={isOpen} >
+                 <DialogContent>
+                   <DialogHeader>
+                     <DialogTitle>Confirm Booking</DialogTitle>
+                  </DialogHeader>
+                   <DialogDescription>
+                    Are You Sure?.
+                 </DialogDescription>
+                 <DialogFooter className="flex justify-between">
+                 <Button  onClick={()=>setIsOpen(false)}>Close</Button>
+                 <Button onClick={markPaid}>Confirm</Button>
+               </DialogFooter>
+                 </DialogContent>
+               </Dialog>
+
     </div>
 
     </>
