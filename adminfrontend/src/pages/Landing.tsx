@@ -1,191 +1,339 @@
 
-import { Link, useNavigate } from "react-router-dom"
-import { Button } from "../shadcn/ui/button"
 
-export function Landing() {
-    const navigate=useNavigate()
+
+import { Button } from "../shadcn/ui/button"
+import { Avatar, AvatarImage, AvatarFallback } from "../shadcn/ui/avatar"
+import { Link, useNavigate } from "react-router-dom"
+import { BusIcon } from "lucide-react"
+
+export  function Landing() {
+  const navigate=useNavigate()
   return (
-    <div className="flex flex-col min-h-screen min-w-full w-screen absolute left-0 top-0">
-      <header className="bg-background px-4 lg:px-6 h-16 flex items-center justify-between">
-        <Link  to="" className="flex items-center" >
-          <BusIcon className="h-6 w-6" />
-          <span className="sr-only">Turf Booking</span>
+    <div className="flex flex-col  w-screen left-0 top-0 absolute">
+      <header className="bg-[#0077B6] text-white py-4 px-6 flex  justify-between h-1/2">
+        <Link to="#" className="flex items-center gap-2 ml-20" >
+          <BusIcon className="w-6 h-6" />
+          <span className="text-3xl font-bold">TurfHub</span>
         </Link>
-        <div className="flex items-center gap-4">
-         <Button onClick={()=>navigate("/signin")} >SignIn</Button>
-         <Button onClick={()=>navigate("/signup")}>SignUp</Button>
+        <div className="flex justify-end w-full gap-6">
+        <Button className="text-white  w-1/6" onClick={()=>navigate("/signin")}>
+          SignIn
+        </Button>
+        <Button  className=" text-white hover:bg-[#005A8E] w-1/6" onClick={()=>navigate("/signup")}>
+          SignUp
+        </Button>
+
         </div>
+        
+        
       </header>
       <main className="flex-1">
-        <section className="w-full h-full flex items-center justify-center bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                    Effortlessly Manage Your Turf Bookings
-                  </h1>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Our admin platform empowers you to streamline your turf booking process, optimize your operations,
-                    and gain valuable insights to grow your business.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Link to=""
-                    
-                    className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                    
-                  >
-                    Get Started
-                  </Link>
-                  <Link to=""
-                    
-                    className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                    
-                  >
-                    Learn More
-                  </Link>
-                </div>
-              </div>
-              <img
-                src="/placeholder.svg"
-                width="550"
-                height="550"
-                alt="Hero"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
-              />
-            </div>
+        <section className="bg-[#0077B6] py-20 px-6 text-center text-white">
+          <h1 className="text-5xl font-bold mb-4">Revolutionize Your Turf Management</h1>
+          <p className="text-xl mb-10">
+            TurfHub is the ultimate platform for managing your sports turf facilities. Book, schedule, and analyze with
+            ease.
+          </p>
+          <Button  className=" text-white hover:bg-gray-200 px-8 py-4 text-lg font-medium w-1/3" onClick={()=>navigate("/signup")}>
+            Try TurfHub
+          </Button>
+        </section>
+        <section className="py-20 px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="flex flex-col items-center gap-6">
+            <CalendarIcon className="w-16 h-16 text-[#0077B6]" />
+            <h3 className="text-3xl font-bold">Turf Booking</h3>
+            <p className="text-gray-600 text-lg">
+              Easily manage bookings and reservations for your sports turf facilities.
+            </p>
+            <Link to="#" className="text-[#0077B6] hover:underline text-lg font-medium" >
+              Learn More
+            </Link>
+          </div>
+          <div className="flex flex-col items-center gap-6">
+            <SettingsIcon className="w-16 h-16 text-[#0077B6]" />
+            <h3 className="text-3xl font-bold">Management Tools</h3>
+            <p className="text-gray-600 text-lg">
+              Streamline your turf management with powerful tools for scheduling, maintenance, and more.
+            </p>
+            <Link to="#" className="text-[#0077B6] hover:underline text-lg font-medium" >
+              Learn More
+            </Link>
+          </div>
+          <div className="flex flex-col items-center gap-6">
+            <BarChartIcon className="w-16 h-16 text-[#0077B6]" />
+            <h3 className="text-3xl font-bold">Analytics</h3>
+            <p className="text-gray-600 text-lg">
+              Gain valuable insights into your turf usage and performance with our advanced analytics.
+            </p>
+            <Link to="#" className="text-[#0077B6] hover:underline text-lg font-medium" >
+              Learn More
+            </Link>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="grid max-w-5xl items-center gap-6 lg:grid-cols-2 lg:gap-12">
-              <img
-                src="/placeholder.svg"
-                width="550"
-                height="310"
-                alt="Admin Dashboard"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
-              />
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Powerful Admin Dashboard</h2>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Gain complete control over your turf bookings with our intuitive admin dashboard. View real-time
-                    data, manage bookings, and access advanced reporting tools.
-                  </p>
+        <section className="bg-[#F1F5F9] py-20 px-6">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-4xl font-bold mb-8">What Our Customers Say</h2>
+            <div className="grid gap-12">
+              <div className="bg-white p-8 rounded-lg shadow-lg">
+                <p className="text-gray-600 mb-6 text-lg">
+                  "TurfHub has been a game-changer for our sports facility. The booking system is so easy to use, and
+                  the analytics have helped us optimize our operations."
+                </p>
+                <div className="flex items-center gap-4">
+                  <Avatar>
+                    <AvatarImage src="/placeholder-user.jpg" />
+                    <AvatarFallback>JD</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-bold text-lg">John Doe</p>
+                    <p className="text-gray-500">Facility Manager</p>
+                  </div>
                 </div>
-                <Link to=""
-                  
-                  className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  
-                >
-                  Explore Features
-                </Link>
               </div>
-            </div>
-          </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="grid max-w-5xl items-center gap-6 lg:grid-cols-2 lg:gap-12">
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Seamless Booking Management</h2>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Our booking management tools make it easy to handle reservations, track availability, and
-                    communicate with customers. Streamline your operations and focus on delivering an exceptional
-                    experience.
-                  </p>
+              <div className="bg-white p-8 rounded-lg shadow-lg">
+                <p className="text-gray-600 mb-6 text-lg">
+                  "I was hesitant to try a new platform, but TurfHub has exceeded all of my expectations. The customer
+                  support has been fantastic, and the features have made my job so much easier."
+                </p>
+                <div className="flex items-center gap-4">
+                  <Avatar>
+                    <AvatarImage src="/placeholder-user.jpg" />
+                    <AvatarFallback>SA</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-bold text-lg">Sarah Anderson</p>
+                    <p className="text-gray-500">Sports Coordinator</p>
+                  </div>
                 </div>
-                <Link to=""
-                  
-                  className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  
-                >
-                  Explore Features
-                </Link>
-              </div>
-              <img
-                src="/placeholder.svg"
-                width="550"
-                height="310"
-                alt="Booking Management"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
-              />
-            </div>
-          </div>
-        </section>
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="grid max-w-5xl items-center gap-6 lg:grid-cols-2 lg:gap-12">
-              <img
-                src="/placeholder.svg"
-                width="550"
-                height="310"
-                alt="Reporting Tools"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
-              />
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Insightful Reporting Tools</h2>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                    Gain valuable insights into your turf business with our comprehensive reporting tools. Track key
-                    metrics, generate custom reports, and make data-driven decisions to optimize your operations.
-                  </p>
-                </div>
-                <Link to=""
-                  
-                  className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                  
-                >
-                  Explore Features
-                </Link>
               </div>
             </div>
           </div>
         </section>
       </main>
-      <footer className="bg-muted p-6 md:py-12 w-full">
-        <div className="container max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
-          <p className="text-xs text-muted-foreground">&copy; 2024 Turf Booking. All rights reserved.</p>
-          <nav className="flex gap-4 sm:gap-6">
-            <Link to="" className="text-xs hover:underline underline-offset-4" >
-              Terms of Service
+      <footer className="bg-[#0077B6] text-white py-12 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="flex flex-col gap-6">
+            <h4 className="text-2xl font-bold">TurfHub</h4>
+            <p className="text-lg">Revolutionize your turf management with TurfHub.</p>
+            <div className="flex gap-6">
+              <Link to="#" className="text-white hover:underline" >
+                <TwitterIcon className="w-8 h-8" />
+              </Link>
+              <Link to="#" className="text-white hover:underline" >
+                <FacebookIcon className="w-8 h-8" />
+              </Link>
+              <Link to="#" className="text-white hover:underline" >
+                <LinkedinIcon className="w-8 h-8" />
+              </Link>
+            </div>
+          </div>
+          <div className="flex flex-col gap-6">
+            <h4 className="text-2xl font-bold">Features</h4>
+            <Link to="#" className="hover:underline text-lg" >
+              Turf Booking
             </Link>
-            <Link to="" className="text-xs hover:underline underline-offset-4" >
-              Privacy
+            <Link to="#" className="hover:underline text-lg" >
+              Management Tools
             </Link>
-          </nav>
+            <Link to="#" className="hover:underline text-lg" >
+              Analytics
+            </Link>
+          </div>
+          <div className="flex flex-col gap-6">
+            <h4 className="text-2xl font-bold">Resources</h4>
+            <Link to="#" className="hover:underline text-lg" >
+              Documentation
+            </Link>
+            <Link to="#" className="hover:underline text-lg" >
+              Blog
+            </Link>
+            <Link to="#" className="hover:underline text-lg" >
+              Support
+            </Link>
+          </div>
         </div>
+        <div className="mt-12 text-center text-lg">&copy; 2024 TurfHub. All rights reserved.</div>
       </footer>
     </div>
   )
 }
 
 //@ts-ignore
-function BusIcon(props) {
-    return (
-      <svg
-        {...props}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M8 6v6" />
-        <path d="M15 6v6" />
-        <path d="M2 12h19.6" />
-        <path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3" />
-        <circle cx="7" cy="18" r="2" />
-        <path d="M9 18h5" />
-        <circle cx="16" cy="18" r="2" />
-      </svg>
-    )
-  }
+
+function BarChartIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="12" x2="12" y1="20" y2="10" />
+      <line x1="18" x2="18" y1="20" y2="4" />
+      <line x1="6" x2="6" y1="20" y2="16" />
+    </svg>
+  )
+}
+//@ts-ignore
+
+function CalendarIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 2v4" />
+      <path d="M16 2v4" />
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" />
+    </svg>
+  )
+}
+//@ts-ignore
+
+function FacebookIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  )
+}
+//@ts-ignore
+
+function GrapeIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M22 5V2l-5.89 5.89" />
+      <circle cx="16.6" cy="15.89" r="3" />
+      <circle cx="8.11" cy="7.4" r="3" />
+      <circle cx="12.35" cy="11.65" r="3" />
+      <circle cx="13.91" cy="5.85" r="3" />
+      <circle cx="18.15" cy="10.09" r="3" />
+      <circle cx="6.56" cy="13.2" r="3" />
+      <circle cx="10.8" cy="17.44" r="3" />
+      <circle cx="5" cy="19" r="3" />
+    </svg>
+  )
+}
+//@ts-ignore
+
+function LinkedinIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect width="4" height="12" x="2" y="9" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  )
+}
+//@ts-ignore
+
+function SettingsIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  )
+}
+
+//@ts-ignore
+function TwitterIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+    </svg>
+  )
+}
+//@ts-ignore
+
+
+function XIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  )
+}
 

@@ -4,7 +4,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Signup } from './pages/Signup'
 import { Signin } from './pages/Signin'
-import { Contact } from 'lucide-react'
+
 import { Home } from './pages/Home'
 import { Details } from './pages/Details'
 import { BookingDetails } from './pages/BookingDetails'

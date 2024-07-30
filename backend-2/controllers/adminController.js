@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { axisBottom } from 'd3';
 const prisma = new PrismaClient();
 
 
@@ -238,4 +239,26 @@ const updateTurfSlots = async (req, res) => {
 
   }
 
-export  {addTimeSlot,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails}
+
+  const markpaid=async(req,res)=>{
+    const body=req.body;
+    console.log(typeof(body.id));
+    try{
+        const data=await prisma.userBooking.update({
+            where:{
+                id:parseInt(body.id)
+            },
+            data:{
+                paid:true
+            }
+        })
+        console.log(data)
+        return res.json({msg:"done"})
+    }
+    catch(e){
+        
+        return res.json({msg:e})
+    }
+  }
+
+export  {addTimeSlot,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails,markpaid}
