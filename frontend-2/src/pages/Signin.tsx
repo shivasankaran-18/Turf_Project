@@ -6,6 +6,8 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Meteors } from "../shadcn/ui/meteors";
 import { AnimeatedButton } from "../components/buttonss";
+import { StarsBackground } from "../shadcn/ui/stars-background";
+import ShootingStars from "../shadcn/ui/shooting-stars";
 
 
 export function Signin() {
@@ -16,11 +18,11 @@ export function Signin() {
 
     return (
        
-        <div className="bg-gray-900 flex items-center justify-center  w-screen absolute left-0 top-0 h-screen">
-            
+        
+        <div className=" rounded-md bg-neutral-900 flex flex-col items-center justify-center w-screen absolute left-0 top-0 h-screen"> 
             <div className=" w-1/3 relative">
             
-        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
+        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.90] bg-red-500 rounded-full blur-3xl" />
         <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
           
           <h1 className="font-bold text-xl text-white mb-4 relative z-50">
@@ -79,9 +81,12 @@ export function Signin() {
               </div>
               </div>
           
-          <Meteors number={40} />
+                    <Meteors number={40} />
+                   
         </div>
-      </div>
+            </div>
+            <ShootingStars/>
+                    <StarsBackground/>
     </div>
         
 

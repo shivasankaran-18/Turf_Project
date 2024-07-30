@@ -93,9 +93,10 @@ module.exports = {
         },
       },
       animation: {
+        
         "meteor-effect": "meteor 5s linear infinite",
         aurora: "aurora 60s linear infinite",
-        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-down": "accordion-down 0.2s ",
         "accordion-up": "accordion-up 0.2s ease-out",
        
       },
