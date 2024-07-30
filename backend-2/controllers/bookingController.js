@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 
 
 const book = async (req,res)=>{
+    console.log("card:",req.body.card)
     const userData = await prisma.user.findUnique({where:{id:req.headers.id}})
     if(!userData){
         return res.json({success:false,message:"Please login to book your turf"})
@@ -25,6 +26,10 @@ const book = async (req,res)=>{
     if(!turfSlot)
     {
         return res.json({msg:"no slot available"})
+    }
+    if(req.body.card=="card"){
+        console.log("HI")
+        return res.json({success:true,message:"Slot is available"})
     }
     console.log(turfSlot)
     try{
@@ -53,11 +58,6 @@ const book = async (req,res)=>{
     catch{
         res.json({success:false})
     }
-   
-
-    
-    
-    
 }
 
 const booked=async(req,res)=>{

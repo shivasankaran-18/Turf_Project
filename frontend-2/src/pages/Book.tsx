@@ -300,9 +300,8 @@ export  function Book() {
       openDialog();
     } else {
       try {
-        const check1 = await handlecheck(); // Await the asynchronous function handlecheck
+        const check1 = await handlecheckcard(); // Await the asynchronous function handlecheck
         console.log("availabitility:", availabitility);
-
           const response = await axios.post(`${BACKEND_URL}/api/user/payment`, {
             turfName: details[0]?.turfName,
             area: details[0]?.area,
@@ -328,6 +327,42 @@ export  function Book() {
   const closeDialog = () => {
     setIsOpen(false);
   };
+  const handlecheckcard = async () => {
+    try {
+      const res = await axios.post(`${BACKEND_URL}/api/user/book`, {
+        turfId: search.get("id"),
+        slot,
+        date,
+        card:"card",
+      }, {
+        headers: {
+          Authorization: localStorage.getItem("usertoken")
+        }
+      });
+
+      if (res.data.success === true) {
+        console.log("HI");
+
+      flushSync(() => {
+      setAvailability(true);
+});
+       
+        console.log("availbefore:", availabitility);
+      
+        closeDialog();
+
+      } else {
+        setAvailability(false);
+        alert("error");
+      }
+    } catch (error) {
+      console.error("Error during the booking request:", error);
+      setAvailability(false);
+    }
+  };
+
+
+
 
   const handlecheck = async () => {
     try {
