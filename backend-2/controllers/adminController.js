@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client'
-import { axisBottom } from 'd3';
-const prisma = new PrismaClient();
 
+const prisma = new PrismaClient();
 
 
 const addTimeSlot = async(req,res)=>{
@@ -260,5 +259,5 @@ const updateTurfSlots = async (req, res) => {
         return res.json({msg:e})
     }
   }
-
+  
 export  {addTimeSlot,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails,markpaid}
