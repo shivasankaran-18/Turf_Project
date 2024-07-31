@@ -2,27 +2,28 @@ import { Button } from "../shadcn/ui/button"
 import { Avatar,AvatarImage,AvatarFallback } from "../shadcn/ui/avatar"
 import { Link, useNavigate } from "react-router-dom"
 
+
 export const NavBar = ({val}:{val:string}) => {
     const navigate=useNavigate();
     
     return (
-        <nav className=" absolute left-0 top-0 w-full  border-b border-gray-200 ">
+        <nav className=" absolute left-0 top-0 w-full   ">
             <div className="container mx-auto flex flex-wrap items-center justify-between p-4">
                 <Link to="/home" className="flex items-center space-x-3 rtl:space-x-reverse">
                    
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap">TurfHub</span>
+                    <span className="self-center text-2xl  text-white font-semibold whitespace-nowrap">TurfHub</span>
                 </Link>
                 <div className="w-full sm:w-auto">
                     <ul className="font-medium flex flex-col p-4 sm:p-0 mt-4 border border-gray-100 rounded-lg sm:flex-row sm:space-x-8 rtl:space-x-reverse sm:mt-0 sm:border-0">
                     <li>
-                        <Link to={"/home"} className={`block py-2 px-3 ${val === 'home' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`} aria-current="page">Home</Link>
+                        <Link to={"/home"} className={`block  text-white py-2 px-3 ${val === 'home' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`} aria-current="page">Home</Link>
                     </li>
                     <li>
-                        <Link to={"/bookingDetails"} className={`block py-2 px-3 ${val === 'Booking Details' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Booking Details</Link>
+                        <Link to={"/bookingDetails"} className={`block text-white py-2 px-3 ${val === 'Booking Details' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Booking Details</Link>
                     </li>
                    
                     <li>
-                        <Link to={"/contact"} className={`block py-2 px-3 ${val === 'contact' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Contact</Link>
+                        <Link to={"/contact"} className={`block  text-white py-2 px-3 ${val === 'contact' ? 'text-sky-400' : 'hover:text-sky-400'} rounded sm:p-0`}>Contact</Link>
                     </li>
 
                     </ul>
