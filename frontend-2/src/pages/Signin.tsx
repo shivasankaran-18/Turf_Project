@@ -7,7 +7,7 @@ import { BACKEND_URL } from "../config";
 import { Meteors } from "../shadcn/ui/meteors";
 import { AnimeatedButton } from "../components/buttonss";
 import { StarsBackground } from "../shadcn/ui/stars-background";
-import ShootingStars from "../shadcn/ui/shooting-stars";
+import ShootingStars  from "../shadcn/ui/shooting-stars";
 
 
 export function Signin() {
@@ -24,6 +24,9 @@ export function Signin() {
        
         
         <div className=" rounded-md bg-neutral-900 flex flex-col items-center justify-center w-screen absolute left-0 top-0 h-screen"> 
+              <ShootingStars/>
+                    <StarsBackground/>
+            
             <div className=" w-1/3 relative">
             
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.90] bg-red-500 rounded-full blur-3xl" />
@@ -89,7 +92,6 @@ export function Signin() {
                    
         </div>
             </div>
-         
     </div>
         
 

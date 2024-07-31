@@ -52,15 +52,14 @@ export function Details() {
 
   useEffect(() => {
     let final = new Date().toISOString().split("T")[0];
-    axios
-      .get(`${BACKEND_URL}/api/admin/getTurf?filter=${final}`, {
+    axios.get(`${BACKEND_URL}/api/admin/getTurf?filter=${final}`, {
         headers: {
           Authorization: localStorage.getItem("admintoken"),
         },
       })
       .then((data) => {
         temp.turfId=data.data.turf.id
-      
+        console.log(data.data)
         setTurfDetails(data.data.turf);
         setTurfSlots(data.data.turfSlots);
       });
@@ -136,23 +135,23 @@ export function Details() {
         <section className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl font-bold">Turf Details</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white">Turf Details</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-1">
-                  <span className="text-sm text-muted-foreground">Turf Name</span>
-                  <span className="font-medium">{turfDetails.turfName}</span>
+                  <span className="text-sm text-white">Turf Name</span>
+                  <span className="font-medium text-white">{turfDetails.turfName}</span>
                 </div>
                 <div className="grid gap-1">
-                  <span className="text-sm text-muted-foreground">Area</span>
-                  <span className="font-medium">{turfDetails.area}</span>
+                  <span className="text-sm text-muted-foreground text-white">Area</span>
+                  <span className="font-medium text-white">{turfDetails.area}</span>
                 </div>
                 <div className="grid gap-1">
-                  <span className="text-sm text-muted-foreground">City</span>
-                  <span className="font-medium">{turfDetails.city}</span>
+                  <span className="text-sm text-muted-foreground text-white">City</span>
+                  <span className="font-medium text-white" >{turfDetails.city}</span>
                 </div>
                 <div className="grid gap-1">
-                  <span className="text-sm text-muted-foreground">State</span>
-                  <span className="font-medium">{turfDetails.state}</span>
+                  <span className="text-sm text-muted-foreground text-white">State</span>
+                  <span className="font-medium text-white">{turfDetails.state}</span>
                 </div>
               </div>
             </div>
