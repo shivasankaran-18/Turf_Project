@@ -38,12 +38,12 @@ const createToken = ({id}) =>{
     return jwt.sign({id},process.env.JWT_SECRET);
 }
 
-/* Register user */
+
 
 const adminregister = async (req,res) =>{
     const {name,email,password,contact} = req.body;
     try{
-        // checking is the user already exists
+      
         const exists = await prisma.adminDetails.findUnique({
             where:{
                 emailId:email
@@ -52,8 +52,8 @@ const adminregister = async (req,res) =>{
         if(exists){
             return res.json({success:false,message:"Email already exists"});
         }
-        // validating the email and password using validator
-        if(!validator.isEmail(email)){   /* This returns whether email is valid  */
+      
+        if(!validator.isEmail(email)){   
             return res.json({success:false,message:"Enter valid email"});
         }
 
@@ -61,7 +61,7 @@ const adminregister = async (req,res) =>{
             return res.json({success:false,message:"Password isn't strong"});
         }
 
-        /* hashing the password using bcrypt by salting it */
+      
 
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(password,salt);

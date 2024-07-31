@@ -20,7 +20,7 @@ import { Label } from "../shadcn/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/ui/select";
 
 import { RadioGroup, RadioGroupItem } from "../shadcn/ui/radio-group";
-import { useToast } from "../shadcn//ui/use-toast"
+import { useToast } from "../shadcn/ui/use-toast"
 
 
 
@@ -119,6 +119,11 @@ export  function Book() {
   };
 
   const closeDialog = () => {
+    toast({
+      title: "SLot Booked Successfully ",
+      description: "Thank you for booking your turf slot! Please be on time and enjoy your game.",
+     
+    })
     setIsOpen(false);
   };
   const handlecheckcard = async () => {

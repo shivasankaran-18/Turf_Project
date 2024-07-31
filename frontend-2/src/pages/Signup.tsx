@@ -40,16 +40,16 @@ export function Signup(){
                 <div className=" py-8 px-4 shadow sm:rounded-lg sm:px-10">
 
                      <div className="grid w-full max-w-sm items-center ">
-                     <label htmlFor="email" className=" flex justify-start">Email</label>
+                     <label htmlFor="email" className=" flex justify-start text-white">Email</label>
                          <Input type="email" id="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
                      </div>
                     
                      <div className="grid w-full max-w-sm items-center pt-5  ">
-                        <label  className=" flex justify-start">Password</label>
+                        <label  className=" flex justify-start text-white">Password</label>
                          <Input type="password" id="email" placeholder="Password" onChange={(e)=>setPasswd(e.target.value)}/>
                      </div>
                      <div className="grid w-full max-w-sm items-center  py-5  ">
-                         <label className=" flex justify-start">Name</label>
+                         <label className=" flex justify-start text-white">Name</label>
                          <Input type="text" id="email" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
                             </div>
                             <br></br>

@@ -4,10 +4,14 @@ import { Input } from "../shadcn/ui/input"
 import { Textarea } from "../shadcn/ui/textarea"
 import { Button } from "../shadcn/ui/button"
 import { NavBar } from "../components/Navbar"
+import { useToast } from "../shadcn/ui/use-toast"
+
+import { Toaster } from "../shadcn/ui/toaster"
 
 
 
 export const Contact=()=>{
+  const {toast}=useToast()
 
     return(
         <>
@@ -16,7 +20,7 @@ export const Contact=()=>{
       <div className="space-y-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-50 tracking-tight sm:text-4xl">Get in Touch</h1>
-          <p className="mt-3 max-w-2xl mx-auto text-muted-foreground sm:text-lg text-gray-100">
+          <p className="mt-3 max-w-2xl mx-auto text-muted sm:text-lg text-gray-100">
             Have a question or want to work together? Fill out the form below and we'll get back to you as soon as
             possible.
           </p>
@@ -39,7 +43,7 @@ export const Contact=()=>{
             </div>
           </div>
           <div className="bg-muted rounded-lg p-6 md:p-8">
-            <form className="space-y-4">
+            <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>
@@ -54,10 +58,22 @@ export const Contact=()=>{
                 <Label htmlFor="message">Message</Label>
                 <Textarea id="message" rows={5} placeholder="Enter your message" />
               </div>
-              <Button type="submit" className="w-full">
+              <Button  className="w-full" onClick={()=>{
+                toast({
+                  title:"Feedback Submitted",
+                  description:"Thank you for your feedback! We appreciate your input and will use it to improve our services"
+                })
+
+                // setTimeout(()=>{
+                //   toast(null)
+                // },5000)
+
+
+              }}>
                 Submit
               </Button>
-            </form>
+              <Toaster />
+            </div>
           </div>
         </div>
       </div>

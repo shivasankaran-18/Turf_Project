@@ -38,10 +38,11 @@ export  function Landing() {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button variant={"destructive"} className="mt-10 h-14 rounded-lg text-xl" onClick={()=>navigate("/signin")}>Book your first Turf</Button>
+                <Button variant={"destructive"} className="mt-10 h-14 rounded-lg text-xl" onClick={()=>navigate("/signup")}>Book your first Turf</Button>
                 </div>
               </div>
               <img
+          
                 src="https://imagetolink.com/ib/H68kgsk1Ni.jpg" alt="H68kgsk1Ni"
                 width="550"
                 height="550"
@@ -86,7 +87,7 @@ export  function Landing() {
                 <h2 className="  lg:leading-tighter text-[3.4rem] font-bold tracking-tighter ">
                   The ultimate sports turf booking platform
                 </h2>
-                <Button variant={"destructive"} className="mt-10 h-14 rounded-lg text-xl" onClick={()=>navigate("/signin")}>Book Now</Button>
+                <Button variant={"destructive"} className="mt-10 h-14 rounded-lg text-xl" onClick={()=>navigate("/signup")}>Book Now</Button>
               </div>
               <div className="flex flex-col items-start space-y-4">
                 <div className="inline-block rounded-lg px-3 py-1 text-2xl">Trusted by Teams</div>
