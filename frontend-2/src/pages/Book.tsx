@@ -20,6 +20,7 @@ import { Label } from "../shadcn/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/ui/select";
 
 import { RadioGroup, RadioGroupItem } from "../shadcn/ui/radio-group";
+import { useToast } from "../shadcn//ui/use-toast"
 
 
 
@@ -29,6 +30,7 @@ import { Carousel,
   CarouselNext,
   CarouselPrevious, } from "../shadcn/ui/carousel";
 import { HeartIcon } from "lucide-react";
+import { Toaster } from "../shadcn/ui/toaster";
 
 type detail = {
   date: string,
@@ -70,6 +72,7 @@ export  function Book() {
   const [liked,setLiked]=useState<boolean>(false)
 
   const [displaySlots,setDisplaySlots]=useState<string[]>()
+  const {toast}=useToast()
   
 
 
@@ -173,6 +176,12 @@ export  function Book() {
 });
        
         console.log("availbefore:", availabitility);
+        toast({
+          title: "Scheduled: Catch up ",
+          description: "Friday, February 10, 2023 at 5:57 PM",
+         
+        })
+
       
         closeDialog();
 
@@ -201,6 +210,7 @@ export  function Book() {
   }
   const handleDateChange=(date:string)=>
   {
+    setDate(date)
     let temp:string[]=[]
     for(let i=0;i<details.length;i++)
     {
@@ -372,6 +382,7 @@ export  function Book() {
 
 
                 </div>
+                <Toaster />
                 <Button className=" mt-4 w-3/4" size={"lg"} variant={"destructive"} onClick={handleSubmit}>Book Now</Button>
                    
                <Dialog open={isOpen} >
