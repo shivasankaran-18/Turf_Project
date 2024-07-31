@@ -4,8 +4,7 @@ import { NavBar } from '../components/Navbar';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { Spinner } from '../components/Spinner';
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
-import { userDetails } from '../store/atom';
+
 import { HoverEffect } from "../shadcn/ui/card-hover-effect";
 
 
@@ -23,7 +22,7 @@ type temp={
 export const Booked = () => {
   const [bookings,setBookings]=useState<temp>([]);
   const[flag,setFlag]=useState(true)
-  const user=useRecoilValueLoadable(userDetails)
+ 
 
   useEffect(()=>{
     axios.get(`${BACKEND_URL}/api/user/get`,{

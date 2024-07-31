@@ -1,6 +1,6 @@
 import {  useEffect, useState } from "react";
 import { NavBar } from "../components/Navbar";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Button } from "../shadcn/ui/button";
@@ -48,14 +48,7 @@ type detail = {
   likes:number
 }[];
 
-type turfDetails = {
-  turfName: string,
-  images: string,
-  
-  state: string,
-  
-  sports: [],
-};
+
 
 export  function Book() {
   const [search] = useSearchParams();
@@ -64,7 +57,7 @@ export  function Book() {
 
   const [date, setDate] = useState<string>("");
   const [slot, setSlot] = useState<string>("");
-  const navigate = useNavigate();
+ 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [availabitility, setAvailability] = useState(false);
@@ -94,7 +87,7 @@ export  function Book() {
       openDialog();
     } else {
       try {
-        const check1 = await handlecheckcard(); // Await the asynchronous function handlecheck
+         await handlecheckcard(); // Await the asynchronous function handlecheck
         console.log("availabitility:", availabitility);
           const response = await axios.post(`${BACKEND_URL}/api/user/payment`, {
             turfName: details[0]?.turfName,
@@ -202,7 +195,7 @@ export  function Book() {
 
   const handleLike=async ()=>{
     setLiked(true)
-    const res=await axios.post(`${BACKEND_URL}/api/turfdetails/addlikes`,details[0],{
+    await axios.post(`${BACKEND_URL}/api/turfdetails/addlikes`,details[0],{
       headers:{
         Authorization:localStorage.getItem("usertoken")
       }
