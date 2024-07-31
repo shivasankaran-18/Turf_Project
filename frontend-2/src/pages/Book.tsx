@@ -112,11 +112,7 @@ export  function Book() {
   };
 
   const closeDialog = () => {
-    toast({
-      title: "SLot Booked Successfully ",
-      description: "Thank you for booking your turf slot! Please be on time and enjoy your game.",
-     
-    })
+   
     setIsOpen(false);
   };
   const handlecheckcard = async () => {
@@ -175,8 +171,8 @@ export  function Book() {
        
         console.log("availbefore:", availabitility);
         toast({
-          title: "Scheduled: Catch up ",
-          description: "Friday, February 10, 2023 at 5:57 PM",
+          title: "SLot Booked Successfully ",
+          description: "Thank you for booking your turf slot! Please be on time and enjoy your game.",
          
         })
 
