@@ -4,9 +4,11 @@ import bcrypt from "bcryptjs"
 import validator from "validator"
 import { PrismaClient } from '@prisma/client'
 import Stripe from "stripe"
+
+
 const prisma = new PrismaClient();
 
-/* Login User */
+
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
 
@@ -26,7 +28,7 @@ const login = async (req,res)=>{
         if(!user){
             return res.json({success:false,message:"User not found"});
         }
-        const match = await bcrypt.compare(password,user.password);  // We can't use direct if cond to check the user.password == password as the user's password is encrypt by bycrpt so we need to use compare method of bycrpt
+        const match = await bcrypt.compare(password,user.password); 
         if(!match){
             return res.json({success:false,message:"Invalid Credantails"});
         }

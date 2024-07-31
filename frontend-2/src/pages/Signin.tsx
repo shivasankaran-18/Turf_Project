@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../shadcn/ui/input";
-import { Button } from "../shadcn/ui/button";
+
 import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -25,7 +25,7 @@ export function Signin() {
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.90] bg-red-500 rounded-full blur-3xl" />
         <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
           
-          <h1 className="font-bold text-xl text-white mb-4 relative z-50">
+          <h1 className="font-bold text-xl text-white mb-4 relative z-50 w-full text-center">
             TURFHUB
           </h1><br></br>
                     
@@ -34,13 +34,13 @@ export function Signin() {
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className=" py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <div className="grid w-full max-w-sm items-center gap-1.5">
-                         <label htmlFor="email" className=" flex justify-start">Email</label>
-                         <Input type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                         <label htmlFor="email" className=" flex justify-start text-white">Email</label>
+                         <Input type="text" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                      </div>
                     
                      <div className="grid w-full max-w-sm items-center gap-1.5 py-5  ">
-                         <label htmlFor="email" className=" flex justify-start">Password</label>
-                         <Input type="email" id="email" placeholder="Password" onChange={(e) => setPasswd(e.target.value)} />
+                         <label htmlFor="email" className=" flex justify-start text-white">Password</label>
+                         <Input type="text" id="email" placeholder="Password" onChange={(e) => setPasswd(e.target.value)} />
                      </div>
 <br></br>
             <AnimeatedButton className="" val={"Signin"} onClicked={async () => {
@@ -85,8 +85,7 @@ export function Signin() {
                    
         </div>
             </div>
-            <ShootingStars/>
-                    <StarsBackground/>
+         
     </div>
         
 

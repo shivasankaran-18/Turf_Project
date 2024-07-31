@@ -7,6 +7,7 @@ import multer from "multer";
 import crypto from 'crypto';
 
 
+
 dotenv.config();
 
 const bucket_name = process.env.BUCKET_NAME;
@@ -98,7 +99,8 @@ const getTurfSlot=async(req,res)=>{
       area:turf.area,
       city:turf.city,
       state:turf.state,
-      sports:turf.Sports
+      sports:turf.Sports,
+      likes:turf.likes
     }));
     console.log("hii *******************"+enrichedTurfSlots);
     return res.json(enrichedTurfSlots);
@@ -112,8 +114,46 @@ const admingetTurf = async(req,res) =>{
 }
 
 const listTurf = async(req,res) =>{
+  console.log("****************** "+req.query.filter)
+    const turf=await prisma.turf.findMany({ where:{
+      OR:[
+        {
+          area:{contains:req.query.filter,mode:"insensitive"}
+        },
+        {
+          city:{contains:req.query.filter,mode:"insensitive"}
+        },
+        {
+          state:{contains:req.query.filter,mode:"insensitive"}
+        }
+        
+      ]
 
-    const turf=await prisma.turf.findMany({ })
+     
+    }})
     return res.json(turf);
 }
-export {addTurf,listTurf,getTurfSlot,admingetTurf}
+
+ const addLike=async(req,res)=>{
+  console.log(req.body)
+  try{
+    const turf=await prisma.turf.update({
+      where:{
+        id:req.body.turfId
+      },
+      data:{
+        likes:{increment:1}
+      }
+    })
+
+    return res.json({msg:"done"})
+  }
+  catch{
+    return res.json({msg:"error"})
+  }
+  
+
+
+ }
+
+export {addTurf,listTurf,getTurfSlot,admingetTurf,addLike}
