@@ -42,10 +42,9 @@ export  function Landing() {
                 </div>
               </div>
               <img
-                src="/placeholder.svg"
+                src="https://imagetolink.com/ib/H68kgsk1Ni.jpg" alt="H68kgsk1Ni"
                 width="550"
                 height="550"
-                alt="Turf"
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
               />
             </div>
@@ -58,11 +57,13 @@ export  function Landing() {
         titleComponent={
           <>
             <h1 className="text-4xl font-semibold text-black dark:text-white">
-              key features <br />
+              Key Features <br />
               <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
               Discover the benefits of TurfHub
               </span>
             </h1>
+            <br></br>
+            <br></br>
           </>
         }
       >

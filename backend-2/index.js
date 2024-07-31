@@ -7,6 +7,7 @@ import userRouter from "./routes/userRoute.js";
 import adminRouter from "./routes/adminRoute.js";
 
 import { PrismaClient } from "@prisma/client";
+import passport from "passport";
 const prisma=new PrismaClient()
 
 /*App Config*/
@@ -24,8 +25,6 @@ app.use(cors())
 app.use("/api/admin",adminRouter)
 app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
-
-
 
 
 app.get("/test",async(req,res)=>{
