@@ -47,8 +47,10 @@ const getTurf = async (req, res) => {
             where: {
                 turfId: turf.id,
                 date: {
-                    gt: params,
+                    gte: params,
+                    
                 },
+                available:true
             },
         });
         const groupedSlots = turfSlots.reduce((acc, slot) => {

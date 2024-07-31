@@ -37,7 +37,7 @@ export function Home() {
 
 
   useEffect(()=>{
-    axios.get(`${BACKEND_URL}/api/turfdetails/list`,{
+    axios.get(`${BACKEND_URL}/api/turfdetails/list?filter=${" "}`,{
       headers:{
           Authorization:localStorage.getItem("usertoken")
       }

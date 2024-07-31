@@ -52,15 +52,14 @@ export function Details() {
 
   useEffect(() => {
     let final = new Date().toISOString().split("T")[0];
-    axios
-      .get(`${BACKEND_URL}/api/admin/getTurf?filter=${final}`, {
+    axios.get(`${BACKEND_URL}/api/admin/getTurf?filter=${final}`, {
         headers: {
           Authorization: localStorage.getItem("admintoken"),
         },
       })
       .then((data) => {
         temp.turfId=data.data.turf.id
-      
+        console.log(data.data)
         setTurfDetails(data.data.turf);
         setTurfSlots(data.data.turfSlots);
       });

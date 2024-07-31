@@ -267,7 +267,8 @@ export const Card = ({
           src={card.images[0]}
           alt={card.turfName}
           fill
-          className="object-cover absolute z-10 inset-0"
+
+          className="object-cover absolute z-10 inset-0 h-full"
         />
       </motion.button>
     </>
