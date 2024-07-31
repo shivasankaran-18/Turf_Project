@@ -14,11 +14,7 @@ export function Signin() {
     const [email, setEmail] = useState<string>(" ");
     const [passwd, setPasswd] = useState<string>(" ");
     const navigate = useNavigate();
-    useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/demologin`).then((data)=>{
-            console.log(data)
-        })
-    },[])
+    
 
     return (
        
