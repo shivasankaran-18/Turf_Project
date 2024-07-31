@@ -44,6 +44,6 @@ app.listen(PORT,()=>{
     console.log("Running........."+PORT)
 });
 
-app.get("/",(req,res)=>{
+app.get("/test",(req,res)=>{
     res.send("Hello world from express");
 })
