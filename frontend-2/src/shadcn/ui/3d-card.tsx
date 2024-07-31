@@ -1,4 +1,4 @@
-"use client";
+
 
 import { cn } from "../../lib/utils";
 
@@ -49,7 +49,7 @@ export const CardContainer = ({
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
         className={cn(
-          "py-20 flex items-center justify-center",
+          "mt-20 flex items-center justify-center",
           containerClassName
         )}
         style={{

@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { NavBar } from "../components/Navbar";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -11,22 +11,24 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
+
 } from "../shadcn/ui/dialog"
 import { Spinner } from "../components/Spinner";
 import { flushSync } from "react-dom";
 import { Label } from "../shadcn/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "../shadcn/ui/popover";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/ui/select";
-import { Calendar } from "../shadcn/ui/calendar";
+
 import { RadioGroup, RadioGroupItem } from "../shadcn/ui/radio-group";
 
-import {DatePicker} from "react-date-picker"
+
+
 import { Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious, } from "../shadcn/ui/carousel";
+import { HeartIcon } from "lucide-react";
 
 type detail = {
   date: string,
@@ -40,7 +42,8 @@ type detail = {
   images:string[],
   sports:string[]
   turfName:string,
-  state:string
+  state:string,
+  likes:number
 }[];
 
 type turfDetails = {
@@ -63,6 +66,10 @@ export  function Book() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
   const [availabitility, setAvailability] = useState(false);
+  const [likes, setLikes] = useState<number>(0);
+  const [liked,setLiked]=useState<boolean>(false)
+
+  const [displaySlots,setDisplaySlots]=useState<string[]>()
   
 
 
@@ -179,6 +186,32 @@ export  function Book() {
     }
   };
 
+  const handleLike=async ()=>{
+    setLiked(true)
+    const res=await axios.post(`${BACKEND_URL}/api/turfdetails/addlikes`,details[0],{
+      headers:{
+        Authorization:localStorage.getItem("usertoken")
+      }
+    })
+    
+    setLikes(likes+1)
+    
+
+
+  }
+  const handleDateChange=(date:string)=>
+  {
+    let temp:string[]=[]
+    for(let i=0;i<details.length;i++)
+    {
+      if(details[i].date==date)
+      {
+          temp.push(details[i].slot)
+      }
+    }
+    setDisplaySlots(temp)
+  }
+
   useEffect(() => {
     console.log(search.get("id"));
     axios.get(`${BACKEND_URL}/api/turfdetails/getslot?id=${search.get("id")}`, {
@@ -186,9 +219,10 @@ export  function Book() {
         Authorization: localStorage.getItem("usertoken"),
       }
     }).then((data) => {
-      console.log(data.data);
+      console.log(data.data[0]+"loggend noww..........................");
   
       setDetails(data.data);
+      setLikes(data.data[0]?.likes)
       setFlag(true);
     });
   }, [search]);
@@ -218,7 +252,7 @@ export  function Book() {
   return (
     <>
     <NavBar val="turfs" />
-    <div className="flex flex-col min-h-dvh mt-20 bg-red-700">
+    <div className="flex flex-col min-h-dvh mt-14 bg-red-700">
       <section className="relative w-full h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
       <Carousel>
             <CarouselContent>
@@ -231,13 +265,7 @@ export  function Book() {
             <CarouselPrevious />
             <CarouselNext/>
         </Carousel>
-        {/* <img src={details[0].images[0]} width={1920} height={1080} className="absolute inset-0 w-full h-full object-cover object-center"/> */}
-        {/* <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white px-4 md:px-6 lg:px-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">{details[0].turfName}</h1>
-          <p className="max-w-[600px] text-lg md:text-xl lg:text-2xl mt-4 text-center">
-            Experience the best playing surface for your next event or match. Book your slot now.
-          </p>
-        </div> */}
+      
       </section>
       <section className="bg-white py-12 md:py-16 lg:py-20">
         <div className="container px-4 md:px-6 lg:px-8">
@@ -262,6 +290,20 @@ export  function Book() {
                   <span>Suitable for all skill levels</span>
                 </li>
               </ul>
+              <div className="mt-6">
+              <button
+              onClick={handleLike}
+            
+            className={`text-2xl ${
+              liked ? "text-red-500" : "text-gray-500"
+            } transition-transform duration-300 transform ${liked ? "scale-125" : "scale-100"}`}
+          >
+      
+            <HeartIcon className="h-10 w-8 pt-4 " />
+          </button>
+          <span className="text-gray-600 text-3xl px-3">{likes} Likes</span>
+              </div>
+             
             </div>
             <div className="bg-muted rounded-xl shadow-lg p-6 md:p-8 lg:p-10">
               <h3 className="text-xl md:text-2xl lg:text-3xl font-bold">Book Your Slot</h3>
@@ -269,7 +311,7 @@ export  function Book() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="date">Date</Label>
-                    <input type="date" onChange={(e)=>{console.log(e.target.value);setDate(e.target.value)}} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                    <input type="date" onChange={(e)=>{handleDateChange(e.target.value)}} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
 
                   </div>
                   <div>
@@ -279,8 +321,8 @@ export  function Book() {
                         <SelectValue placeholder="Select Time" />
                       </SelectTrigger>
                       <SelectContent>
-                        {details.map((val)=>{
-                          return <SelectItem value={val.slot} >{val.slot}</SelectItem>
+                        {displaySlots?.map((val)=>{
+                          return <SelectItem value={val} >{val}</SelectItem>
 
                         })}
 
@@ -291,28 +333,41 @@ export  function Book() {
                 </div>
                 <div>
                   <Label htmlFor="payment">Payment Method</Label>
-                  <RadioGroup defaultValue="card" className="grid grid-cols-2 gap-4">
+                  <RadioGroup value={selectedOption}className="grid grid-cols-2 gap-4">
                     <div>
-                      <RadioGroupItem value="card" id="card" className="peer sr-only" onClick={(e)=>handleOptionChange("card")}/>
+                      <RadioGroupItem value="card" id="card" className="peer sr-only" />
                       <Label
                         htmlFor="card"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                        className={`flex flex-col items-center justify-between rounded-md border-2 p-4 
+                        ${selectedOption === 'card' ? 'border-primary' : 'border-muted'} 
+                        bg-popover hover:bg-accent hover:text-accent-foreground`}
+                        onClick={() => handleOptionChange('card')}
                       >
                         <CreditCardIcon className="mb-3 h-6 w-6" />
                         Card
                       </Label>
                     </div>
                     <div>
-                      <RadioGroupItem value="cash" id="cash" className="peer sr-only" onClick={(e)=>handleOptionChange("cash")}/>
+                      <RadioGroupItem value="cash" id="cash" className="peer sr-only" />
                       <Label
                         htmlFor="cash"
-                        className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                        className={`flex flex-col items-center justify-between rounded-md border-2 p-4 
+                        ${selectedOption === 'cash' ? 'border-primary' : 'border-muted'} 
+                        bg-popover hover:bg-accent hover:text-accent-foreground`}
+                        onClick={() => handleOptionChange('cash')}
                       >
                         <DollarSignIcon className="mb-3 h-6 w-6" />
                         Cash
                       </Label>
                     </div>
                   </RadioGroup>
+
+
+                  {/* <div className="flex items-center space-x-2 mt-4">
+  {/* <Button>Like</Button>
+  <span>{likes} Likes</span>
+</div> */}
+
 
 
 

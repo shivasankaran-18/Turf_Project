@@ -21,10 +21,19 @@ type temp={
 export const Turfs=()=>{
     const [turfs,setTurfs]=useState<temp>([]);
     const [val,setval]=useState<boolean>(true);
-    const [filter,setFilter]=useState<string>(" ");
+    const [filter,setFilter]=useState<string >(" ");
+    let timeout:NodeJS.Timeout;
+    function fn(val:string)
+    {
+        clearTimeout(timeout);
+        timeout=setTimeout(()=>
+        {
+            setFilter(val)
+        },1000)
+    }
 
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/turfdetails/list`,{
+        axios.get(`${BACKEND_URL}/api/turfdetails/list?filter=${filter}`,{
             headers:{
                 Authorization:localStorage.getItem("usertoken")
             }
@@ -51,7 +60,10 @@ export const Turfs=()=>{
     return(
         <>
         <NavBar val={"turfs"}/>
-        <SearchBar setFilter={setFilter}/>
+        <>
+        <SearchBar setFilter={fn}/>
+        </>
+        
        
         <div className="grid grid-cols-1 md:grid-cols-2 ">
 
