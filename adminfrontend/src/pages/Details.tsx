@@ -133,26 +133,27 @@ export function Details() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">{turfDetails.turfName}</h1>
           </div>
         </section>
+        <div className= "bg-white">
         <section className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white">Turf Details</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-black">Turf Details</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-1">
-                  <span className="text-sm text-white">Turf Name</span>
-                  <span className="font-medium text-white">{turfDetails.turfName}</span>
+                  <span className="text-sm text-black">Turf Name</span>
+                  <span className="font-medium ">{turfDetails.turfName}</span>
                 </div>
                 <div className="grid gap-1">
-                  <span className="text-sm text-muted-foreground text-white">Area</span>
-                  <span className="font-medium text-white">{turfDetails.area}</span>
+                  <span className="text-sm text-muted-foreground ">Area</span>
+                  <span className="font-medium ">{turfDetails.area}</span>
                 </div>
                 <div className="grid gap-1">
-                  <span className="text-sm text-muted-foreground text-white">City</span>
-                  <span className="font-medium text-white" >{turfDetails.city}</span>
+                  <span className="text-sm text-muted-foreground ">City</span>
+                  <span className="font-medium " >{turfDetails.city}</span>
                 </div>
                 <div className="grid gap-1">
-                  <span className="text-sm text-muted-foreground text-white">State</span>
-                  <span className="font-medium text-white">{turfDetails.state}</span>
+                  <span className="text-sm text-muted-foreground ">State</span>
+                  <span className="font-medium ">{turfDetails.state}</span>
                 </div>
               </div>
             </div>
@@ -350,7 +351,8 @@ export function Details() {
               </DialogContent>
             </Dialog>
           </div>
-        </section>
+          </section>
+          </div>
       </div>
         
     </>
