@@ -13,6 +13,7 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "../../lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 // import Image, { ImageProps } from "next/image";
 // import { useOutsideClick } from "@/hooks/use-outside-click";
 
@@ -200,12 +201,13 @@ export const Card = ({
     setOpen(false);
     onCardClose(index);
   };
+  const navigate=useNavigate()
 
   return (
     <>
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 h-screen z-50 overflow-auto">
+          <div className="fixed inset-0 h-screen z-50 overflow-auto" onClick={()=>{}}>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -267,8 +269,8 @@ export const Card = ({
           src={card.images[0]}
           alt={card.turfName}
           fill
-
           className="object-cover absolute z-10 inset-0 h-full"
+          onClick={()=>{navigate(`/book?id=${card.id}`)}}
         />
       </motion.button>
     </>
