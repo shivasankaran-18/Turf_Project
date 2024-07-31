@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../shadcn/ui/input";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Meteors } from "../shadcn/ui/meteors";

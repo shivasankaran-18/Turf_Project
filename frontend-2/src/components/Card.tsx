@@ -1,33 +1,16 @@
-import { Link, useNavigate } from "react-router-dom"
-import { Button } from "../shadcn/ui/button"
-import { Input } from "../shadcn/ui/input"
+import { Link } from "react-router-dom"
 
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../shadcn/ui/card"
 import { CardBody, CardContainer, CardItem } from "../shadcn/ui/3d-card"
 
 export const Cards=(prop:{turfName:string,area:string,city:string,state:string,price:string,id:number,image:string})=>{
 
-    const navigate=useNavigate();
+  
   
 
     return(
         <div >
        
-        {/* <Card>
-          <CardHeader>
-            <CardTitle>{prop.turfName}</CardTitle>
-            <CardDescription>{`${prop.area},${prop.city},${prop.state}`}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <img src={prop.image} alt="Football World" className="w-full h-48 object-cover rounded-md" />
-            <p className="mt-4 text-xl font-bold">{prop.price}/-</p>
-          </CardContent>
-          <CardFooter>
-            <Button onClick={()=>{navigate(`/book?id=${prop.id}`)
-             }}>Book a slot</Button>
-          </CardFooter>
-        </Card> */}
-
+   
 <CardContainer className="inter-var">
       <CardBody  className="bg-slate-700 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
         <CardItem
