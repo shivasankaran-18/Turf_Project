@@ -5,12 +5,17 @@ import { Button } from "../shadcn/ui/button"
 import { Avatar, AvatarImage, AvatarFallback } from "../shadcn/ui/avatar"
 import { Link, useNavigate } from "react-router-dom"
 import { BusIcon } from "lucide-react"
+import { InfiniteMovingCards } from "../shadcn/ui/infinite-moving-cards"
 
+import{LampContainer} from "../shadcn/ui/lamp"
 export  function Landing() {
   const navigate=useNavigate()
   return (
+    <div>
     <div className="flex flex-col  w-screen left-0 top-0 absolute">
-      <header className="bg-[#0077B6] text-white py-4 px-6 flex  justify-between h-1/2">
+   
+      <div className="bg-slate-950 text-white py-4 px-6 flex  justify-between ">
+      
         <Link to="#" className="flex items-center gap-2 ml-20" >
           <BusIcon className="w-6 h-6" />
           <span className="text-3xl font-bold">TurfHub</span>
@@ -22,23 +27,29 @@ export  function Landing() {
         <Button  className=" text-white hover:bg-[#005A8E] w-1/6" onClick={()=>navigate("/signup")}>
           SignUp
         </Button>
-
+        
         </div>
         
         
-      </header>
+      </div>
       <main className="flex-1">
-        <section className="bg-[#0077B6] py-20 px-6 text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Revolutionize Your Turf Management</h1>
-          <p className="text-xl mb-10">
+      <div>
+      <LampContainer>
+          
+          <h1 className="text-5xl font-bold text-white mb-4">Revolutionize Your Turf Management</h1>
+          <p className="text-xl text-white mb-10">
             TurfHub is the ultimate platform for managing your sports turf facilities. Book, schedule, and analyze with
             ease.
           </p>
-          <Button  className=" text-white hover:bg-gray-200 px-8 py-4 text-lg font-medium w-1/3" onClick={()=>navigate("/signup")}>
+          <Button  className=" text-black hover:bg-black-200 px-8 py-4 text-lg  bg-gray-200 font-medium w-1/3" onClick={()=>navigate("/signup")}>
             Try TurfHub
-          </Button>
-        </section>
-        <section className="py-20 px-6 grid grid-cols-1 md:grid-cols-3 gap-12">
+            </Button>
+            
+            </LampContainer>
+            </div>
+          
+        
+        <section className="py-20 px-6 grid grid-cols-1 md:grid-cols-3 gap-12 bg-slate-950  ">
           <div className="flex flex-col items-center gap-6">
             <CalendarIcon className="w-16 h-16 text-[#0077B6]" />
             <h3 className="text-3xl font-bold">Turf Booking</h3>
@@ -70,7 +81,7 @@ export  function Landing() {
             </Link>
           </div>
         </section>
-        <section className="bg-[#F1F5F9] py-20 px-6">
+        {/* <section className="bg-[#F1F5F9] py-20 px-6">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-8">What Our Customers Say</h2>
             <div className="grid gap-12">
@@ -108,9 +119,16 @@ export  function Landing() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
+        <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+        <InfiniteMovingCards
+        items={testimonials}
+        direction="left"
+        speed="fast"
+      />
+    </div>
       </main>
-      <footer className="bg-[#0077B6] text-white py-12 px-6">
+      <footer className="bg-slate-950 text-white py-12 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="flex flex-col gap-6">
             <h4 className="text-2xl font-bold">TurfHub</h4>
@@ -154,7 +172,8 @@ export  function Landing() {
         </div>
         <div className="mt-12 text-center text-lg">&copy; 2024 TurfHub. All rights reserved.</div>
       </footer>
-    </div>
+      </div>
+      </div>
   )
 }
 
@@ -180,6 +199,8 @@ function BarChartIcon(props) {
     </svg>
   )
 }
+
+
 //@ts-ignore
 
 function CalendarIcon(props) {
@@ -337,3 +358,35 @@ function XIcon(props) {
   )
 }
 
+
+const testimonials = [
+  {
+    quote:  "I was hesitant to try a new platform, but TurfHub has exceeded all of my expectations. The customersupport has been fantastic, and the features have made my job so much easier."
+     ,
+    name: "SA",
+    title: "",
+  },
+  {
+    quote:
+      " TurfHub has been a game-changer for our sports facility. The booking system is so easy to use, and the analytics have helped us optimize our operations.",
+    name: "JD",
+    title: "",
+  },
+  {
+    quote: "All that we see or seem is but a dream within a dream.",
+    name: "Edgar Allan Poe",
+    title: "A Dream Within a Dream",
+  },
+  {
+    quote:
+      "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+    name: "Jane Austen",
+    title: "Pride and Prejudice",
+  },
+  {
+    quote:
+      "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
+    name: "Herman Melville",
+    title: "Moby-Dick",
+  },
+];

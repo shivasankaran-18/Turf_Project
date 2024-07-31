@@ -4,7 +4,8 @@ import { Button } from "../shadcn/ui/button";
 import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-
+import { AnimeatedButton } from "../components/buttonss";
+import { BackgroundGradient } from "../shadcn/ui/background-gradient";
 
 export function Signin(){
     const [emailId,setemailId]=useState<string>(" ");
@@ -14,69 +15,137 @@ export function Signin(){
 
     return(
 
-        <div className="bg-red-100 min-h-screen bg- flex flex-col justify-center py-12  px-8 ">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <img className="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />
-                <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-                    Signin To Your Account
-                </h2>
-                <p className="mt-2 text-center text-sm leading-5 text-blue-500 max-w">
-                    {"Or "}
-                    <Link to={"/signup"}
-                        className="font-medium text-blue-500 hover:text-blue-500 ">
-                        {"Create a New Account"}
-                    </Link>
-                </p>
-            </div>
+        // <div className="bg-red-100 min-h-screen bg- flex flex-col justify-center py-12  px-8 ">
+        //     <div className="sm:mx-auto sm:w-full sm:max-w-md">
+           
+        //     </div>
 
 
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-
-                    <div className="grid w-full max-w-sm items-center gap-1.5">
-                        <label htmlFor="emailId" className=" flex justify-start">emailId</label>
-                        <Input type="emailId" id="emailId" placeholder="emailId" onChange={(e)=>setemailId(e.target.value)}/>
-                    </div>
+        //     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        //         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        //             <h1>Login</h1>
+        //             <div className="grid w-full max-w-sm items-center gap-1.5">
+        //                 <label htmlFor="emailId" className=" flex justify-start">Email-Id</label>
+        //                 <Input type="emailId" id="emailId" placeholder="emailId" onChange={(e)=>setemailId(e.target.value)}/>
+        //             </div>
                     
-                    <div className="grid w-full max-w-sm items-center gap-1.5 py-5  ">
-                        <label htmlFor="emailId" className=" flex justify-start">Password</label>
-                        <Input type="emailId" id="emailId" placeholder="Password" onChange={(e)=>setPasswd(e.target.value)}/>
-                    </div>
+        //             <div className="grid w-full max-w-sm items-center gap-1.5 py-5  ">
+        //                 <label htmlFor="emailId" className=" flex justify-start">Password</label>
+        //                 <Input type="emailId" id="emailId" placeholder="Password" onChange={(e)=>setPasswd(e.target.value)}/>
+        //             </div>
 
-                    <Button onClick={async()=>{
-                        try{
-                            const res=await axios.post(`${BACKEND_URL}/api/admin/login`,{
-                                emailId,
-                                password:passwd
+        //             <Button onClick={async()=>{
+        //                 try{
+        //                     const res=await axios.post(`${BACKEND_URL}/api/admin/login`,{
+        //                         emailId,
+        //                         password:passwd
 
-                            })
-                            console.log(res.data.token);
-                            if(!res.data.success)
-                            {
-                                alert("user not found")
-                            }
-                            else{
-                                localStorage.setItem("admintoken",res.data.token);
-                                console.log(localStorage.getItem("token"))
+        //                     })
+        //                     console.log(res.data.token);
+        //                     if(!res.data.success)
+        //                     {
+        //                         alert("user not found")
+        //                     }
+        //                     else{
+        //                         localStorage.setItem("admintoken",res.data.token);
+        //                         console.log(localStorage.getItem("token"))
                              
                           
-                            navigate("/home");
-                            }
-                            //@ts-ignore
+        //                     navigate("/home");
+        //                     }
+        //                     //@ts-ignore
                             
-                        }
-                        catch{
-                            window.alert("error");
-                        }
+        //                 }
+        //                 catch{
+        //                     window.alert("error");
+        //                 }
 
-                    }}>Sign In</Button>
+        //             }}>Sign In</Button>
+                    
+        //         <p className="mt-2 text-center text-sm leading-5 text-black max-w">
+        //             {"Don't have account? "}
+        //             <Link to={"/signup"}
+        //                 className="font-medium text-blue-500 hover:text-blue-500 ">
+        //                 {"Create a New Account"}
+        //             </Link>
+        //         </p>
 
                     
             
 
-                </div>
+        //         </div>
+        //     </div>
+        // </div>
+        <div className=" rounded-md bg-black flex flex-col items-center justify-center w-screen absolute left-0 top-0 h-screen"> 
+            <div className=" w-1/3 relative">
+            
+            <BackgroundGradient className="rounded-[22px]    bg-gray-200 dark:bg-zinc-900">
+        <div className="relative  bg-white   px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
+          
+          <h1 className="font-bold text-xl text-black mb-4 relative z-50">
+            TURFHUB
+          </h1><br></br>
+                    
+                    
+          <h2 className="font-bold text-xl text-black  w-full text-center"> LOGIN</h2>
+          <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <div className=" py-8 px-4  sm:rounded-lg sm:px-10">
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+                         <label htmlFor="email" className=" flex justify-start">Email</label>
+                         <Input type="email" id="email" placeholder="Email" onChange={(e) => setemailId(e.target.value)} />
+                     </div>
+                    
+                     <div className="grid w-full max-w-sm items-center gap-1.5 py-5  ">
+                         <label htmlFor="email" className=" flex justify-start">Password</label>
+                         <Input type="email" id="email" placeholder="Password" onChange={(e) => setPasswd(e.target.value)} />
+                     </div>
+<br></br>
+            <AnimeatedButton className="" val={"Signin"} onClicked={async () => {
+                         try {
+                             const res = await axios.post(`${BACKEND_URL}/api/admin/login`, {
+                                 emailId,
+                                 password: passwd
+
+                             })
+                             console.log(res.data.token);
+                             if (!res.data.success) {
+                                 alert("user not found")
+                             }
+                             else {
+                                 localStorage.setItem("admintoken", res.data.token);
+                                 console.log(localStorage.getItem("admintoken"))
+                          
+                                 navigate("/home");
+                             }
+                             //@ts-ignore
+                            
+                         }
+                         catch {
+                            window.alert("error");
+                        }
+
+                }}>Sign In</AnimeatedButton>
+               
+                    <p className="mt-2 text-center text-sm leading-5 text-black max-w">
+                    {"Don't have account ? "}
+                 <Link to={"/signup"}
+                      className="font-medium text-blue-500 hover:text-blue-500 ">
+                       {" Sign-up"}
+                   </Link>
+                 </p>
+ 
+          
+              </div>
+              </div>
+          
+                   
+                   
+                    </div>
+                    </BackgroundGradient>
             </div>
-        </div>
+     
+                   
+    </div>
 
     )
 

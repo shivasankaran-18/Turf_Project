@@ -10,6 +10,7 @@ import { Label } from "../shadcn/ui/label"
 import { Input } from "../shadcn/ui/input"
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../shadcn/ui/dialog"
+import { CardBody, CardContainer, CardItem } from "../shadcn/ui/3d-card"
 
 
 
@@ -215,38 +216,64 @@ export  function Home() {
    
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-background">
+    <div className="flex min-h-screen w-full flex-col ">
         <NavBar val="home" />
      
       <main className="flex-1 px-4 py-8 sm:px-6 mt-16">
-        <div className="mx-auto max-w-3xl">
-          <Card className="overflow-hidden">
-            <CardHeader className="bg-muted/50 p-6">
-              <div className="flex items-center justify-between">
-                <div className="grid gap-1">
-                  <CardTitle className="text-2xl font-bold">{details?.turfName}</CardTitle>
-                  <CardDescription className="text-muted-foreground">{`${details?.area},${details?.city},${details?.state}`}</CardDescription>
-                </div>
-                <div className="flex items-center gap-2">
-                  <HeartIcon className="h-5 w-5 text-red-500" />
-                  <span className="text-lg font-bold">{details?.likes}</span>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <img
-                src={//@ts-ignore 
-                  details?.images[0] || ""}
-                width={600}
-                height={300}
-                alt="Turf Field"
-                className="aspect-[2/1] w-full object-cover"
-              />
-            </CardContent>
-            <CardFooter className="flex justify-center">
-              <Button onClick={()=>navigate("/details")}>View Details </Button>
-            </CardFooter>
-          </Card>
+        <div className="mx-auto  bg-red-700 w-full">
+        
+
+<CardContainer className="inter-var ">
+      <CardBody  className="bg-slate-700 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]  sm:w-[30rem] h-auto rounded-xl p-6 border ">
+        <CardItem
+          translateZ="50"
+          className="text-xl font-bold text-white"
+        >
+          {details?.turfName}
+        </CardItem>
+        <CardItem
+          as="p"
+          translateZ="60"
+          className=" text-sm max-w-sm mt-2 text-white"
+        >
+          {`${details?.area},${details?.city},${details?.state}`}
+        </CardItem>
+        <CardItem
+          translateZ="100"
+          rotateX={20}
+          rotateZ={-10}
+          className="w-full mt-4"
+        >
+          <img
+            src={
+                    //@ts-ignore 
+                    details?.images[0]}
+            height="1000"
+            width="1000"
+            className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl border-purple-400 border"
+            alt="thumbnail"
+          />
+        </CardItem>
+        <div className="flex justify-between items-center mt-20 w-full">
+         
+          <CardItem
+            translateZ={20}
+            translateX={40}
+            as="button"
+            className="px-4 py-2 rounded-xl bg-black text-white text-xs font-bold"
+            
+          >
+        
+            <Link to={`/details`} >View Turf Detaisl</Link>
+
+            
+          </CardItem>
+        </div>
+      </CardBody>
+    </CardContainer>
+
+     
+   
         </div>
       </main>
     </div>
