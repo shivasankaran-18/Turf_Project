@@ -7,6 +7,7 @@ import userRouter from "./routes/userRoute.js";
 import adminRouter from "./routes/adminRoute.js";
 
 import { PrismaClient } from "@prisma/client";
+
 const prisma=new PrismaClient()
 
 /*App Config*/
@@ -26,12 +27,10 @@ app.use("/api/turfdetails",turfRouter)
 app.use("/api/user",userRouter)
 
 
-
-
 app.get("/test",async(req,res)=>{
     const data=await prisma.adminDetails.deleteMany({
         where:{
-            id:11
+            id:14
         }
         
     })

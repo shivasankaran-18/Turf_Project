@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient();
 
+const prisma = new PrismaClient();
 
 
 const addTimeSlot = async(req,res)=>{
@@ -47,8 +47,10 @@ const getTurf = async (req, res) => {
             where: {
                 turfId: turf.id,
                 date: {
-                    gt: params,
+                    gte: params,
+                    
                 },
+                available:true
             },
         });
         const groupedSlots = turfSlots.reduce((acc, slot) => {
@@ -260,5 +262,5 @@ const updateTurfSlots = async (req, res) => {
         return res.json({msg:e})
     }
   }
-
+  
 export  {addTimeSlot,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails,markpaid}

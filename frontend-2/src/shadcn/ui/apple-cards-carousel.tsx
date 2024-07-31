@@ -1,4 +1,4 @@
-"use client";
+
 import React, {
   useEffect,
   useRef,
@@ -13,6 +13,7 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "../../lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 // import Image, { ImageProps } from "next/image";
 // import { useOutsideClick } from "@/hooks/use-outside-click";
 
@@ -20,33 +21,7 @@ interface CarouselProps {
   items: JSX.Element[];
   initialScroll?: number;
 }
-Sports
-: 
-[]
-adminId
-: 
-7
-area
-: 
-"Ambattur"
-city
-: 
-"Tiruvallur"
-id
-: 
-11
-images
-: 
-['https://turfproject1.s3.eu-north-1.amazonaws.com/3…15ba2674a3f130ee8ddc1052ab57acfca6528f79e53f25a9f']
-likes
-: 
-0
-state
-: 
-"Tamil Nadu"
-turfName
-: 
-"Kosal Turf Zone"
+
 
 type Card = {
   sports: string[];
@@ -226,12 +201,13 @@ export const Card = ({
     setOpen(false);
     onCardClose(index);
   };
+  const navigate=useNavigate()
 
   return (
     <>
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 h-screen z-50 overflow-auto">
+          <div className="fixed inset-0 h-screen z-50 overflow-auto" onClick={()=>{}}>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -293,7 +269,8 @@ export const Card = ({
           src={card.images[0]}
           alt={card.turfName}
           fill
-          className="object-cover absolute z-10 inset-0"
+          className="object-cover absolute z-10 inset-0 h-full"
+          onClick={()=>{navigate(`/book?id=${card.id}`)}}
         />
       </motion.button>
     </>

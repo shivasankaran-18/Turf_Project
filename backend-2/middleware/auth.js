@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
 
-
 const authMiddleWare = async(req,res,next)=>{
     console.log(req.headers.authorization)
     const token = req.headers.authorization.split(" ")[1];
@@ -17,5 +16,8 @@ const authMiddleWare = async(req,res,next)=>{
         return res.json({success:false,message:"Error in jwt"});
     }
 }
+
+
+
 
 export {authMiddleWare}
