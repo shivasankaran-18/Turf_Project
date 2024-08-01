@@ -10,9 +10,11 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma=new PrismaClient()
 
+
+
 /*App Config*/
 const app = express();
-const PORT = 4000;
+const PORT = 3000;
 /* Middleware */
 app.use(express.json())
 
@@ -39,9 +41,9 @@ app.get("/test",async(req,res)=>{
 
 
 app.listen(PORT,()=>{
-    console.log("Running.........")
+    console.log("Running........."+PORT)
 });
 
-app.get("/",(req,res)=>{
+app.get("/test",(req,res)=>{
     res.send("Hello world from express");
 })
