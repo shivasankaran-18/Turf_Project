@@ -268,7 +268,7 @@ export  function Home() {
             
           >
         
-            <Link to={`/details`} >View Turf Detaisl</Link>
+            <Link to={`/details`} >View Turf Details</Link>
 
             
           </CardItem>
