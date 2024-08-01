@@ -76,7 +76,7 @@ export function BookingDetails() {
             <>
           
           <NavBar val="Booking Details"></NavBar>
-          <div className="flex justify-center mt-36">
+          <div className="flex  text-white justify-center mt-36">
               No users booked
           </div>
        
