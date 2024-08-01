@@ -6,7 +6,8 @@ import { Link, useNavigate } from "react-router-dom"
 export const NavBar = ({val}:{val:string}) => {
     const navigate=useNavigate();
     
-    return (
+    return (         
+        
         <nav className="  w-full border rounded-full border-y-4  border-cyan-400   ">
             <div className="container mx-auto flex flex-wrap items-center justify-between p-4">
                 <Link to="/home" className="flex items-center  space-x-3 rtl:space-x-reverse">
