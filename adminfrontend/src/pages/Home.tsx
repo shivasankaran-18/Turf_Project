@@ -121,9 +121,13 @@ export  function Home() {
 
   if(!available)
   {
-    return(
+    return (
+      <>
+        <NavBar val='home' />
+        <br></br>
+        <br></br>
       <div className="flex min-h-screen w-full flex-col bg-background">
-        <NavBar val='home'/>
+        
         <div className="flex justify-center items-center h-screen">
                     
         <div className="flex flex-col items-center justify-center space-y-4">
@@ -208,7 +212,7 @@ export  function Home() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-      </div>
+      </div></>
     )
   }
 
@@ -220,7 +224,7 @@ export  function Home() {
         <NavBar val="home" />
      
       <main className="flex-1 px-4 py-8 sm:px-6 mt-16">
-        <div className="mx-auto  bg-red-700 w-full">
+        <div className="mx-auto  bg-[#0f172a] w-full">
         
 
 <CardContainer className="inter-var ">
