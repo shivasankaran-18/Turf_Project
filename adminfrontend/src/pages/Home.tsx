@@ -126,14 +126,14 @@ export  function Home() {
         <NavBar val='home' />
         <br></br>
         <br></br>
-      <div className="flex min-h-screen w-full flex-col bg-background">
+      <div className="flex min-h-screen w-full flex-col bg-[#0f172a]">
         
         <div className="flex justify-center items-center h-screen">
                     
         <div className="flex flex-col items-center justify-center space-y-4">
               <ClipboardIcon className="h-16 w-16 text-muted" />
-              <h2 className="text-2xl font-bold">No Turfs Found</h2>
-              <p className="text-muted-foreground">
+              <h2 className="text-2xl font-bold text-white">No Turfs Found</h2>
+              <p className="text-muted  text-white">
                 You don't have any turfs yet. Click the "Add Turf" button to get started.
               </p>
              <Button size={"lg"} className="bg-green-600 hover:bg-green-800" onClick={()=>setIsOpenCard(true)}>
