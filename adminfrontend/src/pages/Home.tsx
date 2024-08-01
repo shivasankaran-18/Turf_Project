@@ -1,11 +1,11 @@
 import { SetStateAction, useEffect, useState } from "react"
 import { NavBar } from "../components/Navbar"
 import { Button } from "../shadcn/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../shadcn/ui/card"
+
 import axios from "axios"
 import { BACKEND_URL } from "../config"
 import { Spinner } from "../components/Spinner"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, } from "react-router-dom"
 import { Label } from "../shadcn/ui/label"
 import { Input } from "../shadcn/ui/input"
 
@@ -34,7 +34,7 @@ export  function Home() {
   const [flag,setFlag]=useState<boolean>(true)
   const [available,setAvailable]=useState<boolean>(true)
   const [isOpenCard,setIsOpenCard]=useState<boolean>(false)
-  const  navigate=useNavigate()
+
   const [newTurf,setNewTurf]=useState<detial>({area:" ",city:" ",state:" ",turfName:" "})
   const [images, setImages] = useState([]);
 
