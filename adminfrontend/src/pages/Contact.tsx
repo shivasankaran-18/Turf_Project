@@ -16,7 +16,7 @@ export const Contact=()=>{
       <div className="space-y-6">
         <div className="text-center">
           <h1 className="text-3xl text-white font-bold tracking-tight sm:text-4xl">Get in Touch</h1>
-          <p className="mt-3 max-w-2xl mx-auto text-muted-foreground sm:text-lg">
+          <p className="mt-3 max-w-2xl mx-auto text-muted-foreground sm:text-lg text-white">
             Have a question or want to work together? Fill out the form below and we'll get back to you as soon as
             possible.
           </p>

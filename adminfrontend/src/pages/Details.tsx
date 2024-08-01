@@ -115,7 +115,7 @@ export function Details() {
     setNewSlot(temp);
 
     setIsAddSlotOpen(false)
-    window.location.reload()
+    // window.location.reload()
   };
 
   if (!turfDetails) {
