@@ -96,7 +96,7 @@ export function BookingDetails() {
                     
         console.log(res)
         setIsOpen(false)
-        window.location.reload()
+     
 
 
     }
