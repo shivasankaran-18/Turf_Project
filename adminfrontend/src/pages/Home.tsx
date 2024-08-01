@@ -223,12 +223,12 @@ export  function Home() {
     <div className="flex min-h-screen w-full flex-col ">
         <NavBar val="home" />
      
-      <main className="flex-1 px-4 py-8 sm:px-6 mt-16">
+      <main className="flex-1 px-4 py-4 sm:px-6 mt-5">
         <div className="mx-auto  bg-[#0f172a] w-full">
         
 
 <CardContainer className="inter-var ">
-      <CardBody  className="bg-slate-700 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]  sm:w-[30rem] h-auto rounded-xl p-6 border ">
+      <CardBody  className="bg-slate-700 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1]   h-full rounded-xl p-6 border ">
         <CardItem
           translateZ="50"
           className="text-xl font-bold text-white"
@@ -254,7 +254,7 @@ export  function Home() {
                     details?.images[0]}
             height="1000"
             width="1000"
-            className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl border-purple-400 border"
+            className="h-96 w-full object-cover rounded-xl group-hover/card:shadow-xl border-cyan-500 border"
             alt="thumbnail"
           />
         </CardItem>

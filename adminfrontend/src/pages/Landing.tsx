@@ -21,10 +21,10 @@ export  function Landing() {
           <span className="text-3xl font-bold">TurfHub</span>
         </Link>
         <div className="flex justify-end w-full gap-6">
-        <Button className="text-white  w-1/6" onClick={()=>navigate("/signin")}>
+        <Button className="text-white bg-cyan-500  w-1/6" onClick={()=>navigate("/signin")}>
           SignIn
         </Button>
-        <Button  className=" text-white hover:bg-[#005A8E] w-1/6" onClick={()=>navigate("/signup")}>
+        <Button  className=" text-white bg-cyan-500 hover:bg-[#005A8E] w-1/6" onClick={()=>navigate("/signup")}>
           SignUp
         </Button>
         
