@@ -54,7 +54,7 @@ export const Contact=()=>{
                 <Label htmlFor="message">Message</Label>
                 <Textarea id="message" rows={5} placeholder="Enter your message" />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit"  className="w-full bg-cyan-500">
                 Submit
               </Button>
             </form>
