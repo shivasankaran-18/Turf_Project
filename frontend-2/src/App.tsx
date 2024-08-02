@@ -11,6 +11,7 @@ import { Booked } from './pages/Booked'
 import { Contact } from './pages/Contact'
 import {RecoilRoot } from "recoil"
 import { Landing } from './pages/Landing'
+import { Tournaments } from './pages/tournaments'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/book" element={<Book/>}></Route>
           <Route path="/booked" element={<Booked />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/tournaments" element={<Tournaments />}></Route>
         </Routes>
       
       </BrowserRouter>

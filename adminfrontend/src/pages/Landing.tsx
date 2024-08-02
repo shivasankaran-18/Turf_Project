@@ -2,7 +2,7 @@
 
 
 import { Button } from "../shadcn/ui/button"
-import { Avatar, AvatarImage, AvatarFallback } from "../shadcn/ui/avatar"
+
 import { Link, useNavigate } from "react-router-dom"
 import { BusIcon } from "lucide-react"
 import { InfiniteMovingCards } from "../shadcn/ui/infinite-moving-cards"
