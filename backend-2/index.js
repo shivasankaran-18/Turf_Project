@@ -30,10 +30,8 @@ app.use("/api/user",userRouter)
 
 
 app.get("/test",async(req,res)=>{
-    const data=await prisma.adminDetails.deleteMany({
-        where:{
-            id:14
-        }
+    const data=await prisma.tournament.deleteMany({
+      
         
     })
     return res.json(data)

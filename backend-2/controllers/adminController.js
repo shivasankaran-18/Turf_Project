@@ -1,8 +1,25 @@
+import { PutObjectAclCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand,GetObjectCommand } from "@aws-sdk/client-s3";
 import { PrismaClient } from '@prisma/client'
 
 
 const prisma = new PrismaClient();
 
+
+
+const bucket_name = process.env.BUCKET_NAME;
+const bucket_region = process.env.BUCKET_REGION;
+const access_key = process.env.ACCESS_KEY;
+const secret_key = process.env.SECRET_ACCESS_KEY;
+
+/* S3 Config */
+const s3Client = new S3Client({
+  region: bucket_region,
+  credentials: {
+    accessKeyId: access_key,
+    secretAccessKey: secret_key
+  }
+});
 
 const addTimeSlot = async(req,res)=>{
     try{
@@ -262,5 +279,56 @@ const updateTurfSlots = async (req, res) => {
         return res.json({msg:e})
     }
   }
+
+const randomName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
+const addTournament = async(req,res)=>{
+    const admin = prisma.adminDetails.findUnique({
+        where:{
+            id: req.headers.id
+        }
+    })
+    if(!admin){
+        return res.json({success:false,message:"Admin not found"})
+    }
+    const turf_id = await prisma.turf.findUnique({
+        where:{
+            adminId:admin.id
+        },select:{
+            id:true
+        }
+    })
+    try{
+        await prisma.$transaction(async (tx)=>{
+            const imageUrls = await Promise.all(req.files.map(async (file) =>{
+                const params = {
+                    Bucket: bucket_name,
+                    Key: randomName(),
+                    Body : file.buffer,
+                    ContentType : file.mimetype
+                };
+                const command = new PutObjectAclCommand(params);
+                await s3Client.send(command);
+                return `https://${bucket_name}.s3.${bucket_region}.amazonaws.com/${params.Key}`;
+            }));
+
+            const data = await prisma.tournament.create(
+            {
+                data:{
+                turfId : turf_id,
+                name:req.body.name,
+                mode : req.body.mode,
+                price : req.body.price,
+                registrationstartDate : req.body.stdate,
+                registrationendDate : req.body.enddate,
+                images: imageUrls
+                }
+            });
+            res.json({success:true,message:"Tournament Added"});
+    });
+}catch(error){
+    console.log(error)
+    res.json({success:true,message:""})
+}
+} 
   
-export  {addTimeSlot,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails,markpaid}
+export  {addTimeSlot,addTournament,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails,markpaid}
