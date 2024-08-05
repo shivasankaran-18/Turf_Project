@@ -40,6 +40,8 @@ export function Tournaments() {
   const [showUpcoming, setShowUpcoming] = useState(false);
   const [tournaments,setTournaments]=useState<tournaments | null>()
   const [details,setDetails]=useState<details | null>()
+  const[upcomingTournaments,setUpcomingTournaments]=useState<tournaments |null>()
+
   const navigate=useNavigate()
 
   function getDetails(id:number)
@@ -57,6 +59,23 @@ export function Tournaments() {
     }
   }
 
+  function storeUpcoming(){
+    console.log("hiiiiiiiiiiiiiiiii")
+    let temp=[]
+    for(let i=0;i<(tournaments?.length || 0);i++)
+    {
+      //@ts-ignore
+        if( new Date(tournaments[i]?.registrationstartDate) > new Date())
+        {
+          //@ts-ignore
+          temp.push(tournaments[i])
+
+        }
+    }
+    setUpcomingTournaments(temp)
+
+  }
+
   useEffect(()=>{
     axios.get(`${BACKEND_URL}/api/tournament/listtournament`,{
       headers:{
@@ -66,6 +85,7 @@ export function Tournaments() {
       console.log(data.data)
       setTournaments(data.data.tournaments)
       setDetails(data.data.details)
+      storeUpcoming()
     })
   
   
@@ -98,20 +118,22 @@ export function Tournaments() {
       <main className="container mx-auto px-4 md:px-6">
         <div className="flex justify-end mb-6">
           <Button
-            variant={showUpcoming ? "outline" : "destructive"}
+            variant={showUpcoming ? "destructive" : "outline"}
             onClick={() => setShowUpcoming(false)}
             className="mr-2"
           >
             All Tournaments
           </Button>
-          <Button variant={showUpcoming ? "destructive" : "outline"} onClick={() => setShowUpcoming(true)}>
+          <Button variant={showUpcoming ? "outline" : "destructive"} onClick={() => setShowUpcoming(true)}>
             Upcoming Tournaments
           </Button>
         </div>
+        {!showUpcoming ? 
         <div className="grid grid-cols-1       md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tournaments.map((tournament) => {
-            const isUpcoming = new Date(tournament.registrationstartDate) >= new Date();
-            console.log(isUpcoming)
+            const isUpcoming = new Date(tournament.registrationstartDate) > new Date();
+            const closed =new Date(tournament.registrationendDate)<new Date()
+            console.log(tournament.registrationstartDate +" "+new Date().toISOString())
             return (
               <Card key={tournament.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
                 <img src={tournament.images[0]} alt={tournament.name} className="w-full h-48 object-cover" />
@@ -124,10 +146,10 @@ export function Tournaments() {
                       <CalendarIcon className="w-5 h-5 text-gray-600" />
                       <span>{tournament.registrationstartDate}</span>
                     </div>
-                    {/* <div className="flex items-center gap-2">
-                      <ClockIcon className="w-5 h-5 text-gray-600" />
-                      <span>{tournament.time}</span>
-                    </div> */}
+                    <div className="flex items-center gap-2">
+                
+                      <span>{getDetails(tournament.turfId)?.turfName}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       <MapPinIcon className="w-5 h-5 text-gray-600" />
                       <span>{(`${getDetails(tournament.turfId)?.area}`) || ""}</span>
@@ -136,7 +158,7 @@ export function Tournaments() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button disabled={isUpcoming}  onClick={()=>navigate('/tournamentbook')}className="ml-auto">
+                  <Button disabled={isUpcoming || closed}  onClick={()=>navigate(`/tournamentbook?id=${tournament.id}`)}className="ml-auto">
                     Register
                   </Button>
                 </CardFooter>
@@ -144,6 +166,46 @@ export function Tournaments() {
             );
           })}
         </div>
+        :
+        <div className="grid grid-cols-1       md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {//@ts-ignore
+          upcomingTournaments.map((tournament) => {
+      
+            console.log(tournament.registrationstartDate +" "+new Date().toISOString())
+            return (
+              <Card key={tournament.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
+                <img src={tournament.images[0]} alt={tournament.name} className="w-full h-48 object-cover" />
+                <CardHeader>
+                  <CardTitle className="text-xl font-semibold">{tournament.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon className="w-5 h-5 text-gray-600" />
+                      <span>{tournament.registrationstartDate}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                
+                      <span>{getDetails(tournament.turfId)?.turfName}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPinIcon className="w-5 h-5 text-gray-600" />
+                      <span>{(`${getDetails(tournament.turfId)?.area}`) || ""}</span>
+                    </div>
+          
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button   onClick={()=>navigate(`/tournamentbook?id=${tournament.id}`)}className="ml-auto">
+                    Register
+                  </Button>
+                </CardFooter>
+              </Card>
+            );
+          })}
+        </div>
+
+        }
       </main>
     </div>
   );
