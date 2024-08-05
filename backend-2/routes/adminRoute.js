@@ -1,5 +1,5 @@
 import express from "express";
-import { addTimeSlot, addTurfSlots, getNotPaidDetails, getPaidDetails, getTurf,  markpaid,  updateTurfDetails, updateTurfSlots, addTournament } from "../controllers/adminController.js";
+import { addTimeSlot, addTurfSlots, getNotPaidDetails, getPaidDetails, getTurf,  markpaid,  updateTurfDetails, updateTurfSlots } from "../controllers/adminController.js";
 
 import { admindetail, adminlogin, adminregister } from "../controllers/adminDetailsController.js";
 import { authMiddleWare } from "../middleware/auth.js";
@@ -26,7 +26,7 @@ adminRouter.get("/getNotPaidDetails",authMiddleWare,getNotPaidDetails)
 adminRouter.get("/getPaidDetails",authMiddleWare,getPaidDetails)
 adminRouter.post("/addturf",authMiddleWare,upload.array('images',5),addTurf)
 adminRouter.post("/markpaid",authMiddleWare,markpaid)
-adminRouter.post("/addTournament",authMiddleWare,upload.array('images',5),addTournament);
+
 // adminRouter.get("/getTurf",authMiddleWare,admingetTurf)
 
 export default adminRouter
