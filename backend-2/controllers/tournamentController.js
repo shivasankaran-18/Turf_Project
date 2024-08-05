@@ -126,7 +126,17 @@ const getavailableUsersforATournament = async (req,res) =>{
 
 
 const bookTournament = async (req,res) => {
-    const {tournamentId,teamLeadId,teamLeadName,memberEmails} = req.body;
+    const {tournamentId,memberEmails} = req.body;
+    const teamLeadId = req.headers.id;
+    const teamLeadName = await prisma.user.findUnique({
+        where:{
+            id:teamLeadId
+        },
+        select:{
+            name:true
+        }
+    })
+    console.log(teamLeadName)
     try{
         const members = await prisma.user.findMany({
             where:{
@@ -143,7 +153,7 @@ const bookTournament = async (req,res) => {
             data:{
                 tournamentId : parseInt(tournamentId),
                 teamLeadId:parseInt(teamLeadId),
-                teamLeadName: teamLeadName,
+                teamLeadName: teamLeadName.name,
             }
         });
         console.log(members);
@@ -165,8 +175,31 @@ const bookTournament = async (req,res) => {
 }
 
 const getregisteredTournement = async(req,res) =>{
-    console.log("HI");
-    res.json({success:true,message:"Working"})
+    const id = req.headers.id;
+    const asTeamLeader = await prisma.tournamentParticipant.findMany({
+        where:{
+            teamLeadId:id
+        },select:{
+            tournamentId:true
+        }
+    })
+    const tournamentIds = asTeamLeader.map(x=>x.tournamentId);
+    
+    const tournamentsAsTeamLead = await prisma.tournament.findMany({
+        where:{
+            id:{
+                in : tournamentIds
+            }
+        }
+    })
+    // const asMember = await prisma.member.findMany({
+    //     where:{
+    //         userId:id,
+    //     },select:{
+
+    //     }
+    // })
+    res.json({success:true,data:tournamentsAsTeamLead})
 }
 
 export {getavailableUsersforATournament,bookTournament,getregisteredTournement,addTournament,listTournament}
