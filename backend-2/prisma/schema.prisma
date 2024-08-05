@@ -22,6 +22,7 @@ model User{
   userBooking UserBooking[]
   reviews Reviews[]
   member Member[]
+  tournment TournamentParticipant[]
 }
 
 model Turf {
@@ -49,7 +50,7 @@ model Tournament {
   total_teams           Int     
   duration              Int        
   price                 Int         
-  images                String     
+  images                String[]     
   registrationstartDate String
   registrationendDate   String
   tournamentparticipation   TournamentParticipant[]
@@ -59,8 +60,10 @@ model Tournament {
 model TournamentParticipant{
   id Int @id @default(autoincrement())
   tournamentId  Int
+  teamLeadId    Int @unique
   teamLeadName String
   members      Member[]
+  teamLead    User  @relation(fields: [teamLeadId],references: [id])
   tournament  Tournament @relation(fields: [tournamentId],references: [id],onDelete: Cascade)
 }
 
