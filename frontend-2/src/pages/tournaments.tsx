@@ -1,55 +1,95 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../shadcn/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../shadcn/ui/card";
 import { NavBar } from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
+import { Spinner } from "../components/Spinner";
+
+type tournaments={
+  id:number,
+  name:string,
+  mode:number,
+  turfId:number,
+  total_teams:number,
+  duration:number,
+  price:number,
+  images:string[],
+  registrationstartDate:string,
+  registrationendDate:string
+}[]
+
+type details={
+ 
+            "id": number,
+            "turfName": string,
+            "area": string,
+            "city": string,
+            "likes": number,
+            "state": string,
+            "images": string[]
+            "adminId": number,
+            "Sports": string[]
+ 
+}[]
+
+
 
 export function Tournaments() {
   const [showUpcoming, setShowUpcoming] = useState(false);
-  const tournaments = [
+  const [tournaments,setTournaments]=useState<tournaments | null>()
+  const [details,setDetails]=useState<details | null>()
+  const navigate=useNavigate()
+
+  function getDetails(id:number)
+  {
+    for(let i=0;i<(details?.length || 0);i++)
     {
-      id: 1,
-      name: "Summer Turf Classic",
-      date: "June 15, 2024",
-      time: "9:00 AM - 5:00 PM",
-      location: "Central Park, New York",
-      description: "Join us for an exciting day of turf competition and camaraderie. Players of all skill levels are welcome.",
-      imageUrl: "https://example.com/summer-turf-classic.jpg",
-    },
-    {
-      id: 2,
-      name: "Fall Turf Showdown",
-      date: "October 5, 2024",
-      time: "11:00 AM - 7:00 PM",
-      location: "Griffith Park, Los Angeles",
-      description: "Experience the thrill of the Fall Turf Showdown, where the best turf athletes come together to showcase their skills.",
-      imageUrl: "https://example.com/fall-turf-showdown.jpg",
-    },
-    {
-      id: 3,
-      name: "Winter Turf Invitational",
-      date: "January 20, 2025",
-      time: "8:00 AM - 4:00 PM",
-      location: "Millennium Park, Chicago",
-      description: "Don't miss the Winter Turf Invitational, a must-attend event for any true turf enthusiast.",
-      imageUrl: "https://example.com/winter-turf-invitational.jpg",
-    },
-    {
-      id: 4,
-      name: "Spring Turf Challenge",
-      date: "April 12, 2024",
-      time: "10:00 AM - 6:00 PM",
-      location: "Golden Gate Park, San Francisco",
-      description: "Get ready for the Spring Turf Challenge, where the top turf players from around the country will compete for the championship.",
-      imageUrl: "https://example.com/spring-turf-challenge.jpg",
-    },
-  ];
-  const filteredTournaments = showUpcoming
-    ? tournaments.filter((tournament) => new Date(tournament.date) >= new Date())
-    : tournaments;
+      //@ts-ignore
+      if(details[i].id==id)
+      {
+        //@ts-ignore
+          return (details[i]);
+
+      }
+
+    }
+  }
+
+  useEffect(()=>{
+    axios.get(`${BACKEND_URL}/api/tournament/listtournament`,{
+      headers:{
+        Authorization:localStorage.getItem("usertoken")
+      }
+    }).then((data)=>{
+      console.log(data.data)
+      setTournaments(data.data.tournaments)
+      setDetails(data.data.details)
+    })
+  
+  
+  
+  },[])
+ 
+  if(!tournaments)
+  {
+   
+    return(
+      
+       <div className='flex justify-center items-center h-screen'>
+       
+       <Spinner />
+       </div>
+       
+       
+    )
+  }
+
 
   return (
     <div className="text-foreground min-h-screen ">
-      <NavBar val="tournaments" />
+  <NavBar val="tournaments" />
       <header className="text-primary-foreground py-6 px-4 md:px-6">
         <div className="container mx-auto">
           <h1 className="text-3xl font-extrabold">Tournaments</h1>
@@ -68,12 +108,13 @@ export function Tournaments() {
             Upcoming Tournaments
           </Button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTournaments.map((tournament) => {
-            const isUpcoming = new Date(tournament.date) >= new Date();
+        <div className="grid grid-cols-1       md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tournaments.map((tournament) => {
+            const isUpcoming = new Date(tournament.registrationstartDate) >= new Date();
+            console.log(isUpcoming)
             return (
               <Card key={tournament.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                <img src={tournament.imageUrl} alt={tournament.name} className="w-full h-48 object-cover" />
+                <img src={tournament.images[0]} alt={tournament.name} className="w-full h-48 object-cover" />
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold">{tournament.name}</CardTitle>
                 </CardHeader>
@@ -81,21 +122,21 @@ export function Tournaments() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CalendarIcon className="w-5 h-5 text-gray-600" />
-                      <span>{tournament.date}</span>
+                      <span>{tournament.registrationstartDate}</span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    {/* <div className="flex items-center gap-2">
                       <ClockIcon className="w-5 h-5 text-gray-600" />
                       <span>{tournament.time}</span>
-                    </div>
+                    </div> */}
                     <div className="flex items-center gap-2">
                       <MapPinIcon className="w-5 h-5 text-gray-600" />
-                      <span>{tournament.location}</span>
+                      <span>{(`${getDetails(tournament.turfId)?.area}`) || ""}</span>
                     </div>
-                    <p className="text-gray-700">{tournament.description}</p>
+                    {/* <p className="text-gray-700">{tournament.description}</p> */}
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button disabled={isUpcoming} className="ml-auto">
+                  <Button disabled={isUpcoming}  onClick={()=>navigate('/tournamentbook')}className="ml-auto">
                     Register
                   </Button>
                 </CardFooter>
