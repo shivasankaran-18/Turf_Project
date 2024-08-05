@@ -323,7 +323,7 @@ const addTournament = async(req, res) => {
                     price: parseInt(req.body.price),
                     registrationstartDate: req.body.stdate,
                     registrationendDate: req.body.enddate,
-                    images: imageUrls
+                    images:imageUrls
                 }
             });
             res.json({ success: true, message: data });
