@@ -22,18 +22,9 @@ const s3Client = new S3Client({
 const randomName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 const addTournament = async(req, res) => {
     console.log("admin id:", req.headers.id)
-    const admin = await prisma.adminDetails.findUnique({
-        where: {
-            id: req.headers.id
-        }
-    });
-    console.log(admin.id)
-    if (!admin) {
-        return res.json({ success: false, message: "Admin not found" });
-    }
     const turf = await prisma.turf.findUnique({
         where: {
-            adminId: admin.id
+            adminId: req.headers.id,
         },
         select: {
             id: true
@@ -87,12 +78,15 @@ const listTournament=async(req,res)=>{
 }
 
 const getavailableUsersforATournament = async (req,res) =>{
-    const Id = req.headers.id;
-    console.log(Id) 
+    console.log(req.params);
+    const tournamentId = req.body.ID;
+    const userId = req.headers.id;
+    console.log(tournamentId)
+    console.log(userId);
     try{
         const participants = await prisma.tournamentParticipant.findMany({
             where:{
-                tournamentId: parseInt(Id)
+                tournamentId: parseInt(tournamentId)
             },select:{
                 teamLeadId: true,
                 members:{
@@ -107,7 +101,7 @@ const getavailableUsersforATournament = async (req,res) =>{
             participant.members.forEach(member => ids.add(member.userId));
             return ids;
         },new Set());
-
+        participantsInThatTournament.add(req.headers.id)
         const users = await prisma.user.findMany({
             where:{
                 id:{
@@ -192,13 +186,24 @@ const getregisteredTournement = async(req,res) =>{
             }
         }
     })
-    // const asMember = await prisma.member.findMany({
-    //     where:{
-    //         userId:id,
-    //     },select:{
-
-    //     }
-    // })
+    const asMember = await prisma.member.findMany({
+        where:{
+            userId:id,
+        },select:{
+            participation_id:true,
+        }
+    })
+    const participantionIds = asMember.map(x=>x.participation_id)
+    const tournamentIdasMember = await prisma.tournamentParticipant.findMany({
+        where:{
+            id:{
+                in:participantionIds,
+            }
+        },select:{
+            tournamentId:true,
+        }
+    })
+    console.log(tournamentIdasMember)
     res.json({success:true,data:tournamentsAsTeamLead})
 }
 
