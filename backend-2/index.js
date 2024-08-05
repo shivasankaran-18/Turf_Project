@@ -31,7 +31,14 @@ app.use("/api/tournament",tournamentRouter)
 
 
 app.get("/test",async(req,res)=>{
-    const data=await prisma.tournament.deleteMany({
+    const data=await prisma.tournament.update({
+        where:{
+            id:1
+        },data:{
+            registrationstartDate:"2024-08-06",
+            registrationendDate:"2024-08-11"
+        }
+
       
         
     })
