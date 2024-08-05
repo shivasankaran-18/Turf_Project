@@ -12,6 +12,7 @@ import { Contact } from './pages/Contact'
 import {RecoilRoot } from "recoil"
 import { Landing } from './pages/Landing'
 import { Tournaments } from './pages/tournaments'
+import { TournamentDetail } from './pages/tournamentdetail'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/booked" element={<Booked />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/tournaments" element={<Tournaments />}></Route>
+          <Route path="/tournamentbook" element={<TournamentDetail />}></Route>
         </Routes>
       
       </BrowserRouter>

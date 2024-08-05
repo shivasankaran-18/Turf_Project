@@ -72,6 +72,20 @@ const addTournament = async(req, res) => {
         res.json({ success: false, message: "Error creating tournament" });
     }
 };
+
+const listTournament=async(req,res)=>{
+    try{
+        const tournaments=await prisma.tournament.findMany({})
+        const details=await prisma.turf.findMany({})
+        return res.json({tournaments,details})
+    }
+    catch{
+        return res.json({msg:"error"})
+    }
+    
+
+}
+
 const getavailableUsersforATournament = async (req,res) =>{
     const Id = req.headers.id;
     console.log(Id) 
@@ -155,4 +169,4 @@ const getregisteredTournement = async(req,res) =>{
     res.json({success:true,message:"Working"})
 }
 
-export {getavailableUsersforATournament,bookTournament,getregisteredTournement}
+export {getavailableUsersforATournament,bookTournament,getregisteredTournement,listTournament}

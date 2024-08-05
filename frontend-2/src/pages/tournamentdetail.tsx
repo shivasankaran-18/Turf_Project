@@ -5,6 +5,7 @@ import { Label } from "../shadcn/ui/label"
 import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../shadcn/ui/card"
+import { NavBar } from "../components/Navbar"
 
 export  function TournamentDetail() {
   const [showUpcoming, setShowUpcoming] = useState(false)
@@ -94,7 +95,10 @@ export  function TournamentDetail() {
   }
   if (selectedTournament) {
     return (
+      <div className="h-screen">
+      <NavBar val="tournaments"></NavBar>
       <div className="bg-background text-foreground min-h-screen">
+        
         <header className="bg-primary text-primary-foreground py-6 px-4 md:px-6">
           <div className="container mx-auto">
             <h1 className="text-2xl font-bold">{//@ts-ignore
@@ -175,6 +179,7 @@ export  function TournamentDetail() {
             </div>
           </div>
         </main>
+      </div>
       </div>
     )
   }
