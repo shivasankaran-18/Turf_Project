@@ -155,4 +155,4 @@ const getregisteredTournement = async(req,res) =>{
     res.json({success:true,message:"Working"})
 }
 
-export {getavailableUsersforATournament,bookTournament,getregisteredTournement}
+export {getavailableUsersforATournament,bookTournament,getregisteredTournement,addTournament}

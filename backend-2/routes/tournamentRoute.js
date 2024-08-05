@@ -1,7 +1,6 @@
 import express from "express"
-import { bookTournament, getavailableUsersforATournament, getregisteredTournement } from "../controllers/tournamentController.js";
+import { addTournament, bookTournament, getavailableUsersforATournament, getregisteredTournement } from "../controllers/tournamentController.js";
 import { authMiddleWare } from "../middleware/auth.js";
-import { addTournament } from "../controllers/adminController.js";
 import multer from "multer";
 /* Multer config */
 const storage = multer.memoryStorage();

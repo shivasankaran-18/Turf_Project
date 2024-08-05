@@ -280,58 +280,6 @@ const updateTurfSlots = async (req, res) => {
     }
   }
 
-const randomName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
-const addTournament = async(req, res) => {
-    console.log("admin id:", req.headers.id)
-    const admin = await prisma.adminDetails.findUnique({
-        where: {
-            id: req.headers.id
-        }
-    });
-    console.log(admin.id)
-    if (!admin) {
-        return res.json({ success: false, message: "Admin not found" });
-    }
-    const turf = await prisma.turf.findUnique({
-        where: {
-            adminId: admin.id
-        },
-        select: {
-            id: true
-        }
-    });
-    try {
-        await prisma.$transaction(async (tx) => {
-            const imageUrls = await Promise.all(req.files.map(async (file) => {
-                const params = {
-                    Bucket: bucket_name,
-                    Key: randomName(),
-                    Body: file.buffer,
-                    ContentType: file.mimetype,
-                };
-                const command = new PutObjectCommand(params);
-                await s3Client.send(command);
-                return `https://${bucket_name}.s3.${bucket_region}.amazonaws.com/${params.Key}`;
-            }));
-            const data = await tx.tournament.create({
-                data: {
-                    turfId: turf.id,
-                    total_teams:parseInt(req.body.total_teams),
-                    duration:parseInt(req.body.duration),
-                    name: req.body.name,
-                    mode: parseInt(req.body.mode),
-                    price: parseInt(req.body.price),
-                    registrationstartDate: req.body.stdate,
-                    registrationendDate: req.body.enddate,
-                    images: imageUrls
-                }
-            });
-            res.json({ success: true, message: data });
-        });
-    } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: "Error creating tournament" });
-    }
-};
+
   
-export  {addTimeSlot,addTournament,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails,markpaid}
+export  {addTimeSlot,getTurf,updateTurfDetails,updateTurfSlots,addTurfSlots,getNotPaidDetails,getPaidDetails,markpaid}
