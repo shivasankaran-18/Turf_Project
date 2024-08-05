@@ -81,7 +81,7 @@ const bookTournament = async (req,res) => {
     }
 }
 
-const getregisteredTournement = async(req,res) =>{
-}
+// const getregisteredTournement = async(req,res) =>{
+// }
 
 export {getavailableUsersforATournament,bookTournament}
