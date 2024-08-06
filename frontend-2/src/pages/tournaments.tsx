@@ -37,10 +37,10 @@ type details={
 
 
 export function Tournaments() {
-  const [showUpcoming, setShowUpcoming] = useState(false);
+  const [showActive, setShowActive] = useState(false);
   const [tournaments,setTournaments]=useState<tournaments | null>()
   const [details,setDetails]=useState<details | null>()
-  const[upcomingTournaments,setUpcomingTournaments]=useState<tournaments |null>()
+  const[activeTournaments,setActiveTournaments]=useState<tournaments |null>()
 
   const navigate=useNavigate()
 
@@ -59,13 +59,13 @@ export function Tournaments() {
     }
   }
 
-  function storeUpcoming(){
-    console.log("hiiiiiiiiiiiiiiiii")
+  function storeActive(){
+ 
     let temp=[]
     for(let i=0;i<(tournaments?.length || 0);i++)
     {
       //@ts-ignore
-        if( new Date(tournaments[i]?.registrationstartDate) > new Date())
+        if( new Date(tournaments[i]?.registrationstartDate) <= new Date() && new Date(tournaments[i]?.registrationendDate)>=new Date())
         {
           //@ts-ignore
           temp.push(tournaments[i])
@@ -73,7 +73,7 @@ export function Tournaments() {
         }
     }
     console.log(temp)
-    setUpcomingTournaments(temp)
+    setActiveTournaments(temp)
 
   }
 
@@ -84,10 +84,11 @@ export function Tournaments() {
       }
     }).then((data)=>{
       console.log(data.data)
-      storeUpcoming()
+      
       setTournaments(data.data.tournaments)
       setDetails(data.data.details)
-     
+      storeActive()
+
     })
   
   
@@ -120,17 +121,17 @@ export function Tournaments() {
       <main className="container mx-auto px-4 md:px-6">
         <div className="flex justify-end mb-6">
           <Button
-            variant={showUpcoming ? "destructive" : "outline"}
-            onClick={() => setShowUpcoming(false)}
+            variant={showActive ? "destructive" : "outline"}
+            onClick={() => setShowActive(false)}
             className="mr-2"
           >
             All Tournaments
           </Button>
-          <Button variant={showUpcoming ? "outline" : "destructive"} onClick={() => setShowUpcoming(true)}>
-            Upcoming Tournaments
+          <Button variant={showActive ? "outline" : "destructive"} onClick={() => setShowActive(true)}>
+            Active Tournaments
           </Button>
         </div>
-        {!showUpcoming ? 
+        {!showActive ? 
         <div className="grid grid-cols-1       md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tournaments.map((tournament) => {
             const isUpcoming = new Date(tournament.registrationstartDate) > new Date();
@@ -143,8 +144,10 @@ export function Tournaments() {
                   <CardTitle className="text-xl font-semibold">{tournament.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-2">
+                  <div className="space-y-2 gap-4">
+                  <p className="text-left font-bold">Registration Period</p>
                     <div className="flex">
+                     
                     <div className="flex items-center gap-2">
                       <CalendarIcon className="w-5 h-5 text-gray-600" />
                       <span>{tournament.registrationstartDate.split('-').reverse().join('-') }</span>
@@ -177,8 +180,8 @@ export function Tournaments() {
         </div>
         :
         <div className="grid grid-cols-1       md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {//@ts-ignore
-          upcomingTournaments.map((tournament) => {
+          {
+          activeTournaments?.map((tournament) => {
       
             console.log(tournament.registrationstartDate +" "+new Date().toISOString())
             return (
@@ -189,6 +192,7 @@ export function Tournaments() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
+                  <p className="text-left font-bold">Registration Period</p>
                   <div className="flex">
                     <div className="flex items-center gap-2">
                       <CalendarIcon className="w-5 h-5 text-gray-600" />

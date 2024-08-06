@@ -31,17 +31,11 @@ app.use("/api/tournament",tournamentRouter)
 
 
 app.get("/test",async(req,res)=>{
-    const data=await prisma.tournament.update({
+    const data=await prisma.tournament.delete({
         where:{
-            id:2
-        },data:{
-            registrationstartDate:"2024-10-10",
-            registrationendDate:"2024-10-12"
+            id:6
         }
-
-      
-        
-    })
+})
     return res.json(data)
 })
 

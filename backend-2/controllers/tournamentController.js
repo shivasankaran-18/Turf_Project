@@ -69,14 +69,74 @@ const listTournament=async(req,res)=>{
         const params=req.query.id;
         let tournaments;
         let details;
+
         if(params)
         {
-            tournaments=await prisma.tournament.findUnique({where:{id:parseInt(params)}})
+
+            tournaments=await prisma.tournament.findUnique({
+                where:{
+                     id:parseInt(params)
+                    
+                    }})
             details=await prisma.turf.findUnique({where:{id:tournaments.turfId}})
         }
+
         else{
-            tournaments=await prisma.tournament.findMany({})
-            details=await prisma.turf.findMany()
+       
+            const teamLeadTournaments=await prisma.tournamentParticipant.findMany({
+                where:{
+                    teamLeadId:req.headers.id
+                },
+                select:{
+                    tournamentId:true
+                }
+            })
+            const teamMemberTournaments=await prisma.member.findMany({
+                where:{
+                    userId:req.headers.id
+                },
+                select:{
+                    tournamentParticipation:{
+                        select:{
+                            tournamentId:true
+                        }
+                    }
+                }
+
+            })
+           
+
+            let set=new Set()
+            for(let i=0;i<teamLeadTournaments.length;i++)
+            {
+                set.add(teamLeadTournaments[i].tournamentId)
+            }
+            for(let i=0;i<teamMemberTournaments.length;i++)
+            {
+                
+
+                set.add(teamMemberTournaments[i].tournamentParticipation.tournamentId)
+            }
+            console.log("set"+Array.from(set))
+            tournaments=await prisma.tournament.findMany({
+                where:{
+                    id:{
+                       notIn : Array.from(set)
+                    }
+                },
+
+            })
+            console.log("availabel  "+tournaments)
+            let turfs=tournaments.reduce((acc,val)=>{
+                acc.add(val.turfId)
+                return acc
+
+            },new Set())
+            console.log("turfs"+turfs.toString())
+            details=await prisma.turf.findMany({where:{
+                id:{in:Array.from(turfs)}
+            }})
+         
         }
        
         return res.json({tournaments,details})
@@ -130,6 +190,7 @@ const getavailableUsersforATournament = async (req,res) =>{
 
 const bookTournament = async (req,res) => {
     const {tournamentId,memberEmails} = req.body;
+    console.log(memberEmails)
     const teamLeadId = req.headers.id;
     const teamLeadName = await prisma.user.findUnique({
         where:{
@@ -160,6 +221,7 @@ const bookTournament = async (req,res) => {
             }
         });
         console.log(members);
+
         const memberPromises = members.map((member) => {
             return prisma.member.create({
               data: {
@@ -168,7 +230,17 @@ const bookTournament = async (req,res) => {
               },
             });
         });
+
+        
         await Promise.all(memberPromises);
+        await prisma.tournament.update({
+            where:{
+                id:parseInt(tournamentId)
+            },
+            data:{
+                total_teams:{decrement:1}
+            }
+        })
         res.json({ success: true, message: "Tournament booked successfully" ,members:memberPromises,participation:newParticipant});
     }
     catch(error){

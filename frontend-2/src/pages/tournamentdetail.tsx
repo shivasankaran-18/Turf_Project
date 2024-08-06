@@ -8,6 +8,16 @@ import { BACKEND_URL } from "../config";
 import { Spinner } from "../components/Spinner";
 import { CalendarIcon, TicketIcon } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+
+} from "../shadcn/ui/dialog"
+import { Toaster } from "../shadcn/ui/toaster";
 
 type Tournament = {
   id: number;
@@ -47,7 +57,8 @@ export function TournamentDetail() {
   const [tournament, setTournament] = useState<Tournament | null>(null);
   const [details, setDetails] = useState<Detail | null>(null);
   const [teamMembers, setTeamMembers] = useState<User[]>([]);
-  const [selectedTeamMembers, setSelectedTeamMembers] = useState<(User | null)[]>([null]);
+  const [selectedTeamMembers, setSelectedTeamMembers] = useState<string[] >([""]);
+  const [isDialogOpen,setIsDialogOpen]=useState<boolean>(false)
 
   useEffect(() => {
     axios.get(`${BACKEND_URL}/api/tournament/listtournament?id=${search.get("id")}`, {
@@ -57,29 +68,32 @@ export function TournamentDetail() {
     }).then((data) => {
       setDetails(data.data.details);
       setTournament(data.data.tournaments);
-      setSelectedTeamMembers(new Array(data.data.tournaments.mode).fill(null));
+ 
     });
 
-    axios.get(`${BACKEND_URL}/api/user/getusers`, {
+    axios.post(`${BACKEND_URL}/api/tournament/getusers`, {
+      ID:search.get("id")
+    },{
       headers: {
         Authorization: localStorage.getItem("usertoken")
       }
     }).then((data) => {
-      setTeamMembers(data.data.users);
+      console.log(data.data)
+      setTeamMembers(data.data.data);
     });
   }, [search]);
 
   function handleTeamMemberChange(index: number, value: string) {
-    const updatedTeamMembers = [...selectedTeamMembers];
+    const updatedTeamMembers = [...selectedTeamMembers] ;
     const user = teamMembers.find((member) => member.email === value);
     if(index==updatedTeamMembers.length)
     {
-      updatedTeamMembers.push(user || null)
+      updatedTeamMembers.push(user?.email || "")
     }
     else{
-      updatedTeamMembers[index] = user || null;
+      updatedTeamMembers[index] = user?.email || "";
     }
-    
+    console.log(updatedTeamMembers)
     setSelectedTeamMembers(updatedTeamMembers);
   }
 
@@ -90,17 +104,17 @@ export function TournamentDetail() {
       </div>
     );
   }
-  console.log(selectedTeamMembers)
+  console.log(teamMembers)
 
   const availableTeamMembers = teamMembers.filter(
-    (member) => !selectedTeamMembers.some((selected) => selected?.email === member.email)
+    (member) => !selectedTeamMembers.some((selected) => selected === member.email)
   );
 
   return (
     <div className="bg-background text-foreground min-h-screen">
       <main className="container mx-auto py-12 px-4 md:px-6">
-        <div className="flex flex-col gap-6">
-          <div className="flex justify-center">
+        <div className="flex flex-col gap-6 ">
+          <div className="flex justify-center ">
             <img
               src={details?.images[0]}
               alt={tournament.name}
@@ -120,11 +134,11 @@ export function TournamentDetail() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CalendarIcon className="w-5 h-5" />
-                  <span>Start Date: {tournament.registrationstartDate.split('-').reverse().join('-')}</span>
+                  <span>Reg Start Date: {tournament.registrationstartDate.split('-').reverse().join('-')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CalendarIcon className="w-5 h-5" />
-                  <span>End Date: {tournament.registrationendDate.split('-').reverse().join('-')}</span>
+                  <span>Reg End Date: {tournament.registrationendDate.split('-').reverse().join('-')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <TicketIcon className="w-5 h-5" />
@@ -142,14 +156,14 @@ export function TournamentDetail() {
             </div>
             <div className="mt-6 space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="team-leader">Team Leader</Label>
+                <Label  className=" flex ms-4 text-lg ">Team Leader</Label>
                 <Input
                   id="team-leader"
                   type="email"
                   placeholder="Team Leader Email"
-                  value={teamLeader}
+                  value={"test@gmail.com"}
                   // onChange={(e) => setTeamLeader(e.target.value)}
-          
+                  className="w-1/2"
                   required
                 />
               </div>
@@ -178,11 +192,40 @@ export function TournamentDetail() {
                   </div>
                 ))}
               </div>
-              <Button variant="destructive">Register</Button>
+              <Button variant="destructive" onClick={()=>setIsDialogOpen(true)}>Register</Button>
             </div>
           </div>
         </div>
       </main>
+      <Toaster />
+               
+                   
+               <Dialog open={isDialogOpen} >
+                 <DialogContent>
+                   <DialogHeader>
+                     <DialogTitle>Confirm Booking</DialogTitle>
+                  </DialogHeader>
+                   <DialogDescription>
+                    Are You Sure?.
+                 </DialogDescription>
+                 <DialogFooter className="flex justify-between">
+                 <Button onClick={()=>setIsDialogOpen(false)}>Close</Button>
+                <Button onClick={async()=>
+                {
+                  const res=await axios.post(`${BACKEND_URL}/api/tournament/book`,{
+                    tournamentId:search.get("id"),
+                    memberEmails:selectedTeamMembers
+                  },{
+                    headers:{
+                      Authorization:localStorage.getItem("usertoken")
+                    }
+                  })
+                  console.log(res)
+                  setIsDialogOpen(false)
+                   }}>Confirm</Button>
+               </DialogFooter>
+                 </DialogContent>
+               </Dialog>
     </div>
   );
 }
@@ -228,3 +271,4 @@ function MapPinIcon(props) {
     </svg>
   );
 }
+
