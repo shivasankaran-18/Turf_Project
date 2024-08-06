@@ -10,7 +10,7 @@ const upload = multer({ storage: storage });
 const tournamentRouter = express.Router();
 
 
-tournamentRouter.get("/getusers",authMiddleWare,getavailableUsersforATournament)
+tournamentRouter.post("/getusers",authMiddleWare,getavailableUsersforATournament)
 tournamentRouter.post("/book",authMiddleWare,bookTournament)
 tournamentRouter.get("/bookedtournament",authMiddleWare,getregisteredTournement)
 tournamentRouter.post("/addtournament",authMiddleWare,upload.array('images',5),addTournament);
