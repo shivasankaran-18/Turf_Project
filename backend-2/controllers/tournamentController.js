@@ -285,7 +285,7 @@ const getregisteredTournement = async(req,res) =>{
         }
     })
     console.log(tournamentIdasMember)
-    res.json({success:true,data:tournamentsAsTeamLead})
+    res.json({success:true,data1:tournamentsAsTeamLead,data2:tournamentIdasMember})
 }
 
 export {getavailableUsersforATournament,bookTournament,getregisteredTournement,addTournament,listTournament}
