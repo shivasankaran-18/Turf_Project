@@ -1,98 +1,193 @@
+import { useEffect, useState } from "react";
+import { Label } from "../shadcn/ui/label";
+import { Input } from "../shadcn/ui/input";
+import { Button } from "../shadcn/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/ui/select";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
+import { Spinner } from "../components/Spinner";
+import { CalendarIcon, TicketIcon } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 
+type Tournament = {
+  id: number;
+  name: string;
+  mode: number;
+  turfId: number;
+  total_teams: number;
+  duration: number;
+  price: number;
+  images: string[];
+  registrationstartDate: string;
+  registrationendDate: string;
+};
 
-import { useState } from "react"
-import { Label } from "../shadcn/ui/label"
-import { Input } from "../shadcn/ui/input"
-import { Button } from "../shadcn/ui/button"
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../shadcn/ui/card"
-import { NavBar } from "../components/Navbar"
+type Detail = {
+  id: number;
+  turfName: string;
+  area: string;
+  city: string;
+  likes: number;
+  state: string;
+  images: string[];
+  adminId: number;
+  Sports: string[];
+};
 
-export  function TournamentDetail() {
- 
-  const [teamLeader, ] = useState("user@example.com")
-  
+type User = {
+  name: string;
+  password: string;
+  id: number;
+  email: string;
+};
+
+export function TournamentDetail() {
+  const [teamLeader, setTeamLeader] = useState("user@example.com");
+  const [search] = useSearchParams();
+  const [tournament, setTournament] = useState<Tournament | null>(null);
+  const [details, setDetails] = useState<Detail | null>(null);
+  const [teamMembers, setTeamMembers] = useState<User[]>([]);
+  const [selectedTeamMembers, setSelectedTeamMembers] = useState<(User | null)[]>([null]);
+
+  useEffect(() => {
+    axios.get(`${BACKEND_URL}/api/tournament/listtournament?id=${search.get("id")}`, {
+      headers: {
+        Authorization: localStorage.getItem("usertoken")
+      }
+    }).then((data) => {
+      setDetails(data.data.details);
+      setTournament(data.data.tournaments);
+      setSelectedTeamMembers(new Array(data.data.tournaments.mode).fill(null));
+    });
+
+    axios.get(`${BACKEND_URL}/api/user/getusers`, {
+      headers: {
+        Authorization: localStorage.getItem("usertoken")
+      }
+    }).then((data) => {
+      setTeamMembers(data.data.users);
+    });
+  }, [search]);
+
+  function handleTeamMemberChange(index: number, value: string) {
+    const updatedTeamMembers = [...selectedTeamMembers];
+    const user = teamMembers.find((member) => member.email === value);
+    if(index==updatedTeamMembers.length)
+    {
+      updatedTeamMembers.push(user || null)
+    }
+    else{
+      updatedTeamMembers[index] = user || null;
+    }
+    
+    setSelectedTeamMembers(updatedTeamMembers);
+  }
+
+  if (!tournament) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner />
+      </div>
+    );
+  }
+  console.log(selectedTeamMembers)
+
+  const availableTeamMembers = teamMembers.filter(
+    (member) => !selectedTeamMembers.some((selected) => selected?.email === member.email)
+  );
+
   return (
     <div className="bg-background text-foreground min-h-screen">
-      {/* <header className="bg-primary text-primary-foreground py-6 px-4 md:px-6">
-        <div className="container mx-auto">
-          <h1 className="text-2xl font-bold">{selectedTournament.name}</h1>
-        </div>
-      </header>
       <main className="container mx-auto py-12 px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+        <div className="flex flex-col gap-6">
+          <div className="flex justify-center">
             <img
-              src="/placeholder.svg"
-              alt={selectedTournament.name}
-              width={600}
-              height={400}
-              className="w-full h-auto rounded-lg"
+              src={details?.images[0]}
+              alt={tournament.name}
+              className="w-full max-w-lg rounded-lg"
               style={{ aspectRatio: "600/400", objectFit: "cover" }}
             />
           </div>
           <div>
-            <div className="space-y-4">
+            <header className="bg-primary text-primary-foreground py-6 px-4 md:px-6">
+              <h1 className="text-2xl font-bold">{tournament.name}</h1>
+            </header>
+            <div className="space-y-4 mt-4">
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold">{selectedTournament.name}</h2>
                 <div className="flex items-center gap-2">
                   <MapPinIcon className="w-5 h-5" />
-                  <span>{selectedTournament.location}</span>
+                  <span>{details?.area}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CalendarIcon className="w-5 h-5" />
-                  <span>{selectedTournament.date}</span>
+                  <span>Start Date: {tournament.registrationstartDate.split('-').reverse().join('-')}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <ClockIcon className="w-5 h-5" />
-                  <span>{selectedTournament.time}</span>
+                  <CalendarIcon className="w-5 h-5" />
+                  <span>End Date: {tournament.registrationendDate.split('-').reverse().join('-')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TicketIcon className="w-5 h-5" />
+                  <span>Slots Left: {tournament.total_teams}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TicketIcon className="w-5 h-5" />
+                  <span>Teams per Team: {tournament.mode}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <TicketIcon className="w-5 h-5" />
+                  <span>Price: ${tournament.price}</span>
                 </div>
               </div>
-              <div>
-                <p>{selectedTournament.description}</p>
-              </div>
-              <div>
-                <p>Slots Left: {selectedTournament.slotsLeft}</p>
-              </div>
             </div>
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-              <div className="grid gap-2">
-                <Label htmlFor="team-members">Team Members</Label>
-                {teamMembers.map((member, index) => (
-                  <div key={index} className="grid grid-cols-2 gap-2">
-                    <Input
-                      id={`team-member-${index}`}
-                      placeholder={`Team Member ${index + 1} Name`}
-                      value={member.name}
-                      onChange={(e) => handleTeamMemberChange(index, e.target.value, member.email)}
-                    />
-                    <Input
-                      id={`team-member-${index}-email`}
-                      type="email"
-                      placeholder={`Team Member ${index + 1} Email`}
-                      value={member.email}
-                      onChange={(e) => handleTeamMemberChange(index, member.name, e.target.value)}
-                    />
+            <div className="mt-6 space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="team-leader">Team Leader</Label>
+                <Input
+                  id="team-leader"
+                  type="email"
+                  placeholder="Team Leader Email"
+                  value={teamLeader}
+                  // onChange={(e) => setTeamLeader(e.target.value)}
+          
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {Array.from({ length: tournament.mode - 1 }).map((_, index) => (
+              
+                  <div key={index} className="space-y-2 ">
+                    <Label htmlFor={`team-member-${index + 1}`}>Team Member {index + 1}</Label>
+                    <Select
+
+                      // value={selectedTeamMembers[index]?.email ||" hellll"}
+                      onValueChange={(value) => 
+                        {;handleTeamMemberChange(index, value)}}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Team Member Email" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableTeamMembers.map((member) => (
+                          <SelectItem key={member.email} value={member.email}>
+                            {member.name} ({member.email})
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 ))}
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="team-leader">Team Leader</Label>
-                <Input id="team-leader" type="email" placeholder="Team Leader Email" value={teamLeader} disabled />
-              </div>
-              <Button type="submit" className="w-full">
-                Register
-              </Button>
-            </form>
+              <Button variant="destructive">Register</Button>
+            </div>
           </div>
         </div>
-      </main> */}
+      </main>
     </div>
-  )
+  );
 }
 
 //@ts-ignore
-
-
 function ClockIcon(props) {
   return (
     <svg
@@ -110,12 +205,10 @@ function ClockIcon(props) {
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
     </svg>
-  )
+  );
 }
 
 //@ts-ignore
-
-
 function MapPinIcon(props) {
   return (
     <svg
@@ -133,7 +226,5 @@ function MapPinIcon(props) {
       <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
       <circle cx="12" cy="10" r="3" />
     </svg>
-  )
+  );
 }
-
-
