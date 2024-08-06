@@ -81,45 +81,7 @@ export  function Landing() {
             </Link>
           </div>
         </section>
-        {/* <section className="bg-[#F1F5F9] py-20 px-6">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-8">What Our Customers Say</h2>
-            <div className="grid gap-12">
-              <div className="bg-white p-8 rounded-lg shadow-lg">
-                <p className="text-gray-600 mb-6 text-lg">
-                  "TurfHub has been a game-changer for our sports facility. The booking system is so easy to use, and
-                  the analytics have helped us optimize our operations."
-                </p>
-                <div className="flex items-center gap-4">
-                  <Avatar>
-                    <AvatarImage src="/placeholder-user.jpg" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-bold text-lg">John Doe</p>
-                    <p className="text-gray-500">Facility Manager</p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white p-8 rounded-lg shadow-lg">
-                <p className="text-gray-600 mb-6 text-lg">
-                  "I was hesitant to try a new platform, but TurfHub has exceeded all of my expectations. The customer
-                  support has been fantastic, and the features have made my job so much easier."
-                </p>
-                <div className="flex items-center gap-4">
-                  <Avatar>
-                    <AvatarImage src="/placeholder-user.jpg" />
-                    <AvatarFallback>SA</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-bold text-lg">Sarah Anderson</p>
-                    <p className="text-gray-500">Sports Coordinator</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
+     
         <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
         <InfiniteMovingCards
         items={testimonials}
