@@ -33,10 +33,10 @@ app.use("/api/tournament",tournamentRouter)
 app.get("/test",async(req,res)=>{
     const data=await prisma.tournament.update({
         where:{
-            id:1
+            id:2
         },data:{
-            registrationstartDate:"2024-08-06",
-            registrationendDate:"2024-08-11"
+            registrationstartDate:"2024-10-10",
+            registrationendDate:"2024-10-12"
         }
 
       

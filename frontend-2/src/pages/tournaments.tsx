@@ -72,6 +72,7 @@ export function Tournaments() {
 
         }
     }
+    console.log(temp)
     setUpcomingTournaments(temp)
 
   }
@@ -83,9 +84,10 @@ export function Tournaments() {
       }
     }).then((data)=>{
       console.log(data.data)
+      storeUpcoming()
       setTournaments(data.data.tournaments)
       setDetails(data.data.details)
-      storeUpcoming()
+     
     })
   
   
@@ -133,7 +135,7 @@ export function Tournaments() {
           {tournaments.map((tournament) => {
             const isUpcoming = new Date(tournament.registrationstartDate) > new Date();
             const closed =new Date(tournament.registrationendDate)<new Date()
-            console.log(tournament.registrationstartDate +" "+new Date().toISOString())
+          
             return (
               <Card key={tournament.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
                 <img src={tournament.images[0]} alt={tournament.name} className="w-full h-48 object-cover" />
@@ -142,17 +144,24 @@ export function Tournaments() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
+                    <div className="flex">
                     <div className="flex items-center gap-2">
                       <CalendarIcon className="w-5 h-5 text-gray-600" />
-                      <span>{tournament.registrationstartDate}</span>
+                      <span>{tournament.registrationstartDate.split('-').reverse().join('-') }</span>
+                    </div>
+                    <p className="mx-2">-</p>
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon className="w-5 h-5 text-gray-600" />
+                      <span>{"   "+tournament.registrationendDate.split('-').reverse().join('-')}</span>
+                    </div>
                     </div>
                     <div className="flex items-center gap-2">
                 
-                      <span>{getDetails(tournament.turfId)?.turfName}</span>
+                      <span className="px-2">{getDetails(tournament.turfId)?.turfName}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPinIcon className="w-5 h-5 text-gray-600" />
-                      <span>{(`${getDetails(tournament.turfId)?.area}`) || ""}</span>
+                      <span>{(`${getDetails(tournament.turfId)?.area}, ${getDetails(tournament.turfId)?.city},${getDetails(tournament.turfId)?.state}`) || ""}</span>
                     </div>
                     {/* <p className="text-gray-700">{tournament.description}</p> */}
                   </div>
@@ -180,9 +189,16 @@ export function Tournaments() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
+                  <div className="flex">
                     <div className="flex items-center gap-2">
                       <CalendarIcon className="w-5 h-5 text-gray-600" />
-                      <span>{tournament.registrationstartDate}</span>
+                      <span>{tournament.registrationstartDate.split('-').reverse().join('-') }</span>
+                    </div>
+                    <p className="mx-2">-</p>
+                    <div className="flex items-center gap-2">
+                      <CalendarIcon className="w-5 h-5 text-gray-600" />
+                      <span>{"   "+tournament.registrationendDate.split('-').reverse().join('-')}</span>
+                    </div>
                     </div>
                     <div className="flex items-center gap-2">
                 
@@ -190,7 +206,7 @@ export function Tournaments() {
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPinIcon className="w-5 h-5 text-gray-600" />
-                      <span>{(`${getDetails(tournament.turfId)?.area}`) || ""}</span>
+                      <span>{(`${getDetails(tournament.turfId)?.area}, ${getDetails(tournament.turfId)?.city},${getDetails(tournament.turfId)?.state}`) || ""}</span>
                     </div>
           
                   </div>

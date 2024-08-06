@@ -65,14 +65,23 @@ const addTournament = async(req, res) => {
 };
 
 const listTournament=async(req,res)=>{
-    try{
-        const tournaments=await prisma.tournament.findMany({})
-        const details=await prisma.turf.findMany({})
+
+        const params=req.query.id;
+        let tournaments;
+        let details;
+        if(params)
+        {
+            tournaments=await prisma.tournament.findUnique({where:{id:parseInt(params)}})
+            details=await prisma.turf.findUnique({where:{id:tournaments.turfId}})
+        }
+        else{
+            tournaments=await prisma.tournament.findMany({})
+            details=await prisma.turf.findMany()
+        }
+       
         return res.json({tournaments,details})
-    }
-    catch{
-        return res.json({msg:"error"})
-    }
+
+  
     
 
 }
