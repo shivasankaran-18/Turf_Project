@@ -31,10 +31,8 @@ app.use("/api/tournament",tournamentRouter)
 
 
 app.get("/test",async(req,res)=>{
-    const data=await prisma.tournament.delete({
-        where:{
-            id:6
-        }
+    const data=await prisma.tournament.deleteMany({
+        
 })
     return res.json(data)
 })

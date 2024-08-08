@@ -4,18 +4,11 @@ import { NavBar } from '../components/Navbar';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { Spinner } from '../components/Spinner';
-import { HoverEffect } from "../shadcn/ui/card-hover-effect";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter
-} from "../shadcn/ui/card";
+import { HoverEffect } from "../shadcn/ui/card-hover-effect-turfs";
+
 import { Button } from "../shadcn/ui/button";
 
-type Booking = {
+type turfBooking = {
   id: number,
   slots: string[],
   price: string[],
@@ -23,10 +16,24 @@ type Booking = {
   turfName: string
 }[];
 
+type tournamentBooking={
+  id:number,
+  name:string,
+  mode:number,
+  turfId:number,
+  duration:number,
+  price:number,
+  images:string[]
+
+}[]
+
+
+
 export const Booked = () => {
-  const [bookings, setBookings] = useState<Booking>([]);
+  const [turfBookings, setTurfBookings] = useState<turfBooking>([]);
   const [flag, setFlag] = useState(true);
   const [activeTab, setActiveTab] = useState('turf');
+  const [tournamentBookings, setTournamentBookings] = useState<tournamentBooking>([]);
 
   useEffect(() => {
     axios.get(`${BACKEND_URL}/api/user/get`, {
@@ -35,9 +42,30 @@ export const Booked = () => {
       }
     }).then((data) => {
       console.log(data.data.val + "temp....");
-      setBookings(data.data.val);
+      setTurfBookings(data.data.val);
       setFlag(false);
     });
+
+    axios.get(`${BACKEND_URL}/api/tournament/bookedtournament`,{
+      headers:{
+        Authorization:localStorage.getItem("usertoken")
+      }
+    }).then((data)=>{
+      console.log(data.data)
+      // let set=new Set()
+      // data.data.data1.map((val:any)=>{
+      //   set.add(val)
+      // })
+      // data.data.data2.map((val:any)=>{
+      //   set.add(val)
+      // })
+    
+      // console.log(Array.from(set))
+      // //@ts-ignore
+      // setTournamentBookings(Array.from(set))
+    })
+
+
   }, []);
 
   if (flag) {
@@ -80,7 +108,7 @@ export const Booked = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="max-w-5xl mx-auto px-8 mt-4">
-              <HoverEffect items={bookings} />
+              <HoverEffect items={turfBookings} />
               </div>
               </div>
             </div>
@@ -92,7 +120,7 @@ export const Booked = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="max-w-5xl mx-auto px-8 mt-4">
-              <HoverEffect items={bookings} />
+              <HoverEffect items={turfBookings} />
               </div>
               </div>
             </div>

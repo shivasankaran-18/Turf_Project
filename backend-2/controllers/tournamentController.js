@@ -208,6 +208,7 @@ const bookTournament = async (req,res) => {
             },
             select:{
                 id:true,
+                name:true
             }
         });
         if(members.length !== memberEmails.length){
@@ -226,6 +227,7 @@ const bookTournament = async (req,res) => {
             return prisma.member.create({
               data: {
                 userId: member.id,
+                name: member.name,
                 participation_id: newParticipant.id,
               },
             });
@@ -255,37 +257,70 @@ const getregisteredTournement = async(req,res) =>{
         where:{
             teamLeadId:id
         },select:{
-            tournamentId:true
+            tournamentId:true,
+            teamLeadName:true,
+            members:{
+                select:{
+                    name:true
+                }
+            }
         }
     })
+
     const tournamentIds = asTeamLeader.map(x=>x.tournamentId);
     
     const tournamentsAsTeamLead = await prisma.tournament.findMany({
         where:{
             id:{
                 in : tournamentIds
-            }
+            },
+            
+        },select:{
+            id:true,
+            name:true,
+            mode:true,
+            turfId:true,
+            duration:true,
+            price:true,
+            images:true
         }
     })
     const asMember = await prisma.member.findMany({
         where:{
             userId:id,
         },select:{
-            participation_id:true,
+            tournamentParticipation:{
+                select:{
+                    tournamentId:true,
+                    teamLeadName:true,
+                    members:{
+                        select:{
+                            name:true
+                        }
+                    }
+                }
+            }
         }
     })
-    const participantionIds = asMember.map(x=>x.participation_id)
-    const tournamentIdasMember = await prisma.tournamentParticipant.findMany({
+    const participantionIds = asMember.map(x=>x.tournamentParticipation.tournamentId)
+    const tournamentAsMember = await prisma.tournament.findMany({
         where:{
             id:{
                 in:participantionIds,
             }
-        },select:{
-            tournamentId:true,
+        },
+        select:{
+            id:true,
+            name:true,
+            mode:true,
+            turfId:true,
+            duration:true,
+            price:true,
+            images:true
         }
     })
-    console.log(tournamentIdasMember)
-    res.json({success:true,data1:tournamentsAsTeamLead,data2:tournamentIdasMember})
+   
+    res.json({success:true,leadTournamentDetails:tournamentsAsTeamLead,leadTournamentParticipants:asTeamLeader,memberTournamentDetails:tournamentAsMember,memberTournamentParticipants:asMember})
 }
 
 export {getavailableUsersforATournament,bookTournament,getregisteredTournement,addTournament,listTournament}
